@@ -1,0 +1,110 @@
+<div class="row header" ng-class="{'header-padding': $parent.toggle}">
+  <div class="col-md-8">
+    <h3 ng-if="!mobile">{{mainTitle}}</h3>
+    <span ng-if="mobile">{{mainTitle}}</span>
+  </div>
+  <div class="col-xs-4" style="padding-right:20px;">
+    <a class="pull-right" href="http://krispo.github.io/angular-nvd3/#/" target="blank"><span class="menu-icon fa fa-line-chart"></span>{{ mobile ? '':' Charts Documentation'}}</a>
+  </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 top-gap">
+        <rd-loading status="loading"></rd-loading>
+        <ng-form ng-if="!loading.value" name="chartForm">
+          <div class="form-group" ng-class="{ 'has-error' : chartForm.name.$invalid && chartForm.name.$dirty}">
+            <label class="col-sm-2" style="padding-top: 8px;">Name</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="name" ng-model="chart.name" required ng-disabled="viewMode === 'VIEW'">
+              <p class="help-block" ng-show="chartForm.name.$invalid && chartForm.name.$dirty">Name required</p>
+            </div>
+          </div>
+          <div class="form-group" ng-if="showSquadSelector" style="overflow: visible;height: 35px;">
+            <label class="col-sm-2" style="padding-top: 8px;">Squad</label>
+              <div class="col-sm-6">
+                  <entity-selector ng-if="viewMode !== 'VIEW'" entities="squadSelectEntities" selected="squadSelected"></entity-selector>
+                  <p ng-if="errors.squad" style="color: tomato;">{{errors.squad}}</p>
+                  <span class="form-control" disabled ng-if="viewMode === 'VIEW'">{{squadSelected.name}}</span>
+              </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : chartForm.url.$invalid && chartForm.url.$dirty}">
+            <label class="col-sm-2" style="padding-top: 8px;">API's url</label>
+            <div class="col-sm-6">
+              <input type="url" class="form-control" name="url" ng-model="chart.url" ng-change="urlChanged()" required ng-disabled="viewMode === 'VIEW'">
+              <p class="help-block" ng-show="chartForm.url.$invalid && chartForm.description.$dirty">Url required</p>
+            </div>
+            <div class="col-sm-4">
+              <a ng-show="apiJSONResponse" ng-click="showResponse=!showResponse;">{{showResponse ? 'Hide response' : 'Show response'}}</a>
+              <div ng-show="showResponse && apiJSONResponse">
+                <div style="max-height: 200px; overflow: auto; font-size:10px;">
+                  <json-formatter json="apiJSONResponse" open="1"></json-formatter>
+                </div>
+                <div class="text-danger" ng-show="apiError">
+                  {{apiError}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <label>Transform function</label>
+          <div class="form-group">
+            <div class="col-sm-8 control-field">
+              <div ui-ace="{
+                useWrapMode : true,
+                showGutter: true,
+                theme:'monokai',
+                mode: 'javascript',
+                firstLineNumber: 1,
+                onChange: transformFunctionChanged
+              }" ng-model="$parent.transformFunctionModel"></div>
+            </div>
+            <div class="col-sm-4 control-field">
+              <div ng-show="chartData">
+                <div>Response:</div>  
+                <div style="max-height: 170px; overflow: auto; font-size: 10px;">
+                  <json-formatter json="chartData" open="2"></json-formatter>
+                </div>
+              </div>
+              <div class="text-danger" ng-show="transformFunctionError">
+                <div>Error:</div>
+                <div style="max-height: 170px; overflow: auto; font-size: 10px;">
+                  {{transformFunctionError}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <label>Options</label>
+          <div class="form-group">
+            <div class="col-sm-8 control-field">
+              <div ui-ace="{
+                useWrapMode : true,
+                showGutter: true,
+                theme:'monokai',
+                mode: 'javascript',
+                firstLineNumber: 1,
+                onChange: optionsChanged
+              }" ng-model="$parent.optionsModel"></div>
+            </div>
+            <div class="col-sm-4 control-field">
+              <div ng-show="options">
+                <div>Options:</div>
+                <div style="max-height: 170px; overflow: auto; font-size: 10px;">
+                  <json-formatter json="options" open="2"></json-formatter>
+                </div>
+              </div>
+              <div class="text-danger" ng-show="optionsError">
+                <div>Error:</div>
+                <div style="max-height: 170px; overflow: auto; font-size: 10px;">
+                  {{optionsError}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="chartData && options">
+            <nvd3 options="options" data="chartData"></nvd3>
+          </div>
+          <div class="modal-footer" ng-if="viewMode !== 'VIEW'">
+            <button type="submit" class="btn btn-primary" ng-click="accept()">Accept</button>
+            <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button>
+          </div>
+        </ng-form>
+    </div>
+</div>

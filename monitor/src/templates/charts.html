@@ -1,0 +1,53 @@
+<div class="row header" ng-class="{'header-padding': $parent.toggle}">
+  <div class="col-xs-8">
+    <h3 ng-if="!mobile">{{mainTitle}}</h3>
+    <span ng-if="mobile">{{mainTitle}}</span>
+  </div>
+  <div class="col-xs-4"  style="padding-right:20px;">
+    <a class="pull-right" ng-if="user.admin" href="#/newchart"><span class="menu-icon fa fa-plus"></span>{{ mobile ? '':' Create chart'}}</a>
+  </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 top-gap">
+      <rd-loading status="loading"></rd-loading>
+        <div ng-if="!loading.value" class="table-responsive">
+            <table class="table">
+                <thead class="table-header">
+                    <tr>
+                      <th class="text-center">Name</th>
+                      <th class="text-center">Squad</th>
+                      <th class="text-center">Actions</th></tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="chart in charts" ng-class="{'odd-row' : $odd}">
+                        <td class="text-center">
+                          <span title="{{chart.name}}" ng-click="view(chart)" style="cursor: pointer;">{{(chart.name.length >= 30) ? chart.name.substring(0,30) + '...' : chart.name}}</span>
+                        </td>
+                        <td class="text-center">
+                          <span title="{{chart.squad}}">{{(chart.squad.length >= 30) ? chart.squad.substring(0,30) + '...' : chart.squad}}</span>
+                        </td>
+                        <td class="text-center" style="padding: 0px;">
+                            <span title="Edit" class="btn" ng-click="edit(chart)"><i class="fa fa-pencil"></i></span>
+                            <span title="Remove" class="btn text-danger" data-toggle="modal" data-target="#confirmModal" ng-click="openConfirmModal(chart)"><i class="fa fa-trash"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Are you sure</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="remove(selectedChart)">Yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

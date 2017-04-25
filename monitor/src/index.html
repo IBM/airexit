@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Air Exit Monitor</title>
+  <link rel="stylesheet" type="text/css" href="lib/css/vendor.min.css">
+  <link rel="stylesheet" type="text/css" href="css/dashboard.min.css">
+
+  <script type="text/javascript" src="lib/js/vendor.min.js"></script>
+  <script type="text/javascript" src="js/dashboard.min.js"></script>
+</head>
+<body ng-controller="MasterCtrl" ng-class="{'blue-background': !user}">
+  <div growl></div>
+  <div id="page-wrapper" ng-class="{'open': toggle && user}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" ng-if="user && !loading.value">
+      <ul class="left-sidebar">
+        <li class="left-sidebar-main">
+          <div ng-if="!toggle" class="pull-right" ng-click="toggleSidebar()">
+            <img ng-src="{{imageSrc}}" style="cursor:pointer; width: 42px;border-radius: 50%;margin: 9px 15px;">
+          </div>
+          <span ng-if="toggle" style="line-height: 30px;" ng-click="toggleSidebar()">
+            Air Exit Monitor
+          </span>
+          <div ng-if="toggle" ng-if="user" class="item dropdown" uib-dropdown>
+            <img ng-src="{{imageSrc}}" style="width: 24px; border-radius: 50%;margin-right: 4px;">
+            <span class="username dropdown-toggle" uib-dropdown-toggle style="font-size: 12px;">{{user.name}}&nbsp;<span class="caret"></span></span>
+            <ul class="dropdown-menu dropdown-menu-right" style="background-color: #F3F3F3;">
+              <li class="link" ng-click="logout()">
+                <a class="dropdown-item" href="#">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li ng-click="goTo('index')" class="left-sidebar-list">
+          <a ng-class="{'active-item': state.current.name == 'index'}">Checkin <span class="menu-icon fa fa-home"></span></a>
+        </li>
+        <li ng-click="goTo('users')" ng-if="user.admin" class="left-sidebar-list">
+          <a ng-class="{'active-item': state.current.name == 'users' || state.current.name == 'viewuser' || state.current.name == 'edituser' || state.current.name == 'newuser'}">Security Screening <span class="menu-icon fa fa-users"></span></a>
+        </li>
+        <li ng-click="goTo('charts')" ng-if="user.admin" class="left-sidebar-list">
+          <a ng-class="{'active-item': state.current.name == 'charts' || state.current.name == 'viewchart' || state.current.name == 'editchart' || state.current.name == 'newchart'}">Gate check <span class="menu-icon fa fa-bar-chart"></span></a>
+        </li>
+      </ul>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+
+        <!-- Main Content -->
+        <div class="mian-view" ui-view></div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+
+</body>
+</html>

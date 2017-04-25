@@ -1,0 +1,17 @@
+.entity-selector-popup {
+   position: absolute;
+   z-index: 8;
+   background-color: white;
+   box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.75);
+}
+
+.entity-selector-search-input {
+    width: 100%;
+    height: 34px;
+    border: 0px;
+    padding: 0px;
+}
+
+.entity-selector-search-input:focus {
+    outline: 0px;
+}

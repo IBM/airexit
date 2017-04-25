@@ -1,0 +1,39 @@
+<div class="row header" ng-class="{'header-padding': !$parent.toggle}">
+  <div class="col-md-8">
+    <h3 ng-if="!mobile">{{mainTitle}}</h3>
+    <span ng-if="mobile">{{mainTitle}}</span>
+  </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 top-gap">
+        <rd-loading status="loading"></rd-loading>
+        <ng-form ng-if="!loading" name="userForm">
+          <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && userForm.name.$dirty}">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" ng-model="user.name" required ng-disabled="viewMode === 'VIEW'">
+            <p class="help-block" ng-show="userForm.name.$invalid && userForm.name.$dirty">Name required</p>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && userForm.email.$dirty}">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" ng-model="user.email" required ng-disabled="viewMode === 'VIEW'">
+            <p class="help-block" ng-show="userForm.email.$invalid  && userForm.email.$dirty">Email required</p>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">
+                <input type="checkbox" ng-model="user.admin">
+            </span>
+            <input type="text" class="form-control" disabled value="Is Admin?">
+          </div>
+          <br/>
+          <div class="small-gray" ng-if="viewMode === 'VIEW'">
+              <p>Last Modified: {{user.updated_at | date:'medium'}}</p>
+              <p>Created at: {{user.created_at | date:'medium'}}</p>
+          </div>
+
+          <div class="modal-footer" ng-if="viewMode !== 'VIEW'">
+            <button type="submit" class="btn btn-primary" ng-click="accept()">Accept</button>
+            <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button>
+          </div>
+        </ng-form>
+    </div>
+</div>
