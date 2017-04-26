@@ -18,7 +18,7 @@ var paths = {
     index: 'src/index.html',
     bower_fonts: 'bower_components/**/*.{ttf,woff,woff2,eot,svg}',
 	  bower_scripts: 'bower_components/**/*.min.js',
-	  bower_styles: 'bower_components/**/*.min.css',
+	  bower_styles: ['bower_components/**/*.min.css', 'bower_components/ng-autocomplete/angucomplete.css'],
     lib: 'src/lib/**/*.js'
 };
 
@@ -39,7 +39,11 @@ var orderedBowerComponents = function() {
     'bower_components/moment/min/moment-with-locales.js',
     'bower_components/angular-moment/angular-moment.js',
     'bower_components/json-formatter/dist/json-formatter.min.js',
-    'bower_components/webcam/dist/webcam.min.js'
+    'bower_components/webcam/dist/webcam.min.js',
+    'bower_components/tracking/build/tracking-min.js',
+    'bower_components/tracking/build/data/face-min.js',
+    'bower_components/object-path/index.js',
+    'bower_components/ng-autocomplete/angucomplete.js'
   ]
 }
 

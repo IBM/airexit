@@ -206,3 +206,11 @@ ul.left-sidebar .left-sidebar-list .menu-icon {
   background-color: #1d4c75;
   color: white;
 }
+
+.angucomplete-dropdown {
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+}
