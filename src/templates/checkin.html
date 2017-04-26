@@ -2,7 +2,7 @@
     <h1 class="text-center">Check-In</h1>
 </div>
 <div ng-if="status=='RECORDING'" style="position:absolute; width: auto; overflow: hidden;left: 15px;" ng-style="{'height': videoHeight}">
-    <webcam class="text-center" on-streaming="onSuccess()" channel="channel"></webcam>
+    <webcam class="text-center" on-streaming="onSuccess()" on-stream="onStream()" channel="channel"></webcam>
     <div ng-show="videoReady">
     <div ng-style="{'border-top': '3px solid #fff', 'border-left': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px -2px 1px rgba(0,0,0,0.5)'}"></div>
     <div ng-style="{'border-top': '3px solid #fff', 'border-right': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px -2px 1px rgba(0,0,0,0.5)'}"></div>
@@ -10,7 +10,7 @@
     <div ng-style="{'border-bottom': '3px solid #fff', 'border-right': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, bottom: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px 2px 1px rgba(0,0,0,0.5)'}"></div>
     </div>
 </div>
-<div ng-show="status=='SHOWSNAP'" style="position:absolute; width: auto;left: 15px;">
+<div ng-show="status=='SHOWSNAP' || status=='SUBMITTED'" style="position:absolute; width: auto;left: 15px;">
     <div ng-style="{width: focusBox.w, height: focusBox.h, top: focusBox.y, left: focusBox.x, position: 'relative'}" style="overflow: hidden;border: 2px solid rgb(29, 76, 117);border-radius: 3px;" >
         <canvas id="snapshot"></canvas>
     </div>
@@ -21,7 +21,7 @@
             <input class="text-center form-control" placeholder="Type your name" type="text"/>
         </div>
         <div class="col-xs-1 text-center">
-            <button class="btn btn-primary" ng-click="info()">i</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#infoModal" >i</button>
         </div>
     </div> 
 </div>
@@ -30,7 +30,12 @@
         <button class="btn btn-primary" style="width: 50%" ng-click="tryagain()">Try again</button>
     </div>
     <div class="col-sm-6 text-center">
-        <button class="btn btn-primary" style="width: 50%" ng-click="continue()">Submit</button>
+        <button class="btn btn-primary" style="width: 50%" ng-click="submit()">Submit</button>
+    </div>
+</div>
+<div ng-show="status=='SUBMITTED'" style="position: fixed;bottom: 0; background-color: #bfd7ec; width: 50%; padding: 20px; height: 74px;">
+    <div class="col-sm-12 text-center">
+        <button class="btn btn-primary" style="width: 50%" ng-click="next()">Next</button>
     </div>
 </div>
 <div ng-if="status=='RECORDING'" style="position: fixed;bottom: 0; background-color: #bfd7ec; width: 50%; padding: 20px; height: 74px;">
@@ -53,5 +58,22 @@
     </div>
     <div class="well" ng-style="{height: dataHeight}">
         Data
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="infoModal" role="dialog">
+    <div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">User info</h4>
+        </div>
+        <div class="modal-body">
+            User info
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
     </div>
 </div>

@@ -46,14 +46,6 @@ function CheckinCtrl($scope, $state, ApiService) {
         $scope.$apply();
     }
 
-    $scope.continue = function() {
-        if ($scope.step == 'SELECT_TRAVELLER') {
-            $scope.step = 'TAKE_PICTURE';
-        } else {
-            $scope.step = 'SELECT_TRAVELLER';
-        }
-    };
-
     $scope.onSuccess = function () {
         _video = $scope.channel.video;
         $scope.$apply(function() {
@@ -61,8 +53,20 @@ function CheckinCtrl($scope, $state, ApiService) {
         });
     };
 
+    $scope.onStream = function (stream) {
+        // You could do something manually with the stream.
+    };
+
     $scope.tryagain = function() {
         $scope.status = 'RECORDING';
+    };
+
+    $scope.submit = function() {
+        $scope.status = 'SUBMITTED';
+    };
+
+    $scope.next = function() {
+        $state.transitionTo('security');
     };
 
     $scope.makeSnapshot = function makeSnapshot() {
@@ -73,7 +77,7 @@ function CheckinCtrl($scope, $state, ApiService) {
             patCanvas.width = _video.width;
             patCanvas.height = _video.height;
             var ctxPat = patCanvas.getContext('2d');
-
+            
             var idata = getVideoData($scope.focusBox.x, $scope.focusBox.y, $scope.focusBox.w, $scope.focusBox.h);
             ctxPat.putImageData(idata, 0, 0);
 
@@ -90,6 +94,11 @@ function CheckinCtrl($scope, $state, ApiService) {
         hiddenCanvas.height = _video.height;
         var ctx = hiddenCanvas.getContext('2d');
         ctx.drawImage(_video, 0, 0, _video.width, _video.height);
+        // invert image horizontally
+        //ctx.save();
+        //ctx.scale(-1,1);
+        //ctx.drawImage(_video,0,0,_video.width*-1,_video.height);
+        //ctx.restore();
         return ctx.getImageData(x, y, w, h);
     };
 }

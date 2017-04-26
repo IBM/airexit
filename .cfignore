@@ -1,3 +1,5 @@
 node_modules
 bower_components
 server/log
+monitor/src
+src

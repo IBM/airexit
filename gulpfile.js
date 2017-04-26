@@ -211,7 +211,7 @@ function isLoggedInToBluemix() {
 }
 
 function isTargetTest() {
-  return runCheckProcess('bluemix', ['target'], 'silvergate-squads-app-test');
+  return runCheckProcess('bluemix', ['target'], 'airexit-test');
 }
 
 function isLoggedInToCloudFoundry() {
@@ -265,7 +265,7 @@ gulp.task('deploy', function() {
         isLoggedInToCloudFoundry().then(function(cfLoggedIn){
           if (cfLoggedIn) {
             setConfigFor('production');
-            runProcess('cf', ['push','silvergate-squads-app']).then(function() {
+            runProcess('cf', ['push','airexit']).then(function() {
               setConfigFor('development');
               runProcess('cf', ['logout']);
               console.log('Done!');
@@ -294,7 +294,7 @@ gulp.task('deploy', function() {
             isLoggedInToCloudFoundry().then(function(cfLoggedIn){
               if (cfLoggedIn) {
                 setConfigFor('test');
-                runProcess('cf', ['push','test-silvergate-squads-app']).then(function() {
+                runProcess('cf', ['push','test-airexit']).then(function() {
                   setConfigFor('development');
                   console.log('Done!');
                 });
@@ -306,8 +306,8 @@ gulp.task('deploy', function() {
             });
           }
           else {
-            console.log('\x1b[31m', 'The target org selected is not silvergate-connectionCoach-Test');
-            console.log('\x1b[0m', 'Run: bluemix target -o silvergate-connectionCoach-Test] -s silvergate-connectionCoach-Test');
+            console.log('\x1b[31m', 'The target org selected is not test-airexit');
+            console.log('\x1b[0m', 'Run: bluemix target -o test-airexit] -s test-airexit');
           }
         });
       }
