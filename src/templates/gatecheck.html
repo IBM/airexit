@@ -18,7 +18,7 @@
 <div class="col-xs-6">
     <div class="row" style="padding: 5px;">
         <div class="col-xs-11">
-            <input class="text-center form-control" placeholder="Type your name" type="text"/>
+            <input disabled ng-model="selectedTraveller" class="text-center form-control" type="text"/>
         </div>
         <div class="col-xs-1 text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#infoModal" >i</button>
@@ -35,7 +35,7 @@
 </div>
 <div ng-show="status=='SUBMITTED'" style="position: fixed;bottom: 0; background-color: #bfd7ec; width: 50%; padding: 20px; height: 74px;">
     <div class="col-sm-12 text-center">
-        <button class="btn btn-primary" style="width: 50%" ng-click="next()">Next</button>
+        <button class="btn btn-primary" style="width: 50%" ng-click="next()">Start over</button>
     </div>
 </div>
 <div ng-if="status=='RECORDING'" style="position: fixed;bottom: 0; background-color: #bfd7ec; width: 50%; padding: 20px; height: 74px;">

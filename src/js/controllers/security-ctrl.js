@@ -11,6 +11,8 @@ function SecurityCtrl($scope, $state, ApiService) {
     $scope.dataHeader = 80;
     $scope.leftMargin = 15;
 
+    $scope.selectedTraveller = localStorage.getItem('travellerSelected');
+
     $scope.videoHeight = window.innerHeight - $scope.headerOffset - $scope.footerOffset;
     $scope.videoWidth = window.innerWidth/2 - $scope.leftMargin;
     $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader - 20;

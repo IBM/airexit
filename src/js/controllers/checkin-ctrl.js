@@ -14,7 +14,8 @@ function CheckinCtrl($scope, $state, ApiService) {
     $scope.footerOffset = 50;
     $scope.dataHeader = 80;
     $scope.leftMargin = 15;
-    $scope.selectedTraveller = null;
+    $scope.selectedTraveller = {};
+    localStorage.setItem('travellerSelected', null);
     $scope.travellers = [{
         name: 'User',
         lastname: 'One'
@@ -37,7 +38,8 @@ function CheckinCtrl($scope, $state, ApiService) {
         x: $scope.videoWidth/4,
         y: $scope.videoHeight*0.125,
         w: $scope.videoWidth/2,
-        h: $scope.videoHeight*0.75
+        h: $scope.videoHeight*0.75,
+        color: '3px solid #fff'
     };
 
     window.onresize = function() {
@@ -79,15 +81,16 @@ function CheckinCtrl($scope, $state, ApiService) {
                         context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                         context.font = '11px Helvetica';
                         context.fillStyle = "#fff";
-                        context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-                        context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
                         if (rect.x > $scope.focusBox.x && rect.y > $scope.focusBox.y &&
-                            rect.width + rect.x < $scope.focusBox.x + $scope.focusBox.w &&
-                            rect.height + rect.y < $scope.focusBox.y + $scope.focusBox.h) {
-                                $('#capture-button').show();
-                            } else {
-                                $('#capture-button').hide();
-                            }
+                                rect.width + rect.x < $scope.focusBox.x + $scope.focusBox.w &&
+                                    rect.height + rect.y < $scope.focusBox.y + $scope.focusBox.h) {
+                            //$('#capture-button').show();
+                            $scope.focusBox.color = '3px solid rgba(0, 255, 0, 0.5)';
+                        } else {
+                            //$('#capture-button').hide();
+                            $scope.focusBox.color = '3px solid rgba(255, 0, 0, 0.5)';
+                        }
+                        $scope.$apply();
                     });
                 });
             });
@@ -112,22 +115,39 @@ function CheckinCtrl($scope, $state, ApiService) {
         $state.transitionTo('security');
     };
 
+    var timerId;
+    $scope.seconds = 2;
+    $scope.makingSnapshot = false;
+
     $scope.makeSnapshot = function makeSnapshot() {
         if (_video) {
             var patCanvas = document.querySelector('#snapshot');
             if (!patCanvas) return;
 
-            patCanvas.width = _video.width;
-            patCanvas.height = _video.height;
-            var ctxPat = patCanvas.getContext('2d');
+            $scope.makingSnapshot = true;
+            $scope.seconds = 2;
+            timerId = setInterval(function () {
+                $scope.seconds--;
+                if ($scope.seconds == 0) {
+                    clearInterval(timerId);
+                    $scope.makingSnapshot = false;
+                    patCanvas.width = _video.width;
+                    patCanvas.height = _video.height;
+                    var ctxPat = patCanvas.getContext('2d');
+                    
+                    var idata = getVideoData($scope.focusBox.x, $scope.focusBox.y, $scope.focusBox.w, $scope.focusBox.h);
+                    ctxPat.putImageData(idata, 0, 0);
+
+                    //sendSnapshotToServer(patCanvas.toDataURL());
+
+                    patData = idata;
+                    $scope.status = 'SHOWSNAP';
+                    localStorage.setItem('travellerSelected', $scope.selectedTraveller.name + ' ' +$scope.selectedTraveller.name );
+                }
+                $scope.$apply();
+            }, 1000);
+
             
-            var idata = getVideoData($scope.focusBox.x, $scope.focusBox.y, $scope.focusBox.w, $scope.focusBox.h);
-            ctxPat.putImageData(idata, 0, 0);
-
-            //sendSnapshotToServer(patCanvas.toDataURL());
-
-            patData = idata;
-            $scope.status = 'SHOWSNAP';
         }
     };
 
@@ -144,4 +164,7 @@ function CheckinCtrl($scope, $state, ApiService) {
         //ctx.restore();
         return ctx.getImageData(x, y, w, h);
     };
+
+    
+    
 }

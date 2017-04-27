@@ -4,11 +4,12 @@
 <div ng-show="status=='RECORDING'" style="position:absolute; width: auto; overflow: hidden;left: 15px;" ng-style="{'height': videoHeight}">
     <webcam class="text-center" on-streaming="onSuccess()" on-stream="onStream()" channel="channel"></webcam>
     <div ng-show="videoReady">
-        <div ng-style="{'border-top': '3px solid #fff', 'border-left': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px -2px 1px rgba(0,0,0,0.5)'}"></div>
-        <div ng-style="{'border-top': '3px solid #fff', 'border-right': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px -2px 1px rgba(0,0,0,0.5)'}"></div>
-        <div ng-style="{'border-bottom': '3px solid #fff', 'border-left': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, bottom: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px 2px 1px rgba(0,0,0,0.5)'}"></div>
-        <div ng-style="{'border-bottom': '3px solid #fff', 'border-right': '3px solid #fff', width: focusBox.w/4, height: focusBox.h/4, bottom: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px 2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-top': focusBox.color, 'border-left': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px -2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-top': focusBox.color, 'border-right': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px -2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-bottom': focusBox.color, 'border-left': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, bottom: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px 2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-bottom': focusBox.color, 'border-right': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, bottom: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px 2px 1px rgba(0,0,0,0.5)'}"></div>
     </div>
+    <h1 style="position: absolute; width: 100%; text-align: center;color:white;" ng-style="{top: videoHeight/2}" ng-show="makingSnapshot">{{seconds}}</h1>
 </div>
 <canvas ng-if="videoReady" ng-show="status=='RECORDING'" id="canvas" height="{{videoHeight}}" width="{{videoWidth}}" style="position: absolute; left: 15px; z-index: 1;"></canvas>
 <div ng-show="status=='SHOWSNAP' || status=='SUBMITTED'" style="position:absolute; width: auto;left: 15px;">
