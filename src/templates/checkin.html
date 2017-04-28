@@ -1,10 +1,18 @@
 <div class="row topheader">
-    <h1 class="text-center">Gate check</h1>
+    <h1 class="text-center">Check-In</h1>
 </div>
-<div class="col-xs-6">
+<div class="col-xs-6" style="z-index: 5;">
     <div class="row" style="padding: 5px;">
         <div class="col-xs-11">
-            <input disabled ng-model="selectedTraveller" class="text-center form-control" type="text"/>
+            <angucomplete id="ex1"
+              placeholder="Type your name"
+              pause="100"
+              selectedobject="selectedTraveller"
+              localdata="travellers"
+              searchfields="name,lastname"
+              titlefield="name,lastname"
+              minlength="1"
+              inputclass="form-control"/>
         </div>
         <div class="col-xs-1 text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#infoModal" >i</button>
