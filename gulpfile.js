@@ -15,6 +15,7 @@ var paths = {
     directives_styles: 'src/js/directives/**/*.css',
     images: 'src/img/**/*.*',
     templates: ['src/templates/**/*.html','src/js/modals/**/*.html'],
+    directives_templates: 'src/js/directives/**/*.html',
     index: 'src/index.html',
     bower_fonts: 'bower_components/**/*.{ttf,woff,woff2,eot,svg}',
 	  bower_scripts: 'bower_components/**/*.min.js',
@@ -73,7 +74,7 @@ gulp.task('copy-bower_fonts', function() {
  * Handle custom files
  */
 gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-styles',
-                           'custom-templates', 'concat-vendor-js', 'concat-vendor-css']);
+                           'custom-templates', 'directives-templates', 'concat-vendor-js', 'concat-vendor-css']);
 
 gulp.task('custom-images', function() {
     return gulp.src(paths.images)
@@ -114,6 +115,12 @@ gulp.task('custom-templates', function() {
         .pipe(gulp.dest('dist/templates'));
 });
 
+gulp.task('directives-templates', function() {
+    return gulp.src(paths.directives_templates)
+        .pipe(minifyHTML())
+        .pipe(gulp.dest('dist/js/directives'));
+});
+
 /**
  * Watch custom files
  */
@@ -122,6 +129,7 @@ gulp.task('watch', function() {
     gulp.watch([paths.styles, paths.directives_styles], ['custom-styles']);
     gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
+    gulp.watch([paths.directives_templates], ['directives-templates']);
     gulp.watch([paths.index], ['usemin']);
 	  gulp.watch([paths.bower_scripts], ['concat-vendor-js']);
 	  gulp.watch([paths.bower_styles], ['concat-vendor-css']);

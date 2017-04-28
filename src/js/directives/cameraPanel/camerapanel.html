@@ -1,0 +1,34 @@
+<div ng-show="status=='RECORDING'" style="position:absolute; width: auto; overflow: hidden;left: 15px;" ng-style="{'height': videoHeight}">
+    <webcam class="text-center" on-streaming="onSuccess()" on-stream="onStream()" channel="channel"></webcam>
+    <div ng-show="videoReady">
+        <div ng-style="{'border-top': focusBox.color, 'border-left': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px -2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-top': focusBox.color, 'border-right': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px -2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-bottom': focusBox.color, 'border-left': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y + focusBox.h - focusBox.h/4, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px 2px 1px rgba(0,0,0,0.5)'}"></div>
+        <div ng-style="{'border-bottom': focusBox.color, 'border-right': focusBox.color, width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y + focusBox.h - focusBox.h/4, right: focusBox.x, position: 'absolute', 'box-shadow': '2px 2px 1px rgba(0,0,0,0.5)'}"></div>
+    </div>
+    <div style="position: absolute; width: 100%; font-size: 96px; text-align: center;color:white; top: 0px;" ng-style="{height: videoHeight, 'line-height': videoHeight+'px'}" ng-show="makingSnapshot">{{seconds}}</div>
+</div>
+<canvas ng-if="videoReady" ng-show="status=='RECORDING'" id="canvas" height="{{videoHeight}}" width="{{videoWidth}}" style="position: absolute; left: 15px; z-index: 1;"></canvas>
+<div ng-show="status=='SHOWSNAP' || status=='SUBMITTED'" style="position:absolute; width: auto;left: 15px;">
+    <div ng-style="{width: focusBox.w, height: focusBox.h, top: focusBox.y, left: focusBox.x, position: 'relative'}" style="overflow: hidden;border: 2px solid rgb(29, 76, 117);border-radius: 3px;" >
+        <canvas id="snapshot"></canvas>
+    </div>
+</div>
+<div ng-show="status=='SHOWSNAP'" ng-style="{width: videoWidth}" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;">
+    <div class="col-sm-6 text-center">
+        <button class="btn btn-primary" style="width: 50%" ng-click="tryagain()">Try again</button>
+    </div>
+    <div class="col-sm-6 text-center">
+        <button class="btn btn-primary" style="width: 50%" ng-click="submit()">Submit</button>
+    </div>
+</div>
+<div ng-show="status=='SUBMITTED'" ng-style="{width: videoWidth}" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;">
+    <div class="col-sm-12 text-center">
+        <button class="btn btn-primary" style="width: 50%" ng-click="next()">{{nextLabel || 'Next'}}</button>
+    </div>
+</div>
+<div ng-if="status=='RECORDING'" ng-style="{width: videoWidth}" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;">
+    <div class="col-sm-12 text-center">
+        <button id="capture-button" class="btn btn-primary" ng-disabled="makingSnapshot" style="width: 50%" ng-click="makeSnapshot()">Capture</button>
+    </div>
+</div>
