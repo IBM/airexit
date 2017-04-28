@@ -1,0 +1,15 @@
+<div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 10px;">Blockchain view</div>
+<div class="btn-group" data-toggle="buttons" style="padding: 5px;">
+    <label class="btn btn-sm btn-primary active">
+        <input type="radio" name="options" ng-model="cbpOptions" autocomplete="off" ng-class="{checked: selectedOption == 'cbp'}"> CBP
+    </label>
+    <label class="btn btn-sm btn-primary">
+        <input type="radio" name="options" ng-model="airlineOptions" autocomplete="off" ng-class="{checked: selectedOption == 'airline'}"> Airline
+    </label>
+    <label class="btn btn-sm btn-primary">
+        <input type="radio" name="options" ng-model="tsaOptions" autocomplete="off" ng-class="{checked: selectedOption == 'tsa'}"> TSA
+    </label>
+</div>
+<div class="well" ng-style="{height: dataHeight}">
+    Data
+</div>
