@@ -4,7 +4,8 @@ function blockchainViewer($timeout) {
 
     var directive = {
         scope: {
-            blockchaindata: '='
+            blockchaindata: '=',
+            dataready: '='
         },
         controller: ['$scope', function($scope) {
           $scope.headerOffset = 90;
@@ -15,6 +16,24 @@ function blockchainViewer($timeout) {
               $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader -20;
               $scope.$apply();
           }
+
+          $scope.$watch('cbpOptions', function(oldVal, newVal) {
+            if (newVal) {
+              $scope.selectedOption = 'cbp';
+            }
+          });
+          $scope.$watch('airlineOptions', function(oldVal, newVal) {
+            if (newVal) {
+              $scope.selectedOption = 'airline';
+            }
+          });
+          $scope.$watch('tsaOptions', function(oldVal, newVal) {
+            if (newVal) {
+              $scope.selectedOption = 'tsa';
+            }
+          });
+
+          $scope.selectedOption = 'cbp';
         }],
         link: function(scope, element, attrs, tabsCtrl) {
 

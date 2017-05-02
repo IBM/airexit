@@ -2,7 +2,7 @@
 
 angular.module('app')
   .service('ApiService', ['$http','$q','$cookies', function($http, $q, $cookies) {
-    var serverURL = '/api';
+    var serverURL = 'https://cbpdemo.mybluemix.net/api';
     var token = '';
     var authenticated = false;
     var tokenChecked;
@@ -32,7 +32,7 @@ angular.module('app')
 
     var GET = function(url) {
       if (!cache[url]) {
-        cache[url] = $http.get(serverURL+url, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
+        cache[url] = $http.get(serverURL+url, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
         setTimeout(function() {
           delete cache[url];
         }, 1000);
@@ -41,7 +41,7 @@ angular.module('app')
     };
 
     var POST = function(url, data) {
-        return $http.post(serverURL+url, data, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
+        return $http.post(serverURL+url, data, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
     };
 
     var PUT = function(url, data) {
@@ -72,16 +72,44 @@ angular.module('app')
     unathorizedCallback = callback;
   };
 
-  this.createUser = function(data) {
-    return POST('/users', data);
+  this.submit = function(eventType, partnerId, data) {
+    data.partnerId = 'airline'
+    data.requestType = 'write'
+    data.data = {
+      passportInfo: {},
+      reservationInfo: {},
+      tsaPreCheck: {},
+      visaInfo: {}
+    };
+    data.data['eventType'] = eventType; //"CheckIn";
+    data.data['partnerId'] = partnerId; //"airline";
+    data.data['uuid'] = "582349291";
+    data.data['passportInfo']['passportNumber'] = '582349291';
+    data.data['passportInfo']['dateOfExpiration'] = '08/03/2021';
+    data.data['passportInfo']['firstName'] = 'Gary';
+    data.data['passportInfo']['lastName'] = 'Lac';
+    data.data['passportInfo']['sex'] = 'M';
+    data.data['reservationInfo']['ticketNumber'] = 'F82349';
+    data.data['reservationInfo']['operatingCarrierCode'] = 'BAW';
+    data.data['reservationInfo']['fromCityAirportCode'] = 'IAD';
+    data.data['reservationInfo']['toCityAirportCode'] = 'LHR';
+    data.data['reservationInfo']['flightNumber'] = '1523';
+    data.data['reservationInfo']['dateOfFlight'] = '05/08/2017';
+    data.data['reservationInfo']['frequentFlyerNumber'] = 'F29480J';
+    data.data['tsaPreCheck']['indicator'] = 'Y';
+    data.data['tsaPreCheck']['currentStatus'] = 'Green';
+    data.data['visaInfo']['controlNumber'] = '9538453';
+    data.data['visaInfo']['dateOfExpiration'] = '05/18/2020';
+
+    return POST('/request', {document: data});
   };
 
-  this.getUsers = function() {
-    return GET('/users');
+  this.getPassengers = function() {
+    return GET('/manifest');
   };
 
-  this.getUser = function(id) {
-    return GET('/users/' + id);
+  this.getTransaction = function(id) {
+    return POST('/transaction', { txid: id });
   };
 
   this.deleteUser = function(id) {

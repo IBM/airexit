@@ -1,15 +1,18 @@
 <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 10px;">Blockchain view</div>
-<div class="btn-group" data-toggle="buttons" style="padding: 5px;">
-    <label class="btn btn-sm btn-primary active">
-        <input type="radio" name="options" ng-model="cbpOptions" autocomplete="off" ng-class="{checked: selectedOption == 'cbp'}"> CBP
-    </label>
-    <label class="btn btn-sm btn-primary">
-        <input type="radio" name="options" ng-model="airlineOptions" autocomplete="off" ng-class="{checked: selectedOption == 'airline'}"> Airline
-    </label>
-    <label class="btn btn-sm btn-primary">
-        <input type="radio" name="options" ng-model="tsaOptions" autocomplete="off" ng-class="{checked: selectedOption == 'tsa'}"> TSA
-    </label>
+<div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;">
+    <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;">
+      <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'cbp', 'fa-circle': selectedOption == 'cbp'}"></span> CBP</span>
+    <span ng-click="selectedOption = 'airline'" style="margin-right: 10px;">
+      <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'airline', 'fa-circle': selectedOption == 'airline'}"></span> Airline</span>
+    <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;">
+      <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
 </div>
-<div class="well" ng-style="{height: dataHeight}">
-    Data
+<div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
+    <json-formatter open="1" json="blockchaindata.shared"></json-formatter>
+    <hr/>
+    <json-formatter ng-show="selectedOption == 'cbp'" open="1" json="blockchaindata.cbp"></json-formatter>
+    <json-formatter ng-show="selectedOption == 'airline'" open="1" json="blockchaindata.airline"></json-formatter>
+    <json-formatter ng-show="selectedOption == 'tsa'" open="1" json="blockchaindata.tsa"></json-formatter>
+</div>
+<div ng-if="!dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
 </div>

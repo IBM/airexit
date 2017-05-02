@@ -18,8 +18,14 @@ function CheckinCtrl($scope, $state, ApiService) {
         picturebase64: '' 
     };
 
+    $scope.dataready = false;
+
     $scope.onSubmit = function() {
         localStorage.setItem('travellerSelected', JSON.stringify($scope.selectedTraveller.originalObject));
+        ApiService.submit('CheckIn', 'airline', {}).then(function(response) {
+            $scope.blockchaindata = response.data;
+            $scope.dataready = true;
+        });
     };
 
     $scope.onNext = function() {
