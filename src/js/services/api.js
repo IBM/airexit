@@ -84,28 +84,25 @@ angular.module('app')
       visaInfo: user.visaInfo,
       eventType: eventType,
       partnerId: partnerId,
-      faceImage: 'testimage',//faceImage
+      faceImage: CryptoJS.MD5('testimage'),//faceImage
     };
-    /*data.data['eventType'] = eventType; //"CheckIn";
-    data.data['partnerId'] = partnerId; //"airline";
-    data.data['uuid'] = "582349291";
-    data.data['passportInfo']['passportNumber'] = '582349291';
-    data.data['passportInfo']['dateOfExpiration'] = '08/03/2021';
-    data.data['passportInfo']['firstName'] = 'Gary';
-    data.data['passportInfo']['lastName'] = 'Lac';
-    data.data['passportInfo']['sex'] = 'M';
-    data.data['reservationInfo']['ticketNumber'] = 'F82349';
-    data.data['reservationInfo']['operatingCarrierCode'] = 'BAW';
-    data.data['reservationInfo']['fromCityAirportCode'] = 'IAD';
-    data.data['reservationInfo']['toCityAirportCode'] = 'LHR';
-    data.data['reservationInfo']['flightNumber'] = '1523';
-    data.data['reservationInfo']['dateOfFlight'] = '05/08/2017';
-    data.data['reservationInfo']['frequentFlyerNumber'] = 'F29480J';
-    data.data['tsaPreCheck']['indicator'] = 'Y';
-    data.data['tsaPreCheck']['currentStatus'] = 'Green';
-    data.data['visaInfo']['controlNumber'] = '9538453';
-    data.data['visaInfo']['dateOfExpiration'] = '05/18/2020'; */
+    return POST('/request', {document: data});
+  };
 
+  this.read = function(eventType, partnerId, user, faceImage) {
+    var data = {};
+    data.partnerId = 'airline'
+    data.requestType = 'read'
+    data.data = {
+      uuid: user.uuid,
+      passportInfo: user.passportInfo,
+      reservationInfo: user.reservationInfo,
+      tsaPreCheck: user.tsaPreCheck,
+      visaInfo: user.visaInfo,
+      eventType: eventType,
+      partnerId: partnerId,
+      faceImage: CryptoJS.MD5('testimage'),//faceImage
+    };
     return POST('/request', {document: data});
   };
 

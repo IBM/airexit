@@ -33,6 +33,11 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider','growlProvi
                 url: '/gatecheck',
                 templateUrl: 'templates/gatecheck.html',
                 controller: 'GateCheckCtrl'
+            })
+            .state('monitor', {
+                url: '/monitor',
+                templateUrl: 'templates/monitor.html',
+                controller: 'MonitorCtrl'
             });
     }
 ]);
