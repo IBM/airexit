@@ -72,16 +72,21 @@ angular.module('app')
     unathorizedCallback = callback;
   };
 
-  this.submit = function(eventType, partnerId, data) {
+  this.submit = function(eventType, partnerId, user, faceImage) {
+    var data = {};
     data.partnerId = 'airline'
     data.requestType = 'write'
     data.data = {
-      passportInfo: {},
-      reservationInfo: {},
-      tsaPreCheck: {},
-      visaInfo: {}
+      uuid: user.uuid,
+      passportInfo: user.passportInfo,
+      reservationInfo: user.reservationInfo,
+      tsaPreCheck: user.tsaPreCheck,
+      visaInfo: user.visaInfo,
+      eventType: eventType,
+      partnerId: partnerId,
+      faceImage: 'testimage',//faceImage
     };
-    data.data['eventType'] = eventType; //"CheckIn";
+    /*data.data['eventType'] = eventType; //"CheckIn";
     data.data['partnerId'] = partnerId; //"airline";
     data.data['uuid'] = "582349291";
     data.data['passportInfo']['passportNumber'] = '582349291';
@@ -99,7 +104,7 @@ angular.module('app')
     data.data['tsaPreCheck']['indicator'] = 'Y';
     data.data['tsaPreCheck']['currentStatus'] = 'Green';
     data.data['visaInfo']['controlNumber'] = '9538453';
-    data.data['visaInfo']['dateOfExpiration'] = '05/18/2020';
+    data.data['visaInfo']['dateOfExpiration'] = '05/18/2020'; */
 
     return POST('/request', {document: data});
   };

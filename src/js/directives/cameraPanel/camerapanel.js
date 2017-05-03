@@ -6,6 +6,7 @@ function cameraPanel($timeout, $state) {
         scope: {
             picture: '=',
             onSubmit: '=',
+            user: '=',
             onNext: '=',
             nextLabel: '@'
         },

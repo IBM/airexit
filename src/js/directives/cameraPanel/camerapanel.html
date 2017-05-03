@@ -19,7 +19,7 @@
         <button class="btn btn-primary" style="width: 50%" ng-click="tryagain()">Try again</button>
     </div>
     <div class="col-sm-6 text-center">
-        <button class="btn btn-primary" style="width: 50%" ng-click="submit()">Submit</button>
+        <button class="btn btn-primary" ng-disabled="!user" style="width: 50%" ng-click="submit()">Submit</button>
     </div>
 </div>
 <div ng-show="status=='SUBMITTED'" ng-style="{width: videoWidth}" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;">

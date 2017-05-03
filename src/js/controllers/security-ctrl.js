@@ -13,7 +13,10 @@ function SecurityCtrl($scope, $state, ApiService) {
     };
 
     $scope.onSubmit = function() {
-        
+        ApiService.submit('screen', 'tsa', $scope.selectedTraveller, $scope.picture.picturebase64).then(function(response) {
+            $scope.blockchaindata = response.data;
+            $scope.dataready = true;
+        });
     };
 
     $scope.onNext = function() {

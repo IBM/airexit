@@ -33,7 +33,7 @@ function CheckinCtrl($scope, $state, ApiService) {
 
     $scope.onSubmit = function() {
         localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
-        ApiService.submit('CheckIn', 'airline', {}).then(function(response) {
+        ApiService.submit('checkin', 'airline', $scope.travellersById[$scope.selectedTraveller.id], $scope.picture.picturebase64).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
         });
