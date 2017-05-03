@@ -1,4 +1,3 @@
-<div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 10px;">Blockchain view</div>
 <div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;">
     <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;">
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'cbp', 'fa-circle': selectedOption == 'cbp'}"></span> CBP</span>
@@ -8,8 +7,9 @@
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
 </div>
 <div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 10px;">Blockchain Shared</div>
     <json-formatter open="1" json="blockchaindata.shared"></json-formatter>
-    <hr/>
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 10px;">Off-Chain</div>
     <json-formatter ng-show="selectedOption == 'cbp'" open="1" json="blockchaindata.cbp"></json-formatter>
     <json-formatter ng-show="selectedOption == 'airline'" open="1" json="blockchaindata.airline"></json-formatter>
     <json-formatter ng-show="selectedOption == 'tsa'" open="1" json="blockchaindata.tsa"></json-formatter>

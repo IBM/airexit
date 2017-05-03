@@ -9,11 +9,10 @@ function blockchainViewer($timeout) {
         },
         controller: ['$scope', function($scope) {
           $scope.headerOffset = 90;
-          $scope.dataHeader = 80;
-          $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader - 20;
+          $scope.dataHeight = window.innerHeight - $scope.headerOffset - 55;
 
           window.onresize = function() {
-              $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader -20;
+              $scope.dataHeight = window.innerHeight - $scope.headerOffset - 55;
               $scope.$apply();
           }
 
