@@ -17,6 +17,13 @@ function MasterCtrl($scope, $rootScope, ApiService, $state) {
 
     $scope.loading = {value: true};
 
+    $scope.dataHeight = window.innerHeight;
+
+    window.onresize = function() {
+        $scope.dataHeight = window.innerHeight;
+        $scope.$apply();
+    }
+
     $scope.goTo = function(view, params) {
       $state.transitionTo(view, params);
     };
