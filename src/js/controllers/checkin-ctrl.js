@@ -7,6 +7,7 @@ function CheckinCtrl($scope, $state, ApiService) {
     $scope.selectedTraveller = {};
     localStorage.setItem('travellerSelected', null);
     $scope.travellers = [];
+    $scope.travellersById = {};
 
     $scope.picture = {
         picturebase64: '' 
@@ -16,7 +17,12 @@ function CheckinCtrl($scope, $state, ApiService) {
         console.log('Passengers: ' , response.data);
         if (response.data.status == 'SUCCESS') {
             response.data.message.manifest.forEach(function(item) {
-                $scope.travellers.push(item);
+                $scope.travellers.push({
+                    id: item.uuid,
+                    name: item.passportInfo.firstName + ' ' + item.passportInfo.lastName,
+                    description: 'Passport number: ' + item.passportInfo.passportNumber 
+                });
+                $scope.travellersById[item.uuid] = item;
             });
         } else {
             $scope.error = 'Error getting passengers.'
@@ -26,7 +32,7 @@ function CheckinCtrl($scope, $state, ApiService) {
     $scope.dataready = false;
 
     $scope.onSubmit = function() {
-        localStorage.setItem('travellerSelected', JSON.stringify($scope.selectedTraveller.originalObject));
+        localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
         ApiService.submit('CheckIn', 'airline', {}).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;

@@ -109,7 +109,7 @@ function entitySelector($timeout) {
 '       <input type="text" ng-model="search.value" ng-keyup="$event.keyCode == 13 && select(filteredEntities[0])" placeholder="Search..." class="entity-selector-search-input">'+
 '    	</div>'+
 '  	</div>'+
-'   <div class="" style="height:100px; overflow: auto;">'+
+'   <div class="" style="height:200px; overflow: auto;">'+
 '     <div class="list-group" style="margin-bottom: 0px;">'+
 '       <a ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="list-group-item" ng-click="select(item)" ng-class="{active: item.id === selected.id}">'+
 '         <div class="list-group-item-heading" style="margin: 0;">{{item.name}} <small style="color:darkgray;">{{item.description}}</small></div>'+

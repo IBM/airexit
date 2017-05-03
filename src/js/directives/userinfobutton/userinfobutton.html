@@ -1,0 +1,46 @@
+<button class="btn btn-primary text-center" ng-disabled="!user" data-toggle="modal" data-target="#infoModal" >i</button>
+<!-- Modal -->
+<div class="modal fade" id="infoModal" role="dialog">
+    <div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Passenger info</h4>
+        </div>
+        <div class="modal-body">
+            <div>Passport info</div>
+            <ul class="list-group">
+                <li class="list-group-item">First Name: {{user.passportInfo.firstName}}
+                    <span style="float: right;">Last Name: {{user.passportInfo.lastName}}</span>
+                </li>
+                <li class="list-group-item">Passport Number: {{user.passportInfo.passportNumber}}
+                    <span style="float: right;">Date of Expiration: {{user.passportInfo.dateOfExpiration}}</span>
+                </li>
+                <li class="list-group-item">Sex: {{user.passportInfo.sex}}
+                </li>
+            </ul>
+            <div>Visa info</div>
+            <ul class="list-group">
+                <li class="list-group-item">Control Number: {{user.visaInfo.controlNumber}}
+                    <span style="float: right;">Expiration Date: {{user.visaInfo.dateOfExpiration}}</span>
+                </li>
+            </ul>
+            <div>Reservation info</div>
+            <ul class="list-group">
+                <li class="list-group-item">Flight Number: {{user.reservationInfo.flightNumber}}
+                    <span style="float: right;">Carrier Code: {{user.reservationInfo.operatingCarrierCode}}</span>
+                </li>
+                <li class="list-group-item">From: {{user.reservationInfo.toCityAirportCode}}
+                    <span style="float: right;">To: {{user.reservationInfo.fromCityAirportCode}}</span>
+                </li>
+                <li class="list-group-item">Tiket Number: {{user.reservationInfo.ticketNumber}}
+                    <span style="float: right;">Date of flight: {{user.reservationInfo.dateOfFlight}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    </div>
+</div>

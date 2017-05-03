@@ -4,9 +4,10 @@ angular
 
 function SecurityCtrl($scope, $state, ApiService) {
 
-    var traveller = JSON.parse(localStorage.getItem('travellerSelected'));
-    if (traveller) $scope.selectedTraveller = traveller.passportInfo.firstName + ' ' + traveller.passportInfo.lastName;
-
+    $scope.selectedTraveller = JSON.parse(localStorage.getItem('travellerSelected'));
+    if ($scope.selectedTraveller) {
+        $scope.travellerName = $scope.selectedTraveller.passportInfo.firstName + ' ' + $scope.selectedTraveller.passportInfo.lastName;
+    }
     $scope.picture = {
         picturebase64: '' 
     };
