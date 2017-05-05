@@ -87,7 +87,15 @@ function cameraPanel($timeout, $state) {
                                 } else {
                                     $scope.focusBox.color = '3px solid rgba(255, 0, 0, 0.5)';
                                 }
-                                $scope.$apply();
+                                $('.focusBoxTopLeft').css('border-top', $scope.focusBox.color);
+                                $('.focusBoxTopLeft').css('border-left', $scope.focusBox.color);
+                                $('.focusBoxTopRight').css('border-top', $scope.focusBox.color);
+                                $('.focusBoxTopRight').css('border-right', $scope.focusBox.color);
+                                $('.focusBoxBottomLeft').css('border-bottom', $scope.focusBox.color);
+                                $('.focusBoxBottomLeft').css('border-left', $scope.focusBox.color);
+                                $('.focusBoxBottomRight').css('border-bottom', $scope.focusBox.color);
+                                $('.focusBoxBottomRight').css('border-right', $scope.focusBox.color);
+                                // $scope.$apply();
                             });
                         });
                     });
