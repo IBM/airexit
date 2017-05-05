@@ -4,7 +4,7 @@ angular
 
 function CheckinCtrl($scope, $state, ApiService) {
     
-    $scope.selectedTraveller = {};
+    $scope.selectedTraveller = null;
     localStorage.setItem('travellerSelected', null);
     $scope.travellers = [];
     $scope.travellersById = {};
