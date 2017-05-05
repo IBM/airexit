@@ -15,3 +15,7 @@
 .entity-selector-search-input:focus {
     outline: 0px;
 }
+
+.list-group-item-selector:hover {
+    cursor: pointer;
+}
