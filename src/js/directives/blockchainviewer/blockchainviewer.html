@@ -6,7 +6,7 @@
     <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;">
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
 </div>
-<div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
+<div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
     <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 5px;">Blockchain Shared</div>
     <!--<json-formatter json="blockchaindata.shared"></json-formatter>-->
     <ul class="list-group-small">
