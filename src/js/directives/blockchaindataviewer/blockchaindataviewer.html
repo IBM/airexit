@@ -1,0 +1,87 @@
+<div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 5px;">Blockchain Shared</div>
+    <!--<json-formatter json="blockchaindata.shared"></json-formatter>-->
+    <ul class="list-group-small">
+        <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}
+            <span style="float: right;"><small>Event Type:</small> {{blockchaindata.shared.eventType}}</span>
+        </li>
+        <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.shared.timestamp}}
+            <span style="float: right;"><small>UUID:</small> {{blockchaindata.shared.uuid}}</span>
+        </li>
+        <li class="list-group-item"><small>Face image:</small> {{blockchaindata.shared.faceImage}}
+        </li>
+    </ul>
+    <small>Passport info</small>
+    <ul class="list-group-small">
+        <li class="list-group-item"><small>Name:</small> {{blockchaindata.shared.passportInfo.firstName}} {{blockchaindata.shared.passportInfo.lastName}}
+            <span style="float: right;"><small>Sex:</small> {{blockchaindata.shared.passportInfo.sex}}</span>
+        </li>
+        <li class="list-group-item"><small>Passport Number:</small> {{blockchaindata.shared.passportInfo.passportNumber}}
+            <span style="float: right;"><small>Date of Expiration:</small> {{blockchaindata.shared.passportInfo.dateOfExpiration}}</span>
+        </li>
+    </ul>
+    <small>Reservation info</small>
+    <ul class="list-group-small">
+        <li class="list-group-item"><small>Flight:</small> {{blockchaindata.shared.reservationInfo.operatingCarrierCode}} {{blockchaindata.shared.reservationInfo.flightNumber}}
+            <span style="float: right;"><small>From</small> {{blockchaindata.shared.reservationInfo.fromCityAirportCode}}<small> to </small>{{blockchaindata.shared.reservationInfo.toCityAirportCode}}</span>
+        </li>
+        <li class="list-group-item"><small>Ticket Number:</small> {{blockchaindata.shared.reservationInfo.ticketNumber}}
+          <span style="float: right;"><small>Date of flight:</small> {{blockchaindata.shared.reservationInfo.dateOfFlight}}</span>
+        </li>
+    </ul>
+    <br>
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Off-Chain</div>
+    <!--json-formatter ng-show="selectedOption == 'cbp'" open="1" json="blockchaindata.cbp"></json-formatter>-->
+    <div ng-show="selectedOption == 'cbp'">
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Transaction Id:</small> {{blockchaindata.cbp.txid}}</li>
+          <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.cbp.timestamp}}</li>
+      </ul>
+      <small>Visa info</small>
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Date of expiration:</small> {{blockchaindata.cbp.visaInfo.dateOfExpiration}}
+              <span style="float: right;"><small>Control number</small> {{blockchaindata.cbp.visaInfo.controlNumber}}
+          </li>
+      </ul>
+      <small>TSA precheck</small>
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Indicator:</small> {{blockchaindata.cbp.tsaPreCheck.indicator}}
+              <span style="float: right;"><small>Current Status</small> {{blockchaindata.cbp.tsaPreCheck.currentStatus}}
+          </li>
+      </ul>
+    </div>
+    <div ng-show="selectedOption == 'airline'">
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Transaction Id:</small> {{blockchaindata.airline.txid}}</li>
+          <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.airline.timestamp}}</li>
+      </ul>
+      <small>Reservation info</small>
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Ticket Number:</small> {{blockchaindata.airline.reservationInfo.ticketNumber}}
+              <span style="float: right;"><small>Frequent Flyer Number:</small> {{blockchaindata.airline.reservationInfo.frequentFlyerNumber}}
+          </li>
+      </ul>
+      <small>TSA precheck</small>
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Indicator:</small> {{blockchaindata.airline.tsaPreCheck.indicator}}
+              <span style="float: right;"><small>Current Status</small> {{blockchaindata.airline.tsaPreCheck.currentStatus}}
+          </li>
+      </ul>
+    </div>
+    <div ng-show="selectedOption == 'tsa'">
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Transaction Id:</small> {{blockchaindata.tsa.txid}}</li>
+          <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.tsa.timestamp}}</li>
+      </ul>
+      <small>TSA precheck</small>
+      <ul class="list-group-small">
+          <li class="list-group-item"><small>Indicator:</small> {{blockchaindata.tsa.tsaPreCheck.indicator}}
+              <span style="float: right;"><small>Current Status</small> {{blockchaindata.tsa.tsaPreCheck.currentStatus}}
+          </li>
+      </ul>
+    </div>
+    <!--<json-formatter ng-show="selectedOption == 'airline'" open="1" json="blockchaindata.airline"></json-formatter>
+    <json-formatter ng-show="selectedOption == 'tsa'" open="1" json="blockchaindata.tsa"></json-formatter> -->
+</div>
+<div ng-if="!dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
+</div>

@@ -8,13 +8,7 @@ function blockchainViewer($timeout) {
             dataready: '='
         },
         controller: ['$scope', function($scope) {
-          $scope.headerOffset = 90;
-          $scope.dataHeight = window.innerHeight - $scope.headerOffset - 55;
-
-          window.onresize = function() {
-              $scope.dataHeight = window.innerHeight - $scope.headerOffset - 55;
-              $scope.$apply();
-          }
+          $scope.headerOffset = 145;
 
           $scope.$watch('cbpOptions', function(oldVal, newVal) {
             if (newVal) {

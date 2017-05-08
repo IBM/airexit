@@ -4,25 +4,33 @@
     <img src="/img/tsa-logo.png" style="height: 70px;padding: 5px;float: right;">
     <img src="/img/plane-logo.png" style="height: 70px;padding: 5px;float:right;">
 </div>
-<div class="col-xs-12">
-    <div class="row" style="padding: 5px;">
-        <div class="col-xs-11" style="z-index: 5px;">
-              <entity-selector selected="selectedTraveller" entities="travellers"></entity-selector>
-        </div>
-        <div class="col-xs-1">
-            <user-info-button user="travellersById[selectedTraveller.id]"></user-info-button>
+<div class="row" style="padding: 0px;">
+    <div class="col-xs-6" style="z-index: 5px;">
+            <entity-selector selected="selectedSession" entities="sessions"></entity-selector>
+    </div>
+    <div class="col-xs-6">
+        <div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;">
+            <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;">
+            <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'cbp', 'fa-circle': selectedOption == 'cbp'}"></span> CBP</span>
+            <span ng-click="selectedOption = 'airline'" style="margin-right: 10px;">
+            <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'airline', 'fa-circle': selectedOption == 'airline'}"></span> Airline</span>
+            <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;">
+            <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
         </div>
     </div>
 </div>
-<div class="col-xs-12 text-center">
-    <div class="col-xs-4 text-center">
-        Check-in
+<div class="col-xs-12">
+    <div class="col-xs-4">
+        <div class="row text-center">Check-in</div>
+        <blockchain-data-viewer blockchaindata="session.checkin" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset"></blockchain-data-viewer>
     </div>
-    <div class="col-xs-4 text-center">
-        Passenger Screening
+    <div class="col-xs-4">
+        <div class="row text-center">Passenger Screening</div>
+        <blockchain-data-viewer blockchaindata="session.security" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset"></blockchain-data-viewer>
     </div>
-    <div class="col-xs-4 text-center">
-        Departure Gate
+    <div class="col-xs-4">
+        <div class="row text-center">Departure Gate</div>
+        <blockchain-data-viewer blockchaindata="session.gatecheck" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset"></blockchain-data-viewer>
     </div>
 </div>
 

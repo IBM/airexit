@@ -4,43 +4,48 @@ angular
 
 function MonitorCtrl($scope, $state, ApiService) {
     
-    $scope.selectedTraveller = {};
-    localStorage.setItem('travellerSelected', null);
-    $scope.travellers = [];
-    $scope.travellersById = {};
+    $scope.sessions = [];
+    $scope.sessionsById = {};
+    $scope.selectedSession = null;
+    $scope.session = null;
+    $scope.dataready = false;
+    $scope.headerOffset = 185;
 
-    $scope.picture = {
-        picturebase64: '' 
-    };
-
-    ApiService.getPassengers().then(function(response) {
-        console.log('Passengers: ' , response.data);
-        if (response.data.status == 'SUCCESS') {
-            response.data.message.manifest.forEach(function(item) {
-                $scope.travellers.push({
-                    id: item.uuid,
-                    name: item.passportInfo.firstName + ' ' + item.passportInfo.lastName,
-                    description: 'Passport number: ' + item.passportInfo.passportNumber 
-                });
-                $scope.travellersById[item.uuid] = item;
+    var sessions = JSON.parse(localStorage.getItem('sessions'));
+    if (sessions) {
+        for (var key in sessions) {
+            var item = sessions[key];
+            $scope.sessions.push({
+                id: item.id,
+                name: item.user.firstName + ' ' + item.user.lastName,
+                description: 'Timestamp: ' + item.checkin.shared.timestamp 
             });
-        } else {
-            $scope.error = 'Error getting passengers.'
+            $scope.sessionsById[item.id] = item;
+        }
+    }
+
+    $scope.$watch('selectedSession', function(ov, nv) {
+        if (ov != nv) {
+            $scope.session = $scope.sessionsById[$scope.selectedSession.id];
+            $scope.dataready = true;
         }
     });
 
-    $scope.dataready = false;
+    $scope.$watch('cbpOptions', function(oldVal, newVal) {
+    if (newVal) {
+        $scope.selectedOption = 'cbp';
+    }
+    });
+    $scope.$watch('airlineOptions', function(oldVal, newVal) {
+    if (newVal) {
+        $scope.selectedOption = 'airline';
+    }
+    });
+    $scope.$watch('tsaOptions', function(oldVal, newVal) {
+    if (newVal) {
+        $scope.selectedOption = 'tsa';
+    }
+    });
 
-    $scope.onSubmit = function() {
-        localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
-        ApiService.submit('checkin', 'airline', $scope.travellersById[$scope.selectedTraveller.id], $scope.picture.picturebase64).then(function(response) {
-            $scope.blockchaindata = response.data;
-            $scope.dataready = true;
-        });
-    };
-
-    $scope.onNext = function() {
-        $state.transitionTo('security');
-    };
-    
+    $scope.selectedOption = 'cbp';
 }
