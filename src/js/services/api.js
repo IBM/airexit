@@ -74,8 +74,8 @@ angular.module('app')
 
   this.submit = function(eventType, partnerId, user, faceImage) {
     var data = {};
-    data.partnerId = 'airline'
-    data.requestType = 'write'
+    data.partnerId = 'airline';
+    data.requestType = 'write';
     data.data = {
       uuid: user.uuid,
       passportInfo: user.passportInfo,
@@ -84,25 +84,15 @@ angular.module('app')
       visaInfo: user.visaInfo,
       eventType: eventType,
       partnerId: partnerId,
-      faceImage: CryptoJS.MD5('testimage'),//faceImage
+      faceImage: CryptoJS.MD5('testimage').toString(),//faceImage
     };
     return POST('/request', {document: data});
   };
 
   this.read = function(eventType, partnerId, user, faceImage) {
     var data = {};
-    data.partnerId = 'airline'
-    data.requestType = 'read'
-    data.data = {
-      uuid: user.uuid,
-      passportInfo: user.passportInfo,
-      reservationInfo: user.reservationInfo,
-      tsaPreCheck: user.tsaPreCheck,
-      visaInfo: user.visaInfo,
-      eventType: eventType,
-      partnerId: partnerId,
-      faceImage: CryptoJS.MD5('testimage'),//faceImage
-    };
+    data.partnerId = 'airline';
+    data.requestType = 'read';
     return POST('/request', {document: data});
   };
 

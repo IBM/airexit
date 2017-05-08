@@ -214,3 +214,14 @@ ul.left-sidebar .left-sidebar-list .menu-icon {
 .form-control {
   width: 100%;
 }
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 5px 10px;
+  margin-bottom: -1px;
+  background-color: #bfd7ec;
+  border: 1px solid #1d4c75;
+  font-size: 11px;
+  color: #1d4c75;
+}
