@@ -49,7 +49,10 @@ function CheckinCtrl($scope, $state, ApiService) {
             checkin: $scope.blockchaindata,
             security: null,
             gatecheck: null,
-            user: $scope.travellersById[$scope.selectedTraveller.id].passportInfo
+            user: $scope.travellersById[$scope.selectedTraveller.id].passportInfo,
+            pictures: {
+                checkin: $scope.picture.picturebase64
+            }
         }
         sessions[$scope.blockchaindata.cbp.txid] = session;
         localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);

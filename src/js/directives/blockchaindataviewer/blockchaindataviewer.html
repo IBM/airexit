@@ -1,7 +1,7 @@
 <div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
     <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 5px;">Blockchain Shared</div>
     <!--<json-formatter json="blockchaindata.shared"></json-formatter>-->
-    <ul class="list-group-small">
+    <ul ng-if="!picture" class="list-group-small">
         <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}
             <span style="float: right;"><small>Event Type:</small> {{blockchaindata.shared.eventType}}</span>
         </li>
@@ -11,6 +11,25 @@
         <li class="list-group-item"><small>Face image:</small> {{blockchaindata.shared.faceImage}}
         </li>
     </ul>
+    <div ng-if="picture" class="row">
+        <div class="col-xs-8">
+            <ul class="list-group-small">
+                <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}
+                </li>
+                <li class="list-group-item"><small>Event Type:</small> {{blockchaindata.shared.eventType}}
+                </li>
+                <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.shared.timestamp}}
+                </li>
+                <li class="list-group-item"><small>UUID:</small> {{blockchaindata.shared.uuid}}
+                </li>
+                <li class="list-group-item"><small>Face image:</small> {{blockchaindata.shared.faceImage}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-4" style="overflow: hidden;">
+            <img ng-src="{{picture}}" height="161" style="padding: 5px;"/>
+        </div>
+    </div>
     <small>Passport info</small>
     <ul class="list-group-small">
         <li class="list-group-item"><small>Name:</small> {{blockchaindata.shared.passportInfo.firstName}} {{blockchaindata.shared.passportInfo.lastName}}

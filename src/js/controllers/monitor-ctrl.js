@@ -61,6 +61,8 @@ function MonitorCtrl($scope, $state, ApiService) {
             $scope.sessions.splice(index, 1);
             delete sessions[id];
             $scope.selectedSession = null;
+            $scope.session = null;
+            $scope.dataready = false;
             localStorage.setItem('sessions', JSON.stringify(sessions));
         }
     }

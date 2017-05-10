@@ -7,7 +7,8 @@ function blockchainDataViewer($timeout) {
             blockchaindata: '=',
             dataready: '=',
             selectedOption: '=',
-            headerOffset: '='
+            headerOffset: '=',
+            picture: '='
         },
         controller: ['$scope', function($scope) {
           $scope.dataHeight = window.innerHeight - $scope.headerOffset;

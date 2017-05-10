@@ -20,6 +20,7 @@ function GateCheckCtrl($scope, $state, ApiService) {
             var sessions = JSON.parse(localStorage.getItem('sessions'));
             if (sessions[localStorage.getItem('currentSession')]) {
                 sessions[localStorage.getItem('currentSession')].gatecheck = $scope.blockchaindata;
+                sessions[localStorage.getItem('currentSession')].pictures.gatecheck = $scope.picture.picturebase64;
                 localStorage.setItem('sessions', JSON.stringify(sessions));
             }
         });
