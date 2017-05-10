@@ -16,17 +16,17 @@ function GateCheckCtrl($scope, $state, ApiService) {
     $scope.onSubmit = function() {
         ApiService.submit('gate', 'airline', $scope.selectedTraveller, $scope.picture.picturebase64).then(function(response) {
             $scope.blockchaindata = response.data;
+            $scope.dataready = true;
             var sessions = JSON.parse(localStorage.getItem('sessions'));
             if (sessions[localStorage.getItem('currentSession')]) {
                 sessions[localStorage.getItem('currentSession')].gatecheck = $scope.blockchaindata;
                 localStorage.setItem('sessions', JSON.stringify(sessions));
             }
-            $scope.dataready = true;
         });
     };
 
     $scope.onNext = function() {
-        $state.transitionTo('checkin');
+        $state.transitionTo('monitor');
     };
 
 }
