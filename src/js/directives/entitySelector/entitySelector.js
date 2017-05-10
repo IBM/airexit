@@ -117,10 +117,10 @@ function entitySelector($timeout) {
 '     </div>  '+
 '	  </div>'+
 ' </div>'+
-' <div ng-if="!entities.length && expanded">'+
+' <div ng-if="!entities.length && expanded" class="entity-selector-popup" style="width:{{popupWidth}}px;">'+
 '   <div class="row">'+
-'    	<div class="col-md-12">'+
-'       The are no items'+
+'    	<div class="col-md-12" style="margin-bottom: 0px;border-bottom: 1px solid #eee">'+
+'       <span> The are no items </span>'+
 '    	</div>'+
 '  	</div>'+
 ' </div>',
