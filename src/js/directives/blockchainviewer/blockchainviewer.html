@@ -1,9 +1,9 @@
-<div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;">
-    <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;">
+<div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;cursor: default;">
+    <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;cursor: pointer;">
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'cbp', 'fa-circle': selectedOption == 'cbp'}"></span> CBP</span>
-    <span ng-click="selectedOption = 'airline'" style="margin-right: 10px;">
+    <span ng-click="selectedOption = 'airline'" style="margin-right: 10px;cursor: pointer;">
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'airline', 'fa-circle': selectedOption == 'airline'}"></span> Airline</span>
-    <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;">
+    <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;cursor: pointer;">
       <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
 </div>
 <blockchain-data-viewer blockchaindata="blockchaindata" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset"></blockchain-data-viewer>
