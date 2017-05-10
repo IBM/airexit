@@ -41,11 +41,13 @@ function cameraPanel($timeout, $state) {
                 $scope.videoWidth = window.innerWidth/2 - $scope.leftMargin*2;
                 $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader - 20;
 
-                if ($scope.videoHeight > $scope.videoWidth) {
-                    $scope.videoHeight = $scope.videoWidth;
+                var calculatedHeight = $scope.videoWidth*3/4;
+                var channelWidth = $scope.videoWidth;
+                if (calculatedHeight < $scope.videoHeight) {
+                    channelWidth = $scope.videoHeight/calculatedHeight * $scope.videoWidth;
                 }
                 $scope.channel.videoHeight = $scope.videoHeight;
-                $scope.channel.videoWidth = $scope.videoWidth;
+                $scope.channel.videoWidth = channelWidth;
                 
                 $scope.focusBox.x = $scope.videoWidth/4;
                 $scope.focusBox.y = $scope.videoHeight*0.125;

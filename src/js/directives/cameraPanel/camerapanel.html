@@ -1,5 +1,7 @@
 <div ng-show="status=='RECORDING'" style="position:absolute; width: auto; overflow: hidden;left: 15px;" ng-style="{'height': videoHeight}">
-    <webcam class="text-center" on-streaming="onSuccess()" on-stream="onStream()" channel="channel"></webcam>
+    <div ng-style="{'height': videoHeight, width: videoWidth}" style="overflow: hidden;">
+        <webcam class="text-center" on-streaming="onSuccess()" on-stream="onStream()" channel="channel"></webcam>
+    </div>
     <div ng-show="videoReady">
         <div class="focusBoxTopLeft" ng-style="{width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, left: focusBox.x, position: 'absolute', 'box-shadow': '-2px -2px 1px rgba(0,0,0,0.5)'}"></div>
         <div class="focusBoxTopRight" ng-style="{width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y, right: focusBox.x, position: 'absolute', 'box-shadow': '2px -2px 1px rgba(0,0,0,0.5)'}"></div>
