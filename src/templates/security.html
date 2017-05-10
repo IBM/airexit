@@ -3,14 +3,15 @@
     <h1 class="text-center">Security Screening</h1>
 </div>
 <div class="col-xs-6">
-    <div class="row" style="padding: 5px;">
+    <div ng-if="dataready" class="row" style="padding: 5px;">
         <div class="col-xs-11">
             <input disabled ng-model="travellerName" class="text-center form-control" type="text"/>
         </div>
         <div class="col-xs-1">
             <user-info-button user="selectedTraveller"></user-info-button>
         </div>
-    </div> 
+    </div>
+    <div ng-if="!dataready" style="height: 64px;"></div>
     <camera-panel picture="picture" user="selectedTraveller" on-submit="onSubmit" on-next="onNext" next-label="Next"></camera-panel>
 </div>
 <div class="col-xs-6 text-center">
