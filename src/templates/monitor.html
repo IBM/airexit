@@ -1,14 +1,15 @@
 <div class="row topheader" style="width: 100%; height: 70px;">
     <img src="/img/cbp-logo.png" style="position: absolute;height: 70px;padding: 5px;">
-    <h1 class="text-center" style="position: absolute;width: 100%;">Exit Record View</h1>
+    <h1 class="text-center" style="position: absolute;width: 100%;">Exit Record View<a class="header-link" href="/#/checkin"> Go to checkin</a></h1>
     <img src="/img/tsa-logo.png" style="height: 70px;padding: 5px;float: right;">
     <img src="/img/plane-logo.png" style="height: 70px;padding: 5px;float:right;">
 </div>
 <div class="row" style="padding: 0px;">
     <div class="col-xs-6" style="z-index: 5px;">
-            <entity-selector selected="selectedSession" entities="sessions"></entity-selector>
+        <entity-selector selected="selectedSession" entities="sessions"></entity-selector>
     </div>
-    <div class="col-xs-6">
+    
+    <div class="col-xs-5">
         <div class="btn-group" data-toggle="buttons" style="margin-top: 3px;padding: 5px 10px;text-align: left; background-color: #1d4c75; color: white;width: 100%;">
             <span ng-click="selectedOption = 'cbp'" style="margin-right: 10px;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'cbp', 'fa-circle': selectedOption == 'cbp'}"></span> CBP</span>
@@ -17,6 +18,9 @@
             <span ng-click="selectedOption = 'tsa'" style="margin-right: 10px;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'tsa', 'fa-circle': selectedOption == 'tsa'}"></span> TSA</span>
         </div>
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-primary text-center" ng-disabled="!selectedSession" ng-click="deleteSession(selectedSession.id)"><i class="fa fa-trash"></i></button>
     </div>
 </div>
 <div class="col-xs-12">

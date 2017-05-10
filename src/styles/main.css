@@ -225,3 +225,15 @@ ul.left-sidebar .left-sidebar-list .menu-icon {
   font-size: 11px;
   color: #1d4c75;
 }
+
+.header-link {
+    font-size: 10px;
+    color: #83bff3;
+    text-decoration: none;
+    padding: 0px 10px;
+}
+
+.header-link:focus, .header-link:hover {
+    color: #bfd7ec;
+    text-decoration: underline;
+}

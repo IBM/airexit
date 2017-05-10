@@ -25,7 +25,7 @@ function MonitorCtrl($scope, $state, ApiService) {
     }
 
     $scope.$watch('selectedSession', function(ov, nv) {
-        if (ov != nv) {
+        if (ov != nv && $scope.selectedSession) {
             $scope.session = $scope.sessionsById[$scope.selectedSession.id];
             $scope.dataready = true;
         }
@@ -46,6 +46,24 @@ function MonitorCtrl($scope, $state, ApiService) {
         $scope.selectedOption = 'tsa';
     }
     });
+
+    $scope.deleteSession = function(id) {
+        var sessions = JSON.parse(localStorage.getItem('sessions'));
+        if (sessions) {
+            delete $scope.sessionsById[id];
+            var index = 0;
+            for (var i = 0; i < $scope.sessions.length; i++) {
+                if ($scope.sessions[i].id == id) {
+                    index = i;
+                    break;
+                }
+            }
+            $scope.sessions.splice(index, 1);
+            delete sessions[id];
+            $scope.selectedSession = null;
+            localStorage.setItem('sessions', JSON.stringify(sessions));
+        }
+    }
 
     $scope.selectedOption = 'cbp';
 }
