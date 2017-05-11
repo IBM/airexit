@@ -1,5 +1,5 @@
 <div ng-if="dataready" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
-    <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 5px;">Blockchain Shared</div>
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d7525; color: white;padding: 5px;">Common View</div>
     <!--<json-formatter json="blockchaindata.shared"></json-formatter>-->
     <ul ng-if="!picture" class="list-group-small">
         <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}
@@ -49,7 +49,7 @@
         </li>
     </ul>
     <br>
-    <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Off-Chain</div>
+    <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
     <!--json-formatter ng-show="selectedOption == 'cbp'" open="1" json="blockchaindata.cbp"></json-formatter>-->
     <div ng-show="selectedOption == 'cbp'">
       <ul class="list-group-small">
