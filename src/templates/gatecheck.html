@@ -1,6 +1,7 @@
 <div class="row topheader">
     <img src="/img/plane-logo.png" class="float-left" style="position: absolute;height: 70px;padding: 5px;">
     <h1 class="text-center">Gate check</h1>
+    <a class="header-link" style="right: 0px;top: 40px;position: absolute;" href="/#/monitor"> Go to monitor</a>
 </div>
 <div class="col-xs-6">
     <div ng-if="dataready" class="row" style="padding: 5px;">
@@ -12,7 +13,7 @@
         </div>
     </div>
     <div ng-if="!dataready" style="height: 64px;"></div>
-    <camera-panel picture="picture" user="selectedTraveller" on-submit="onSubmit" on-next="onNext" next-label="Go to monitor"></camera-panel>
+    <camera-panel picture="picture" user="selectedTraveller" on-submit="onSubmit" on-next="onNext" next-label="Start over"></camera-panel>
 </div>
 <div class="col-xs-6 text-center">
     <blockchain-viewer blockchaindata="blockchaindata" dataready="dataready"></blockchain-viewer>

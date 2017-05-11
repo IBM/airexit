@@ -27,7 +27,7 @@ function GateCheckCtrl($scope, $state, ApiService) {
     };
 
     $scope.onNext = function() {
-        $state.transitionTo('monitor');
+        $state.transitionTo('checkin');
     };
 
 }
