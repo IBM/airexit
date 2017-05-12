@@ -1,8 +1,8 @@
 <div class="row topheader" style="width: 100%; height: 70px;">
-    <img src="/img/cbp-logo.png" style="position: absolute;height: 70px;padding: 5px;">
+    <img src="/img/cbp-logo.png" style="position: absolute;height: 70px;padding: 10px;">
     <h1 class="text-center" style="position: absolute;width: 100%;">Exit Record View<a class="header-link" href="/#/checkin"> Go to checkin</a></h1>
-    <img src="/img/tsa-logo.png" style="height: 70px;padding: 5px;float: right;">
-    <img src="/img/plane-logo.png" style="height: 70px;padding: 5px;float:right;">
+    <img src="/img/tsa-logo.png" style="height: 70px;padding: 10px;float: right;">
+    <img src="/img/plane-logo.png" style="height: 70px;padding: 10px;float:right;">
 </div>
 <div class="row" style="padding: 0px;">
     <div class="col-xs-6" style="z-index: 5px;">
@@ -25,15 +25,15 @@
 </div>
 <div class="col-xs-12">
     <div class="col-xs-4">
-        <div class="row text-center">Check-in</div>
+        <div class="row text-center" style="font-size: 18px;">Check-in</div>
         <blockchain-data-viewer blockchaindata="session.checkin" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset" picture="session.pictures.checkin"></blockchain-data-viewer>
     </div>
     <div class="col-xs-4">
-        <div class="row text-center">Passenger Screening</div>
+        <div class="row text-center" style="font-size: 18px;">Passenger Screening</div>
         <blockchain-data-viewer blockchaindata="session.security" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset" picture="session.pictures.security"></blockchain-data-viewer>
     </div>
     <div class="col-xs-4">
-        <div class="row text-center">Departure Gate</div>
+        <div class="row text-center" style="font-size: 18px;">Departure Gate</div>
         <blockchain-data-viewer blockchaindata="session.gatecheck" selected-option="selectedOption" dataready="dataready" header-offset="headerOffset" picture="session.pictures.gatecheck"></blockchain-data-viewer>
     </div>
 </div>

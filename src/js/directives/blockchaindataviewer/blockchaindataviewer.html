@@ -12,22 +12,17 @@
         </li>
     </ul>
     <div ng-if="picture" class="row">
-        <div class="col-xs-8">
+        <div class="col-xs-8" style="padding: 5px 0px; margin-bottom: 0;">
             <ul class="list-group-small">
-                <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}
-                </li>
-                <li class="list-group-item"><small>Event Type:</small> {{blockchaindata.shared.eventType}}
-                </li>
-                <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.shared.timestamp}}
-                </li>
-                <li class="list-group-item"><small>UUID:</small> {{blockchaindata.shared.uuid}}
-                </li>
-                <li class="list-group-item"><small>Face image:</small> {{blockchaindata.shared.faceImage}}
-                </li>
+                <li class="list-group-item"><small>Partner ID:</small> {{blockchaindata.shared.partnerId}}</li>
+                <li class="list-group-item"><small>Event Type:</small> {{blockchaindata.shared.eventType}}</li>
+                <li class="list-group-item"><small>Timestamp:</small> {{blockchaindata.shared.timestamp}}</li>
+                <li class="list-group-item"><small>UUID:</small> {{blockchaindata.shared.uuid}}</li>
+                <li class="list-group-item"><small>Face image:</small> {{blockchaindata.shared.faceImage}}</li>
             </ul>
         </div>
-        <div class="col-xs-4" style="overflow: hidden;">
-            <img ng-src="{{picture}}" height="161" style="padding: 5px;"/>
+        <div class="col-xs-4" style="overflow: hidden;margin-bottom: 0;">
+            <img ng-src="{{picture}}" height="151" style="padding: 5px;"/>
         </div>
     </div>
     <small>Passport info</small>
