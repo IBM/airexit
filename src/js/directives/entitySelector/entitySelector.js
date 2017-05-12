@@ -92,9 +92,9 @@ function entitySelector($timeout) {
           };
         },
         template:
-' <div class="form-control">'+
+' <div class="form-control" style="margin-bottom: 0;">'+
 '	  <div class="row">'+
-'  		<div class="col-md-12" ng-click="toggleExpand()">'+
+'  		<div class="col-md-12" ng-click="toggleExpand()" style="cursor:pointer;">'+
 '    		<div ng-if="!selected" class="pull-left">&nbsp;<span style="color:gray;">please select one...</span></div>'+
 '    		<div ng-if="selected" class="pull-left">&nbsp;<span>{{selected.name}}</span></div>'+
 '       <div ng-show="!expanded" class="pull-right"><i class="glyphicon glyphicon-chevron-down"></i></div>'+
@@ -106,12 +106,13 @@ function entitySelector($timeout) {
 ' <div ng-if="entities.length" ng-show="expanded" class="entity-selector-popup" style="width:{{popupWidth}}px;">'+
 '   <div class="row">'+
 '    	<div class="col-md-12" style="margin-bottom: 0px;border-bottom: 1px solid #eee">'+
-'       <input type="text" ng-model="search.value" ng-keyup="$event.keyCode == 13 && select(filteredEntities[0])" placeholder="Search..." class="entity-selector-search-input">'+
+'       <input type="text" ng-model="search.value" ng-keyup="$event.keyCode == 13 && select(filteredEntities[0])" placeholder="Type to search..." class="entity-selector-search-input">'+
+'       <span ng-show="search.value" style="position: absolute; right: 5px; color: grey; font-size: 10px; top: 8px;">{{filteredEntities.length ? \'Hit Enter to select\' : \'All items filtered\'}}</span>'+
 '    	</div>'+
 '  	</div>'+
 '   <div class="" style="max-height:200px; overflow: auto;">'+
 '     <div class="list-group" style="margin-bottom: 0px;">'+
-'       <a ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="list-group-item list-group-item-selector" ng-click="select(item)" ng-class="{active: item.id === selected.id}">'+
+'       <a ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="list-group-item list-group-item-selector" ng-click="select(item)" style="border-radius: 0;" ng-class="{active: item.id === selected.id}">'+
 '         <div class="list-group-item-heading" style="margin: 0;">{{item.name}} <small style="color:darkgray;">{{item.description}}</small></div>'+
 '       </a>'+
 '     </div>  '+

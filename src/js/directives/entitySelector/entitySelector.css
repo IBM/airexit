@@ -7,9 +7,10 @@
 
 .entity-selector-search-input {
     width: 100%;
-    height: 34px;
+    height: 28px;
     border: 0px;
     padding: 0px;
+    font-size: 10px;
 }
 
 .entity-selector-search-input:focus {
