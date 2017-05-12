@@ -223,6 +223,7 @@ ul.left-sidebar .left-sidebar-list .menu-icon {
   background-color: #bfd7ec;
   border: 1px solid #1d4c75;
   font-size: 11px;
+  border-radius: 0px!important;
   color: #1d4c75;
 }
 
