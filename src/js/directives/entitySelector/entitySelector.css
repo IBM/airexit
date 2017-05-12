@@ -17,6 +17,27 @@
     outline: 0px;
 }
 
-.list-group-item-selector:hover {
+.entity-selector-item:hover {
     cursor: pointer;
+    background-color: #1d4c75!important;
+    border-left: 4px solid #1d4c75!important;
+    color: white;
+}
+
+.entity-selector-item-active {
+    border-left: 4px solid #1d4c75!important;
+}
+
+.entity-selector-item {
+  position: relative;
+  display: block;
+  padding: 5px 10px;
+  margin-bottom: -1px;
+  background-color: #bfd7ec;
+  border: 1px solid #1d4c75;
+  border-left: 4px solid #bfd7ec;
+  font-size: 11px;
+  color: #1d4c75;
+  border-radius: 0;
+  transition: all .3s ease 0s;
 }

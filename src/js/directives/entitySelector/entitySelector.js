@@ -107,14 +107,14 @@ function entitySelector($timeout) {
 '   <div class="row">'+
 '    	<div class="col-md-12" style="margin-bottom: 0px;border-bottom: 1px solid #eee">'+
 '       <input type="text" ng-model="search.value" ng-keyup="$event.keyCode == 13 && select(filteredEntities[0])" placeholder="Type to search..." class="entity-selector-search-input">'+
-'       <span ng-show="search.value" style="position: absolute; right: 5px; color: grey; font-size: 10px; top: 8px;">{{filteredEntities.length ? \'Hit Enter to select\' : \'All items filtered\'}}</span>'+
+'       <span ng-show="search.value" style="position: absolute; right: 5px; color: grey; font-size: 10px; top: 8px;">{{filteredEntities.length ? (filteredEntities[0].id == selected.id ? \'Hit Enter to unselect\' : \'Hit Enter to select\') : \'All items filtered\'}}</span>'+
 '    	</div>'+
 '  	</div>'+
 '   <div class="" style="max-height:200px; overflow: auto;">'+
 '     <div class="list-group" style="margin-bottom: 0px;">'+
-'       <a ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="list-group-item list-group-item-selector" ng-click="select(item)" style="border-radius: 0;" ng-class="{active: item.id === selected.id}">'+
+'       <div ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="entity-selector-item" ng-click="select(item)" ng-class="{ \'entity-selector-item-active\': item.id == selected.id}">'+
 '         <div class="list-group-item-heading" style="margin: 0;">{{item.name}} <small style="color:darkgray;">{{item.description}}</small></div>'+
-'       </a>'+
+'       </div>'+
 '     </div>  '+
 '	  </div>'+
 ' </div>'+
