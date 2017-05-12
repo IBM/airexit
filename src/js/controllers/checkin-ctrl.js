@@ -36,27 +36,27 @@ function CheckinCtrl($scope, $state, ApiService) {
         ApiService.submit('checkin', 'airline', $scope.travellersById[$scope.selectedTraveller.id], $scope.picture.picturebase64).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
-        });
+            var sessions = JSON.parse(localStorage.getItem('sessions'));
+            if (!sessions) {
+                sessions = {};
+            }
+            var session = {
+                id: $scope.blockchaindata.cbp.txid,
+                checkin: $scope.blockchaindata,
+                security: null,
+                gatecheck: null,
+                user: $scope.travellersById[$scope.selectedTraveller.id].passportInfo,
+                pictures: {
+                    checkin: $scope.picture.picturebase64
+                }
+            }
+            sessions[$scope.blockchaindata.cbp.txid] = session;
+            localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
+            localStorage.setItem('sessions', JSON.stringify(sessions));
+            });
     };
 
     $scope.onNext = function() {
-        var sessions = JSON.parse(localStorage.getItem('sessions'));
-        if (!sessions) {
-            sessions = {};
-        }
-        var session = {
-            id: $scope.blockchaindata.cbp.txid,
-            checkin: $scope.blockchaindata,
-            security: null,
-            gatecheck: null,
-            user: $scope.travellersById[$scope.selectedTraveller.id].passportInfo,
-            pictures: {
-                checkin: $scope.picture.picturebase64
-            }
-        }
-        sessions[$scope.blockchaindata.cbp.txid] = session;
-        localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
-        localStorage.setItem('sessions', JSON.stringify(sessions));
         $state.transitionTo('security');
     };
     

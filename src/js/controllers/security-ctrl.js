@@ -16,16 +16,16 @@ function SecurityCtrl($scope, $state, ApiService) {
         ApiService.submit('screen', 'tsa', $scope.selectedTraveller, $scope.picture.picturebase64).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
+            var sessions = JSON.parse(localStorage.getItem('sessions'));
+            if (sessions[localStorage.getItem('currentSession')]) {
+                sessions[localStorage.getItem('currentSession')].security = $scope.blockchaindata;
+                sessions[localStorage.getItem('currentSession')].pictures.security = $scope.picture.picturebase64;
+                localStorage.setItem('sessions', JSON.stringify(sessions));
+            }
         });
     };
 
     $scope.onNext = function() {
-        var sessions = JSON.parse(localStorage.getItem('sessions'));
-        if (sessions[localStorage.getItem('currentSession')]) {
-            sessions[localStorage.getItem('currentSession')].security = $scope.blockchaindata;
-            sessions[localStorage.getItem('currentSession')].pictures.security = $scope.picture.picturebase64;
-            localStorage.setItem('sessions', JSON.stringify(sessions));
-        }
         $state.transitionTo('gatecheck');
     };
 
