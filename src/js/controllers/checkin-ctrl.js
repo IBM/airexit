@@ -8,6 +8,9 @@ function CheckinCtrl($scope, $state, ApiService) {
     localStorage.setItem('travellerSelected', null);
     $scope.travellers = [];
     $scope.travellersById = {};
+    $scope.loading = {
+        value: false
+    };
 
     $scope.picture = {
         picturebase64: '' 
@@ -32,10 +35,12 @@ function CheckinCtrl($scope, $state, ApiService) {
     $scope.dataready = false;
 
     $scope.onSubmit = function() {
+        $scope.loading.value = true;
         localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
         ApiService.submit('checkin', 'airline', $scope.travellersById[$scope.selectedTraveller.id], $scope.picture.picturebase64).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
+            $scope.loading.value = false;
             var sessions = JSON.parse(localStorage.getItem('sessions'));
             if (!sessions) {
                 sessions = {};

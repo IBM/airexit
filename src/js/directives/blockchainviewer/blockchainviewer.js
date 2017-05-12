@@ -5,7 +5,8 @@ function blockchainViewer($timeout) {
     var directive = {
         scope: {
             blockchaindata: '=',
-            dataready: '='
+            dataready: '=',
+            loading: '='
         },
         controller: ['$scope', function($scope) {
           $scope.headerOffset = 145;
