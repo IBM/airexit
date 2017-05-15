@@ -17,6 +17,7 @@
                     <span style="float: right;">Date of Expiration: {{user.passportInfo.dateOfExpiration}}</span>
                 </li>
                 <li class="list-group-item">Sex: {{user.passportInfo.sex}}
+                    <span style="float: right;">Nationality: {{user.passportInfo.nationality}}</span>
                 </li>
             </ul>
             <div>Visa info</div>
@@ -35,6 +36,14 @@
                 </li>
                 <li class="list-group-item">Ticket Number: {{user.reservationInfo.ticketNumber}}
                     <span style="float: right;">Date of flight: {{user.reservationInfo.dateOfFlight}}</span>
+                </li>
+                <li class="list-group-item">Group: {{user.reservationInfo.boardingGroup}}
+                    <span style="float: right;">Class: {{user.reservationInfo.class}}</span>
+                </li>
+                <li class="list-group-item">Seat: {{user.reservationInfo.seatNumber}}
+                    <span style="float: right;">Special Needs: {{user.reservationInfo.specialNeeds}}</span>
+                </li>
+                <li class="list-group-item">Frequent Flyer Number: {{user.reservationInfo.frequentFlyerNumber}}
                 </li>
             </ul>
         </div>
