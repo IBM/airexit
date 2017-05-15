@@ -19,7 +19,13 @@ function GateCheckCtrl($scope, $state, ApiService) {
 
     $scope.onSubmit = function() {
         $scope.loading.value = true;
-        ApiService.submit('gate', 'airline', $scope.selectedTraveller, $scope.picture.picturebase64).then(function(response) {
+        ApiService.submit(
+            'gate',
+            'airline',
+            $scope.selectedTraveller,
+            $scope.picture.picturebase64,
+            'T2-G31'
+        ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
             $scope.loading.value = false;

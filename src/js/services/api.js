@@ -72,18 +72,21 @@ angular.module('app')
     unathorizedCallback = callback;
   };
 
-  this.submit = function(eventType, partnerId, user, faceImage) {
+  this.submit = function(eventType, partnerId, user, faceImage, location) {
     var data = {};
     data.partnerId = 'airline';
     data.requestType = 'write';
     data.data = {
       uuid: user.uuid,
+      location: location,
       passportInfo: user.passportInfo,
       reservationInfo: user.reservationInfo,
       tsaPreCheck: user.tsaPreCheck,
       visaInfo: user.visaInfo,
       eventType: eventType,
       partnerId: partnerId,
+      cbpInfo: user.cbpInfo,
+      tsaInfo: user.tsaInfo,
       faceImage: CryptoJS.MD5('testimage').toString(),//faceImage
     };
     return POST('/request', {document: data});

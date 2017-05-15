@@ -19,7 +19,13 @@ function SecurityCtrl($scope, $state, ApiService) {
 
     $scope.onSubmit = function() {
         $scope.loading.value = true;
-        ApiService.submit('screen', 'tsa', $scope.selectedTraveller, $scope.picture.picturebase64).then(function(response) {
+        ApiService.submit(
+            'screen',
+            'tsa',
+            $scope.selectedTraveller,
+            $scope.picture.picturebase64,
+            'TSA-G01'
+        ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
             $scope.loading.value = false;
