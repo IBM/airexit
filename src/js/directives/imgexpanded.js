@@ -11,7 +11,7 @@ function ImgExpanded() {
                 console.log('Element: ', element);
                 var width = element.parent().width();
                 element.width(width*2);
-                element.parent().height(116);
+                element.parent().height(136);
                 element.css('opacity',1);
             });
         }
