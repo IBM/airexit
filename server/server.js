@@ -9,43 +9,29 @@ var express = require('express'),
     jwt = require('jsonwebtoken'),
     session = require('express-session');
 
-function getQueryParams(qs) {
-    qs = qs.split('+').join(' ');
-
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
-
-    return params;
-}
-
 var goToLogin = function(req, res) {
   var encodedHost = encodeURIComponent(req.headers.host);
   res.redirect('https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=MDA4MjIxYTktYmFiMC00&response_type=code&scope=openid&state=' + encodedHost);
 }
 
 var authMiddleware = function(req, res, next) {
-  var params = getQueryParams(req.url);
-  if (req.session) {
+  console.log('URL query:', req.query);
+  if (req.session && req.session.token) {
     jwt.verify(req.session.token, 'secretkey', function(err, decoded) {
       var token = decoded._doc || decoded;
       if (err || !token) {
-        goToLogin(req, res);
+        res.send('Error: ' + "No session invalid token varification with JWT");
       } else {
         next();
       }
     });
   } else {
-    if (params.code) {
-      var hostname = decodeURIComponent(params.state);
+    if (req.query.code) {
+      var hostname = decodeURIComponent(req.query.state);
       request.post({
         url: 'https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token',
         form: {
-          code: code,
+          code: req.query.code,
           client_id: 'MDA4MjIxYTktYmFiMC00',
           client_secret: 'ZDEyYjYyODUtZDE0Mi00',
           grant_type: 'authorization_code',
@@ -58,7 +44,7 @@ var authMiddleware = function(req, res, next) {
       }, function(err,httpResponse,body) {
         if (err) {
           console.log('Error:', err);
-          goToLogin(req, res);
+          res.send('Error: ' + err);
         } else {
           try {
             var tokenResponse = JSON.parse(httpResponse.body);
@@ -70,13 +56,14 @@ var authMiddleware = function(req, res, next) {
           } catch (e) {
             console.log('Error:', e);
             console.log('Body:', httpResponse.body);
-            goToLogin(req, res);
+            res.send('Error: ' + httpResponse.body);
           }
         }
       });
+    } else {
+      goToLogin(req, res);
     }
   }
-  goToLogin(req, res);
 }
 
 app.use(session({
