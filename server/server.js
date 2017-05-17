@@ -4,58 +4,88 @@
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    SocketIO = require('socket.io').listen(server),
-    fs = require('fs'),
+    request = require('request'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-    api = require('./api.js'),
-    FileStreamRotator = require('file-stream-rotator'),
-    fs = require('fs'),
-    morgan = require('morgan'),
-    // dbFactory = require('./db/dbFactory.js'),
-    collections = require('./db/collections.js');
+    session = require('express-session');
 
-var service = require('./services.js');
-var RealtimeNotifier = require('./realtimeNotifier.js');
-var realtimeNotifier = new RealtimeNotifier(SocketIO);
-service.setRealtimeNotifier(realtimeNotifier);
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
 
-api.setService(service);
-var setupLogger = function() {
-  var logDirectory = __dirname + '/log';
-  fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
-  // create a rotating write stream
-  var accessLogStream = FileStreamRotator.getStream({
-    date_format: 'YYYYMMDD',
-    filename: logDirectory + '/access-%DATE%.log',
-    frequency: 'daily',
-    verbose: false
-  });
-  return accessLogStream;
-};
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
 
-// setup the logger
-app.use(morgan('short', {stream: setupLogger()}));
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
 
-// var DB;
-/*dbFactory(collections).then(function(instance) {
-  DB = instance;
-  service.setDB(instance);
-  init();
-}, function(reason) {
+    return params;
+}
 
-  var testRouter = express.Router();
-  testRouter.get('/', function(req, res){
-    res.json(reason);
-  });
-  app.use('/errors', testRouter);
-  console.log('Error connecting to DB: ' + reason);
-  console.log('Server NOT started.');
-});*/
+var goToLogin = function(req, res) {
+  var encodedHost = encodeURIComponent(req.headers.host);
+  res.redirect('https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=MDA4MjIxYTktYmFiMC00&response_type=code&scope=openid&state=' + encodedHost);
+}
 
-app.use(express.static(__dirname + '/../dist'));
+var authMiddleware = function(req, res, next) {
+  var params = getQueryParams(req.url);
+  if (req.session) {
+    jwt.verify(req.session.token, 'secretkey', function(err, decoded) {
+      var token = decoded._doc || decoded;
+      if (err || !token) {
+        goToLogin(req, res);
+      } else {
+        next();
+      }
+    });
+  } else {
+    if (params.code) {
+      var hostname = decodeURIComponent(params.state);
+      request.post({
+        url: 'https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token',
+        form: {
+          code: code,
+          client_id: 'MDA4MjIxYTktYmFiMC00',
+          client_secret: 'ZDEyYjYyODUtZDE0Mi00',
+          grant_type: 'authorization_code',
+          state: hostname
+        },
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'UIServer'
+        } 
+      }, function(err,httpResponse,body) {
+        if (err) {
+          console.log('Error:', err);
+          goToLogin(req, res);
+        } else {
+          try {
+            var tokenResponse = JSON.parse(httpResponse.body);
+            var token = jwt.sign(tokenResponse, 'secretkey', {
+              expiresIn: 60*60*24 // expires in 24 hours
+            });
+            req.session.token = token;
+            next();
+          } catch (e) {
+            console.log('Error:', e);
+            console.log('Body:', httpResponse.body);
+            goToLogin(req, res);
+          }
+        }
+      });
+    }
+  }
+  goToLogin(req, res);
+}
 
-app.use('/monitor', express.static(__dirname + '/../monitor/dist'));
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(authMiddleware, express.static(__dirname + '/../dist'));
+//app.use('/secure', authMiddleware, express.static(__dirname + '/../dist'));
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(bodyParser.json({limit: '10mb'}));
@@ -72,56 +102,7 @@ var host = (process.env.VCAP_APP_HOST || 'localhost');
 server.listen(port);
 
 function init() {
-
-  // init users
-  console.log('Initing users...');
-  /*service.saveUser({
-    name: 'Facundo Crego',
-    email: 'facrego@ar.ibm.com',
-    admin: true
-  }, 'admin').then(function(user) {
-    console.log('User facrego@ar.ibm.com added');
-  }, function(reason) {
-    console.log('User facrego@ar.ibm.com already exists');
-  });*/
-
-  var cacheRouter = new express.Router();
-  cacheRouter.get('/', function(req, res) {
-    var response = [];
-    var collections = DB.getCollections();
-    for (var key in collections) {
-      var collection = collections[key];
-      var obj = {};
-      obj[collection.name] = collection.cache.responses;
-      response.push(obj);
-    }
-    res.json(response);
-  });
-  //app.use('/cache', cacheRouter);
-
-  var requestRouter = new express.Router();
-  var request = require('request');
-  requestRouter.post('/', function(req, res) {
-    if (!req.body.url) {
-      res.status(400).send('Missing url param');
-    }
-    request(req.body.url, function (error, response, body) {
-      if (error) {
-        res.status(404).send('Invalid request or not found.');
-        return;
-      }
-      try {
-        res.json(JSON.parse(body));
-      } catch(e) {
-        res.status(400).send('Invalid request unable to parse response to JSON');
-      }
-    });
-  });
-  app.use('/request', requestRouter);
-
-  app.use('/api', api.getRouter());
   console.log('Started at http://' + host + ':' + port);
-  console.log('API doc at http://' + host + ':' + port + '/api/doc');
 }
 
 init();

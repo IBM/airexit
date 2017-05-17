@@ -28,19 +28,12 @@
   },
   "dependencies": {
     "body-parser": "^1.15.0",
-    "cloudant": "^1.4.1",
     "express": "^4.13.4",
-    "file-stream-rotator": "0.0.6",
+    "express-session": "^1.15.2",
     "jsonwebtoken": "^5.7.0",
-    "mongodb": "^2.1.7",
-    "mongoose": "^4.4.3",
-    "morgan": "^1.7.0",
-    "mysql": "^2.10.2",
-    "nodemailer": "^2.3.0",
     "q": "^1.4.1",
     "queue": "^4.0.0",
     "request": "^2.81.0",
-    "socket.io": "^1.4.5",
     "uuid": "^2.0.2"
   }
 }
