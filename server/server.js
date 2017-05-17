@@ -6,6 +6,7 @@ var express = require('express'),
     server = require('http').createServer(app),
     request = require('request'),
     bodyParser = require('body-parser'),
+    jwt = require('jsonwebtoken'),
     session = require('express-session');
 
 function getQueryParams(qs) {
