@@ -38,6 +38,11 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider','growlProvi
                 url: '/monitor',
                 templateUrl: 'templates/monitor.html',
                 controller: 'MonitorCtrl'
+            })
+            .state('monitor2', {
+                url: '/monitor2',
+                templateUrl: 'templates/monitor2.html',
+                controller: 'Monitor2Ctrl'
             });
     }
 ]);
