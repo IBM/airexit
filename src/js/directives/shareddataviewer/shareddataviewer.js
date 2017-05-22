@@ -12,7 +12,7 @@ function sharedDataViewer() {
         link: function(scope, element, attrs, tabsCtrl) {
 
         },
-        templateUrl: '/js/directives/shareddataviewer/shareddataviewer.html',
+        templateUrl: 'js/directives/shareddataviewer/shareddataviewer.html',
         restrict: 'E'
     };
     return directive;

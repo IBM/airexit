@@ -32,7 +32,7 @@ function blockchainViewer($timeout) {
         link: function(scope, element, attrs, tabsCtrl) {
 
         },
-        templateUrl: '/js/directives/blockchainviewer/blockchainviewer.html',
+        templateUrl: 'js/directives/blockchainviewer/blockchainviewer.html',
         restrict: 'E'
     };
     return directive;

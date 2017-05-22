@@ -11,7 +11,7 @@ var express = require('express'),
 
 var goToLogin = function(req, res) {
   var encodedHost = encodeURIComponent(req.headers.host);
-  res.redirect('https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=MDA4MjIxYTktYmFiMC00&response_type=code&scope=openid&state=' + encodedHost);
+  res.redirect('https://w3id.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=MDA4MjIxYTktYmFiMC00&response_type=code&scope=openid&state=' + encodedHost);
 }
 
 var authMiddleware = function(req, res, next) {
@@ -32,7 +32,7 @@ var authMiddleware = function(req, res, next) {
     if (req.query.code) {
       var hostname = decodeURIComponent(req.query.state);
       request.post({
-        url: 'https://w3id.alpha.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token',
+        url: 'https://w3id.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token',
         form: {
           code: req.query.code,
           client_id: 'MDA4MjIxYTktYmFiMC00',
@@ -75,8 +75,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.use('/public', express.static(__dirname + '/../dist'));
 app.use(authMiddleware, express.static(__dirname + '/../dist'));
-//app.use('/secure', authMiddleware, express.static(__dirname + '/../dist'));
+
 
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(bodyParser.json({limit: '10mb'}));

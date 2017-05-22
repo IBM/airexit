@@ -22,7 +22,7 @@ function blockchainDataViewer($timeout) {
         link: function(scope, element, attrs, tabsCtrl) {
 
         },
-        templateUrl: '/js/directives/blockchaindataviewer/blockchaindataviewer.html',
+        templateUrl: 'js/directives/blockchaindataviewer/blockchaindataviewer.html',
         restrict: 'E'
     };
     return directive;

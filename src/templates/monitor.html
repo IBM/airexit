@@ -1,8 +1,8 @@
 <div class="row topheader" style="width: 100%; height: 70px;">
-    <img src="/img/cbp-logo.png" style="position: absolute;height: 70px;padding: 10px;">
-    <h1 class="text-center" style="position: absolute;width: 100%;">Exit Record View<a class="header-link" href="/#/checkin"> Go to checkin</a></h1>
-    <img src="/img/tsa-logo.png" style="height: 70px;padding: 10px;float: right;">
-    <img src="/img/plane-logo.png" style="height: 70px;padding: 10px;float:right;">
+    <img src="img/cbp-logo.png" style="position: absolute;height: 70px;padding: 10px;">
+    <h1 class="text-center" style="position: absolute;width: 100%;">Exit Record View<a class="header-link" href="#/checkin"> Go to checkin</a></h1>
+    <img src="img/tsa-logo.png" style="height: 70px;padding: 10px;float: right;">
+    <img src="img/plane-logo.png" style="height: 70px;padding: 10px;float:right;">
 </div>
 <div class="row" style="padding: 0px;">
     <div class="col-xs-6" style="z-index: 5px;">
@@ -33,12 +33,16 @@
             <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session[selectedOption].shared"></shared-data-viewer>
             <br>
             <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
+            <small>Reservation info</small>
             <ul class="list-group-small">
-                <li class="list-group-item"><small>Reservation Number:</small> {{session[selectedOption].cbp.reservationInfo.reservationNumber}}</li>
-                <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus}}</li>
+                <li class="list-group-item"><small>Reservation Number:</small> {{blockchaindata.cbp.reservationInfo.reservationNumber}}</li>
+            </ul>
+            <small>TSA info</small>
+            <ul class="list-group-small">
+                <li class="list-group-item"><small>Secure Flight Status:</small> {{blockchaindata.tsa.tsaInfo.secureFlightStatus}}</li>
             </ul>
             <br>
-            <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Private View</div>
+            <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
             <small>Visa info</small>
             <ul class="list-group-small">
                 <li class="list-group-item"><small>Date of expiration:</small> {{session[selectedOption].cbp.visaInfo.dateOfExpiration}}
@@ -64,11 +68,12 @@
             <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session[selectedOption].shared"></shared-data-viewer>
             <br>
             <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
+            <small>TSA PreCheck</small>
             <ul class="list-group-small">
-                <li class="list-group-item"><small>Indicator:</small> {{session[selectedOption].tsa.tsaPreCheck.indicator}}</li>
+                <li class="list-group-item"><small>Indicator:</small> {{blockchaindata.tsa.tsaPreCheck.indicator}}</li>
             </ul>
             <br>
-            <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Private View</div>
+            <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
             <small>Reservation info</small>
             <ul class="list-group-small">
                 <li class="list-group-item"><small>Ticket Number:</small> {{session[selectedOption].airline.reservationInfo.ticketNumber}}
@@ -91,12 +96,16 @@
             <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session[selectedOption].shared"></shared-data-viewer>
             <br>
             <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
+            <small>Visa info</small>
             <ul class="list-group-small">
-                <li class="list-group-item"><small>Control Number:</small> {{session[selectedOption].tsa.visaInfo.controlNumber}}</li>
-                <li class="list-group-item"><small>No Fly Indicator:</small> {{session[selectedOption].tsa.cbpInfo.noFlyIndicator}}</li>
+                <li class="list-group-item"><small>Control Number:</small> {{blockchaindata.tsa.visaInfo.controlNumber}}</li>
+            </ul>
+            <small>CBP info</small>
+            <ul class="list-group-small">
+                <li class="list-group-item"><small>No Fly Indicator:</small> {{blockchaindata.tsa.cbpInfo.noFlyIndicator}}</li>
             </ul>
             <br>
-            <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Private View</div>
+            <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
             <small>TSA info</small>
             <ul class="list-group-small">
                 <li class="list-group-item"><small>Enhanced Screening:</small> {{session[selectedOption].tsa.tsaInfo.enhancedScreening}}

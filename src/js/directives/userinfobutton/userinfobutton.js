@@ -11,7 +11,7 @@ function userInfoButton() {
         link: function(scope, element, attrs, tabsCtrl) {
 
         },
-        templateUrl: '/js/directives/userinfobutton/userinfobutton.html',
+        templateUrl: 'js/directives/userinfobutton/userinfobutton.html',
         restrict: 'E'
     };
     return directive;

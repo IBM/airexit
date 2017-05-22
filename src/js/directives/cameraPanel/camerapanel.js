@@ -173,7 +173,7 @@ function cameraPanel($timeout, $state) {
         link: function(scope, element, attrs, tabsCtrl) {
 
         },
-        templateUrl: '/js/directives/camerapanel/camerapanel.html',
+        templateUrl: 'js/directives/camerapanel/camerapanel.html',
         restrict: 'E'
     };
     return directive;
