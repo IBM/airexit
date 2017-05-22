@@ -1,0 +1,46 @@
+<div class="row text-center shared-viewer-header">Common View</div>
+<ul ng-if="!picture" class="list-group-small">
+    <li class="list-group-item"><small>Partner ID:</small> {{shareddata.partnerId}}
+        <span style="float: right;"><small>Event Type:</small> {{shareddata.eventType}}</span>
+    </li>
+    <li class="list-group-item"><small>Timestamp:</small> {{shareddata.timestamp}}
+        <span style="float: right;"><small>UUID:</small> {{shareddata.uuid}}</span>
+    </li>
+    <li class="list-group-item"><small>Face image:</small> {{shareddata.faceImage}}
+        <span style="float: right;"><small>Location:</small> {{shareddata.location}}</span>
+    </li>
+</ul>
+<div ng-if="picture" class="row">
+    <div class="col-xs-8" style="padding: 5px 0px; margin-bottom: 0;">
+        <ul class="list-group-small">
+            <li class="list-group-item"><small>Partner ID:</small> {{shareddata.partnerId}}</li>
+            <li class="list-group-item"><small>Event Type:</small> {{shareddata.eventType}}</li>
+            <li class="list-group-item"><small>Timestamp:</small> {{shareddata.timestamp}}</li>
+            <li class="list-group-item"><small>UUID:</small> {{shareddata.uuid}}</li>
+            <li class="list-group-item"><small>Face image:</small> {{shareddata.faceImage}}</li>
+            <li class="list-group-item"><small>Location:</small> {{shareddata.location}}</li>
+        </ul>
+    </div>
+    <div class="col-xs-4" style="overflow: hidden;margin-bottom: 0; padding: 5px 0px 0px 5px;">
+        <img img-expanded ng-src="{{picture}}"/>
+    </div>
+</div>
+<small>Passport info</small>
+<ul class="list-group-small">
+    <li class="list-group-item"><small>Name:</small> {{shareddata.passportInfo.firstName}} {{shareddata.passportInfo.lastName}}
+        <span style="float: right;"><small>Sex:</small> {{shareddata.passportInfo.sex}}</span>
+    </li>
+    <li class="list-group-item"><small>Passport Number:</small> {{shareddata.passportInfo.passportNumber}}
+        <span style="float: right;"><small>Date of Expiration:</small> {{shareddata.passportInfo.dateOfExpiration}}</span>
+    </li>
+    <li class="list-group-item"><small>Nationality:</small> {{shareddata.passportInfo.nationality}}
+    </li>
+</ul>
+<small>Reservation info</small>
+<ul class="list-group-small">
+    <li class="list-group-item"><small>Flight:</small> {{shareddata.reservationInfo.operatingCarrierCode}} {{shareddata.reservationInfo.flightNumber}}
+        <span style="float: right;"><small>From</small> {{shareddata.reservationInfo.fromCityAirportCode}}<small> to </small>{{shareddata.reservationInfo.toCityAirportCode}}</span>
+    </li>
+    <li class="list-group-item"><small>Date of flight:</small> {{shareddata.reservationInfo.dateOfFlight}}
+    </li>
+</ul>

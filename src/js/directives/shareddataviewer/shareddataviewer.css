@@ -1,0 +1,10 @@
+.shared-viewer-header {
+    background-color: #1d7525;
+    color: white;
+    padding: 5px;
+}
+
+.list-group-small {
+    padding: 0 0;
+    margin: 0 0;
+}

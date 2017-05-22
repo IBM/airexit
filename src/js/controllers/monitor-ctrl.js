@@ -9,7 +9,7 @@ function MonitorCtrl($scope, $state, ApiService) {
     $scope.selectedSession = null;
     $scope.session = null;
     $scope.dataready = false;
-    $scope.headerOffset = 185;
+    $scope.headerOffset = 160;
 
     var sessions = JSON.parse(localStorage.getItem('sessions'));
     if (sessions) {
@@ -24,27 +24,18 @@ function MonitorCtrl($scope, $state, ApiService) {
         }
     }
 
+    $scope.dataHeight = window.innerHeight - $scope.headerOffset;
+
+    window.onresize = function() {
+        $scope.dataHeight = window.innerHeight - $scope.headerOffset;
+        $scope.$apply();
+    }
+
     $scope.$watch('selectedSession', function(ov, nv) {
         if (ov != nv && $scope.selectedSession) {
             $scope.session = $scope.sessionsById[$scope.selectedSession.id];
             $scope.dataready = true;
         }
-    });
-
-    $scope.$watch('cbpOptions', function(oldVal, newVal) {
-    if (newVal) {
-        $scope.selectedOption = 'cbp';
-    }
-    });
-    $scope.$watch('airlineOptions', function(oldVal, newVal) {
-    if (newVal) {
-        $scope.selectedOption = 'airline';
-    }
-    });
-    $scope.$watch('tsaOptions', function(oldVal, newVal) {
-    if (newVal) {
-        $scope.selectedOption = 'tsa';
-    }
     });
 
     $scope.deleteSession = function(id) {
@@ -67,5 +58,5 @@ function MonitorCtrl($scope, $state, ApiService) {
         }
     }
 
-    $scope.selectedOption = 'cbp';
+    $scope.selectedOption = 'checkin';
 }
