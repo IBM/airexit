@@ -26,13 +26,13 @@
         <span ng-click="selectedOption = 'checkin'" style="cursor: pointer;width: 33%;position: absolute;left: 0%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'checkin', 'fa-circle': selectedOption == 'checkin'}"></span>
         </span>
-        <div ng-if="session.security" style="border-top: 3px solid white; width: calc(33% - 15px);left: calc(16.5% + 8px);position: absolute;top: 11px;"></div>
+        <div ng-if="session.security" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(16.5% + 7px);position: absolute;top: 11px;"></div>
         <span ng-click="selectedOption = session.security ? 'security' : selectedOption"
               ng-style="{color: session.security ? 'white' : 'darkgrey', cursor: session.security ? 'pointer' : 'default'}"
               style="width: 33%;position: absolute;left: 33%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'security', 'fa-circle': selectedOption == 'security'}"></span>
         </span>
-        <div ng-if="session.gatecheck" style="border-top: 3px solid white; width: calc(66% - 15px);left: calc(49.5% + 8px);position: absolute;top: 11px;"></div>
+        <div ng-if="session.gatecheck" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(49.5% + 7px);position: absolute;top: 11px;"></div>
         <span ng-click="selectedOption = session.gatecheck ? 'gatecheck' : selectedOption"
               ng-style="{color: session.gatecheck ? 'white' : 'darkgrey', cursor: session.gatecheck ? 'pointer' : 'default'}"
               style="width: 33%;position: absolute;left: 66%;">
