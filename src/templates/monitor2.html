@@ -47,10 +47,19 @@
         </div>
     </div>
     <div class="col-xs-8" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
+        <div class="row" style="margin: 0px;">
+            <div class="col-xs-2 text-center" style="font-size: 18px;"></div>
+            <div class="col-xs-5" style="margin: 0px;">
+                <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px; margin:0;">Permissioned View</div>
+            </div>
+            <div class="col-xs-5" style="margin: 0px;">
+                <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px; margin:0;">Private View</div>
+            </div>
+        </div>
+        <hr style="margin: 10px 0;">
         <div class="row">
             <div class="col-xs-2 text-center" style="font-size: 18px;">CBP</div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
                 <small>Reservation info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Reservation Number:</small> {{session[selectedOption].cbp.reservationInfo.reservationNumber}}</li>
@@ -61,7 +70,6 @@
                 </ul>
             </div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
                 <small>Visa info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Date of expiration:</small> {{session[selectedOption].cbp.visaInfo.dateOfExpiration}}
@@ -83,14 +91,12 @@
         <div class="row">
             <div class="col-xs-2 text-center" style="font-size: 18px;">Airline</div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
                 <small>TSA PreCheck</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Indicator:</small> {{session[selectedOption].tsa.tsaPreCheck.indicator}}</li>
                 </ul>
             </div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
                 <small>Reservation info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Ticket Number:</small> {{session[selectedOption].airline.reservationInfo.ticketNumber}}
@@ -111,7 +117,6 @@
         <div class="row">
             <div class="col-xs-2 text-center" style="font-size: 18px;">TSA</div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #1d4c75; color: white;padding: 5px;">Permissioned View</div>
                 <small>Visa info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Control Number:</small> {{session[selectedOption].tsa.visaInfo.controlNumber}}</li>
@@ -122,7 +127,6 @@
                 </ul>
             </div>
             <div class="col-xs-5">
-                <div class="row text-center blockchain-viewer-header" style="background-color: #a94442; color: white;padding: 5px;">Private View</div>
                 <small>TSA info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Enhanced Screening:</small> {{session[selectedOption].tsa.tsaInfo.enhancedScreening}}
