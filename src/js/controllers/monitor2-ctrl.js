@@ -9,7 +9,7 @@ function Monitor2Ctrl($scope, $state, ApiService) {
     $scope.selectedSession = null;
     $scope.session = null;
     $scope.dataready = false;
-    $scope.headerOffset = 220;
+    $scope.headerOffset = 210;
 
     var sessions = JSON.parse(localStorage.getItem('sessions'));
     if (sessions) {
