@@ -87,7 +87,7 @@ angular.module('app')
       partnerId: partnerId,
       cbpInfo: user.cbpInfo,
       tsaInfo: user.tsaInfo,
-      faceImage: CryptoJS.MD5('testimage').toString(),//faceImage
+      faceImage: CryptoJS.MD5(faceImage).toString()
     };
     return POST('/request', {document: data});
   };
