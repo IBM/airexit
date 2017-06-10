@@ -22,7 +22,6 @@ function cameraPanel($timeout, $state) {
             $scope.headerOffset = 90 + 64;
             $scope.footerOffset = 74;
             $scope.dataHeader = 80;
-            $scope.leftMargin = 15;
 
             $scope.channel = {
                 videoHeight: 0,
@@ -38,7 +37,8 @@ function cameraPanel($timeout, $state) {
 
             var render = function() {
                 $scope.videoHeight = window.innerHeight - $scope.headerOffset - $scope.footerOffset;
-                $scope.videoWidth = window.innerWidth/2 - $scope.leftMargin*2;
+                $scope.videoWidth = window.innerWidth/2;
+                $scope.videoLeft = window.innerWidth/4;
                 $scope.dataHeight = window.innerHeight - $scope.headerOffset - $scope.dataHeader - 20;
 
                 var calculatedHeight = $scope.videoWidth*3/4;
