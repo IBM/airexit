@@ -34,10 +34,10 @@ function Monitor2Ctrl($scope, $state, ApiService) {
 
     $scope.dataHeight = window.innerHeight - $scope.headerOffset;
 
-    window.onresize = function() {
+    window.addEventListener("resize", function() {
         $scope.dataHeight = window.innerHeight - $scope.headerOffset;
         $scope.$apply();
-    }
+    });
 
     $scope.$watch('selectedSession', function(ov, nv) {
         if (ov != nv && $scope.selectedSession) {

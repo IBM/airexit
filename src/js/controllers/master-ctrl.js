@@ -19,10 +19,10 @@ function MasterCtrl($scope, $rootScope, ApiService, $state) {
 
     $scope.dataHeight = window.innerHeight;
 
-    window.onresize = function() {
+    window.addEventListener("resize", function() {
         $scope.dataHeight = window.innerHeight;
         $scope.$apply();
-    }
+    });
 
     $scope.goTo = function(view, params) {
       $state.transitionTo(view, params);

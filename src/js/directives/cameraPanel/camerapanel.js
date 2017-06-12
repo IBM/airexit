@@ -57,10 +57,10 @@ function cameraPanel($timeout, $state) {
 
             render();
 
-            window.onresize = function() {
+            window.addEventListener("resize",  function() {
                 render();
                 $scope.$apply();
-            }
+            });
 
             $scope.onSuccess = function () {
                 _video = $scope.channel.video;

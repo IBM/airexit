@@ -13,10 +13,10 @@ function blockchainDataViewer($timeout) {
         controller: ['$scope', function($scope) {
           $scope.dataHeight = window.innerHeight - $scope.headerOffset;
 
-          window.onresize = function() {
+          window.addEventListener("resize", function() {
               $scope.dataHeight = window.innerHeight - $scope.headerOffset;
               $scope.$apply();
-          }
+          });
 
         }],
         link: function(scope, element, attrs, tabsCtrl) {
