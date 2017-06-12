@@ -56,40 +56,43 @@ function entitySelector($timeout) {
             $scope.focusSearchInput();
           };
 
+          $scope.$on('$init', function() {
+            scope.resize();
+          });
+
           $scope.$on('$destroy', function() {
             delete instances[$scope.$id];
-          })
+          });
         }],
         link: function(scope, element, attrs, tabsCtrl) {
           instances[scope.$id] = scope;
 
           scope.focusSearchInput = function() {
-            $timeout(function(){
               scope.search.value = '';
-              var searchElem = angular.element(element).children().children()[1].children[0].children[0];
+              var searchElem = angular.element(element).children().children()[1] && angular.element(element).children().children()[1].children[0].children[0];
               if (searchElem) {
-                  searchElem.focus();
+                  $timeout(function() {
+                    searchElem.focus();
+                  },0);
               }
-            },0);
           };
 
           scope.resize = function() {
-            $timeout(function(){
-              var popup = angular.element(element).children().children()[1];
-              var inputTag = angular.element(element).children()[0];
+            var popup = angular.element(element).children()[1];
+            var inputTag = angular.element(element).children()[0];
+            if (popup && inputTag) {
               popup.style.width = inputTag.clientWidth +'px';
-            },0);
+            }
           };
 
-          var windowResize = window.onresize;
           var inputTag = angular.element(element).children()[0];
-          window.onresize = function() {
+          inputTag.addEventListener("resize", function() {
               if (scope.expanded) {
-                var popup = angular.element(element).children().children()[1];
-                popup.style.width = inputTag.clientWidth +'px';
+                  var popup = angular.element(element).children()[1];
+                  popup.style.width = inputTag.clientWidth +'px';
+                  console.log(popup.style.width);
               }
-              if (windowResize) windowResize();
-          };
+          });
         },
         template:
 ' <div class="form-control" style="margin-bottom: 0;">'+
@@ -103,27 +106,23 @@ function entitySelector($timeout) {
 '  		</div>'+
 '	  </div>'+
 ' </div>'+
-' <div ng-if="entities.length" ng-show="expanded" class="entity-selector-popup" style="width:{{popupWidth}}px;">'+
-'   <div class="row">'+
+' <div ng-show="expanded" class="entity-selector-popup">'+
+'   <div ng-show="entities.length" class="row">'+
 '    	<div class="col-md-12" style="margin-bottom: 0px;border-bottom: 1px solid #eee">'+
 '       <input type="text" ng-model="search.value" ng-keyup="$event.keyCode == 13 && select(filteredEntities[0])" placeholder="Type to search..." class="entity-selector-search-input">'+
 '       <span ng-show="search.value" style="position: absolute; right: 5px; color: grey; font-size: 10px; top: 8px;">{{filteredEntities.length ? (filteredEntities[0].id == selected.id ? \'Hit Enter to unselect\' : \'Hit Enter to select\') : \'All items filtered\'}}</span>'+
 '    	</div>'+
 '  	</div>'+
-'   <div class="" style="max-height:200px; overflow: auto;">'+
+'   <div style="max-height:200px; overflow: auto;">'+
 '     <div class="list-group" style="margin-bottom: 0px;">'+
 '       <div ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="entity-selector-item" ng-click="select(item)" ng-class="{ \'entity-selector-item-active\': item.id == selected.id}">'+
 '         <div class="list-group-item-heading" style="margin: 0;">{{item.name}} <small style="color:darkgray;">{{item.description}}</small></div>'+
 '       </div>'+
+'       <div ng-show="!entities.length" style="padding: 5px 10px;height: 27px;font-size: 11px;">'+
+'          The are no items'+
+'    	  </div>'+
 '     </div>  '+
 '	  </div>'+
-' </div>'+
-' <div ng-if="!entities.length && expanded" class="entity-selector-popup" style="width:{{popupWidth}}px;">'+
-'   <div class="row">'+
-'    	<div class="col-md-12" style="margin-bottom: 0px;border-bottom: 1px solid #eee">'+
-'       <span> The are no items </span>'+
-'    	</div>'+
-'  	</div>'+
 ' </div>',
         restrict: 'E'
     };
