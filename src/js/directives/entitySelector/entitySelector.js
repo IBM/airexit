@@ -115,7 +115,7 @@ function entitySelector($timeout) {
 '  	</div>'+
 '   <div style="max-height:200px; overflow: auto;">'+
 '     <div class="list-group" style="margin-bottom: 0px;">'+
-'       <div ng-repeat="item in filteredEntities = (entities | filter:search.value)" class="entity-selector-item" ng-click="select(item)" ng-class="{ \'entity-selector-item-active\': item.id == selected.id}">'+
+'       <div ng-repeat="item in filteredEntities = (entities | filter:{name: search.value})" class="entity-selector-item" ng-click="select(item)" ng-class="{ \'entity-selector-item-active\': item.id == selected.id}">'+
 '         <div class="list-group-item-heading" style="margin: 0;">{{item.name}} <small style="color:darkgray;">{{item.description}}</small></div>'+
 '       </div>'+
 '       <div ng-show="!entities.length" style="padding: 5px 10px;height: 27px;font-size: 11px;">'+
