@@ -9,6 +9,8 @@ function SecurityCtrl($scope, $state, ApiService) {
         $scope.travellerName = $scope.selectedTraveller.passportInfo.firstName + ' ' + $scope.selectedTraveller.passportInfo.lastName;
     }
 
+    $scope.location = 'TSA-G01';
+
     $scope.loading = {
         value: false
     };
@@ -24,7 +26,7 @@ function SecurityCtrl($scope, $state, ApiService) {
             'tsa',
             $scope.selectedTraveller,
             $scope.picture.picturebase64,
-            'TSA-G01'
+            $scope.location
         ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;

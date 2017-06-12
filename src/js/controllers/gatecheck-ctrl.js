@@ -9,6 +9,8 @@ function GateCheckCtrl($scope, $state, ApiService) {
         $scope.travellerName = $scope.selectedTraveller.passportInfo.firstName + ' ' + $scope.selectedTraveller.passportInfo.lastName;
     }
 
+    $scope.location = 'T2-G31';
+
     $scope.loading = {
         value: false
     };
@@ -24,7 +26,7 @@ function GateCheckCtrl($scope, $state, ApiService) {
             'airline',
             $scope.selectedTraveller,
             $scope.picture.picturebase64,
-            'T2-G31'
+            $scope.location 
         ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;

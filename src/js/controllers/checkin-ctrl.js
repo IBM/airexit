@@ -12,6 +12,8 @@ function CheckinCtrl($scope, $state, ApiService) {
         value: false
     };
 
+    $scope.location = 'MT-BAW-001';
+
     $scope.picture = {
         picturebase64: '' 
     };
@@ -42,7 +44,7 @@ function CheckinCtrl($scope, $state, ApiService) {
             'airline',
             $scope.travellersById[$scope.selectedTraveller.id],
             $scope.picture.picturebase64,
-            'MT-BAW-001'
+            $scope.location
         ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
