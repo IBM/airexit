@@ -16,7 +16,7 @@
         <canvas id="snapshot"></canvas>
     </div>
 </div>
-<div class="col-xs-12" ng-show="status=='SHOWSNAP'" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;z-index: 1;">
+<div class="col-xs-6" ng-show="status=='SHOWSNAP'" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;z-index: 1;left: 25%;">
     <div class="col-sm-6 text-center">
         <button class="btn btn-primary" style="width: 50%" ng-click="tryagain()">Try again</button>
     </div>
@@ -31,6 +31,6 @@
 </div>
 <div class="col-xs-12" ng-if="status=='RECORDING'" style="position: fixed;bottom: 0; left: 0; background-color: #bfd7ec; padding: 20px; height: 74px;z-index: 1;">
     <div class="col-sm-12 text-center">
-        <button id="capture-button" class="btn btn-primary" ng-disabled="makingSnapshot" style="width: 50%" ng-click="makeSnapshot()">Capture</button>
+        <button id="capture-button" class="btn btn-primary" ng-disabled="makingSnapshot" style="width: 25%" ng-click="makeSnapshot()">Capture</button>
     </div>
 </div>
