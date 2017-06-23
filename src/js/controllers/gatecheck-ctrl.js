@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('GateCheckCtrl', ['$scope','$state','ApiService',GateCheckCtrl]);
+    .controller('GateCheckCtrl', ['$scope','$state','ApiService','$timeout',GateCheckCtrl]);
 
-function GateCheckCtrl($scope, $state, ApiService) {
+function GateCheckCtrl($scope, $state, ApiService,$timeout) {
 
     $scope.selectedTraveller = JSON.parse(localStorage.getItem('travellerSelected'));
     if ($scope.selectedTraveller) {
@@ -15,9 +15,16 @@ function GateCheckCtrl($scope, $state, ApiService) {
         value: false
     };
 
+    $scope.submitted = false;
+
     $scope.picture = {
         picturebase64: '' 
     };
+
+    $scope.containerWidth = '100%';
+    $scope.selectorLeft = '25%';
+    $scope.selectorWidth = '50%';
+    $scope.blockchainDataOpacity = '0';
 
     $scope.onSubmit = function() {
         $scope.loading.value = true;
@@ -37,6 +44,14 @@ function GateCheckCtrl($scope, $state, ApiService) {
                 sessions[localStorage.getItem('currentSession')].pictures.gatecheck = $scope.picture.picturebase64;
                 localStorage.setItem('sessions', JSON.stringify(sessions));
             }
+            $scope.submitted = true;
+            $scope.containerWidth = '50%';
+            $scope.blockchainDataOpacity = '1';
+            $scope.selectorLeft = '0px';
+            $scope.selectorWidth = '100%';
+            $timeout(function() {
+                $scope.showData = true;
+            }, 500);
         });
     };
 

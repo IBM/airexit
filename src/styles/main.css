@@ -238,3 +238,7 @@ ul.left-sidebar .left-sidebar-list .menu-icon {
     color: #bfd7ec;
     text-decoration: underline;
 }
+
+.transition-effect {
+  transition: all 1s ease;
+}

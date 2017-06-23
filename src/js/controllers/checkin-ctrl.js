@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('CheckinCtrl', ['$scope','$state','ApiService',CheckinCtrl]);
+    .controller('CheckinCtrl', ['$scope','$state','ApiService','$timeout',CheckinCtrl]);
 
-function CheckinCtrl($scope, $state, ApiService) {
+function CheckinCtrl($scope, $state, ApiService, $timeout) {
     
     $scope.selectedTraveller = null;
     localStorage.setItem('travellerSelected', null);
@@ -11,12 +11,18 @@ function CheckinCtrl($scope, $state, ApiService) {
     $scope.loading = {
         value: false
     };
+    $scope.submitted = false;
 
     $scope.location = 'MT-BAW-001';
 
     $scope.picture = {
         picturebase64: '' 
     };
+
+    $scope.containerWidth = '100%';
+    $scope.selectorLeft = '25%';
+    $scope.selectorWidth = '50%';
+    $scope.blockchainDataOpacity = '0';
 
     ApiService.getPassengers().then(function(response) {
         console.log('Passengers: ' , response.data);
@@ -64,6 +70,14 @@ function CheckinCtrl($scope, $state, ApiService) {
                 }
             }
             sessions[$scope.blockchaindata.cbp.txid] = session;
+            $scope.submitted = true;
+            $scope.containerWidth = '50%';
+            $scope.blockchainDataOpacity = '1';
+            $scope.selectorLeft = '0px';
+            $scope.selectorWidth = '100%';
+            $timeout(function() {
+                $scope.showData = true;
+            }, 500);
             localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
             localStorage.setItem('sessions', JSON.stringify(sessions));
             });

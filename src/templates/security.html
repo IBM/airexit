@@ -3,22 +3,21 @@
     <h1 class="text-center">Security Screening</h1>
     <a class="header-link" style="right: 0px;top: 40px;position: absolute;" href="#/monitor"> Go to monitor</a>
 </div>
-<div class="col-xs-12">
-    <div ng-if="dataready" class="row" style="left: 25%;position: relative;width: 50%;">
-        <div class="col-xs-11">
+<div class="transition-effect" ng-style="{width: containerWidth}" style="padding-left: 20px; padding-right: 20px;">
+    <div ng-if="dataready" class="row transition-effect" ng-style="{left: selectorLeft, width: selectorWidth}" style="position: relative;">
+        <div class="col-xs-12" style="z-index: 5px;padding-right: 50px;padding-left: 0px;">
             <input disabled ng-model="travellerName" class="text-center form-control" type="text"/>
         </div>
-        <div class="col-xs-1">
+        <div style="position: absolute;right: 0px;">
             <user-info-button user="selectedTraveller"></user-info-button>
         </div>
     </div>
     <div ng-if="!dataready" style="height: 64px;"></div>
-    <camera-panel picture="picture" user="selectedTraveller" on-submit="onSubmit" on-next="onNext" next-label="Next"></camera-panel>
+    <camera-panel picture="picture" user="selectedTraveller" on-submit="onSubmit" on-next="onNext" next-label="Next" submitted="submitted"></camera-panel>
 </div>
-<!--
-<div class="col-xs-6 text-center">
+<div ng-if="showData" ng-style="{opacity: blockchainDataOpacity}" class="text-center transition-effect" style="left: 50%;position: absolute;top: 90px;padding-bottom: 20px;padding-right: 20px; width: 50%;">
     <blockchain-viewer blockchaindata="blockchaindata" loading="loading" dataready="dataready"></blockchain-viewer>
-</div> -->
+</div>
 <div style="position: absolute; right: 10px; top: 10px;">
     {{location}}
 </div>

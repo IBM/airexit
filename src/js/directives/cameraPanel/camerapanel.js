@@ -8,7 +8,8 @@ function cameraPanel($timeout, $state) {
             onSubmit: '=',
             user: '=',
             onNext: '=',
-            nextLabel: '@'
+            nextLabel: '@',
+            submitted: '='
         },
         controller: ['$scope', function($scope) {
             var _video = null;
@@ -169,6 +170,14 @@ function cameraPanel($timeout, $state) {
                 //ctx.restore();
                 return ctx.getImageData(x, y, w, h);
             };
+
+            $scope.$watch('submitted',function(nv, ov) {
+                if (nv) {
+                    $scope.left = '0px';
+                } else {
+                    $scope.left = '25%';
+                }
+            });
         }],
         link: function(scope, element, attrs, tabsCtrl) {
 
