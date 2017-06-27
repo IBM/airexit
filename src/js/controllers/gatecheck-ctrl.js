@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('GateCheckCtrl', ['$scope','$state','ApiService','$timeout',GateCheckCtrl]);
+    .controller('GateCheckCtrl', ['$scope','$state','ApiService','$timeout','growl',GateCheckCtrl]);
 
-function GateCheckCtrl($scope, $state, ApiService,$timeout) {
+function GateCheckCtrl($scope, $state, ApiService,$timeout, growl) {
 
     $scope.selectedTraveller = JSON.parse(localStorage.getItem('travellerSelected'));
     if ($scope.selectedTraveller) {
@@ -42,7 +42,11 @@ function GateCheckCtrl($scope, $state, ApiService,$timeout) {
             if (sessions[localStorage.getItem('currentSession')]) {
                 sessions[localStorage.getItem('currentSession')].gatecheck = $scope.blockchaindata;
                 sessions[localStorage.getItem('currentSession')].pictures.gatecheck = $scope.picture.picturebase64;
-                localStorage.setItem('sessions', JSON.stringify(sessions));
+                try {
+                    localStorage.setItem('sessions', JSON.stringify(sessions));
+                } catch (e) {
+                    growl.error('LocalStorage is full, please clean LocalStorage and try again');
+                }
             }
             $scope.submitted = true;
             $scope.containerWidth = '50%';

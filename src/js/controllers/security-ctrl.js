@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('SecurityCtrl', ['$scope','$state','ApiService','$timeout',SecurityCtrl]);
+    .controller('SecurityCtrl', ['$scope','$state','ApiService','$timeout','growl',SecurityCtrl]);
 
-function SecurityCtrl($scope, $state, ApiService, $timeout) {
+function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
 
     $scope.selectedTraveller = JSON.parse(localStorage.getItem('travellerSelected'));
     if ($scope.selectedTraveller) {
@@ -42,7 +42,11 @@ function SecurityCtrl($scope, $state, ApiService, $timeout) {
             if (sessions[localStorage.getItem('currentSession')]) {
                 sessions[localStorage.getItem('currentSession')].security = $scope.blockchaindata;
                 sessions[localStorage.getItem('currentSession')].pictures.security = $scope.picture.picturebase64;
-                localStorage.setItem('sessions', JSON.stringify(sessions));
+                try {
+                    localStorage.setItem('sessions', JSON.stringify(sessions));
+                } catch (e) {
+                    growl.error('LocalStorage is full, please clean LocalStorage and try again');
+                }
             }
             $scope.submitted = true;
             $scope.containerWidth = '50%';

@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('CheckinCtrl', ['$scope','$state','ApiService','$timeout',CheckinCtrl]);
+    .controller('CheckinCtrl', ['$scope','$state','ApiService','$timeout','growl',CheckinCtrl]);
 
-function CheckinCtrl($scope, $state, ApiService, $timeout) {
+function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
     
     $scope.selectedTraveller = null;
     localStorage.setItem('travellerSelected', null);
@@ -44,7 +44,11 @@ function CheckinCtrl($scope, $state, ApiService, $timeout) {
 
     $scope.onSubmit = function() {
         $scope.loading.value = true;
-        localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
+        try {
+            localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
+        } catch (e) {
+            growl.error('LocalStorage is full, please clean LocalStorage and try again');
+        }
         ApiService.submit(
             'checkin',
             'airline',
@@ -78,9 +82,13 @@ function CheckinCtrl($scope, $state, ApiService, $timeout) {
             $timeout(function() {
                 $scope.showData = true;
             }, 500);
-            localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
-            localStorage.setItem('sessions', JSON.stringify(sessions));
-            });
+            try {
+                localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
+                localStorage.setItem('sessions', JSON.stringify(sessions));
+            } catch (e) {
+                growl.error('LocalStorage is full, please clean LocalStorage and try again');
+            }
+        });
     };
 
     $scope.onNext = function() {

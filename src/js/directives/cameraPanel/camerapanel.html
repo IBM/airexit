@@ -9,10 +9,10 @@
         <div class="focusBoxBottomRight" ng-style="{width: focusBox.w/4, height: focusBox.h/4, top: focusBox.y + focusBox.h - focusBox.h/4, right: focusBox.x, position: 'absolute', 'box-shadow': '2px 2px 1px rgba(0,0,0,0.5)'}"></div>
     </div>
     <div style="position: absolute; width: 100%; font-size: 96px; text-align: center;color:white; top: 0px;text-shadow: 0 0 5px black;" ng-style="{height: videoHeight, 'line-height': videoHeight+'px'}" ng-show="makingSnapshot">{{seconds}}</div>
-    <div style="position: absolute;top: 0px;left: 0px;width: 5px;height: 100%;    background-color: rgba(0, 0, 0, 0.26);z-index: 20;"></div>
-    <div style="position: absolute;top: 0px;right: 0px;width: 5px;height: 100%;    background-color: rgba(0, 0, 0, 0.26);z-index: 20;"></div>
-    <div style="position: absolute;top: 0;left: 5px;width: calc(100% - 10px);height: 5px;    background-color: rgba(0, 0, 0, 0.26);z-index: 20;"></div>
-    <div style="position: absolute;bottom: 0px;left: 5px;width: calc(100% - 10px);height: 5px;    background-color: rgba(0, 0, 0, 0.26);z-index: 20;"></div>
+    <div style="position: absolute;top: 0px;left: 0px;width: 5px;height: 100%;    background-color: rgba(0, 0, 0, 0.26);z-index: 7;"></div>
+    <div style="position: absolute;top: 0px;right: 0px;width: 5px;height: 100%;    background-color: rgba(0, 0, 0, 0.26);z-index: 7;"></div>
+    <div style="position: absolute;top: 0;left: 5px;width: calc(100% - 10px);height: 5px;    background-color: rgba(0, 0, 0, 0.26);z-index: 7;"></div>
+    <div style="position: absolute;bottom: 0px;left: 5px;width: calc(100% - 10px);height: 5px;    background-color: rgba(0, 0, 0, 0.26);z-index: 7;"></div>
 </div>
 <canvas ng-if="videoReady" ng-show="status=='RECORDING'" id="canvas" height="{{videoHeight}}" width="{{videoWidth}}" style="position: absolute; left: 25%; z-index: 1;box-shadow: inset 0 0 50px 10px rgba(0, 0, 0, 0.26);"></canvas>
 <div ng-show="status=='SHOWSNAP' || status=='SUBMITTED'">
