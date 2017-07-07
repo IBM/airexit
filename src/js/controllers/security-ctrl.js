@@ -11,20 +11,15 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
 
     $scope.location = 'TSA-G01';
 
+    $scope.submitted = false;
+    
     $scope.loading = {
         value: false
     };
 
-    $scope.submitted = false;
-
     $scope.picture = {
         picturebase64: '' 
     };
-
-    $scope.containerWidth = '100%';
-    $scope.selectorLeft = '25%';
-    $scope.selectorWidth = '50%';
-    $scope.blockchainDataOpacity = '0';
 
     $scope.onSubmit = function() {
         $scope.loading.value = true;
@@ -49,13 +44,7 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
                 }
             }
             $scope.submitted = true;
-            $scope.containerWidth = '50%';
-            $scope.blockchainDataOpacity = '1';
-            $scope.selectorLeft = '0px';
-            $scope.selectorWidth = '100%';
-            $timeout(function() {
-                $scope.showData = true;
-            }, 500);
+            $scope.showData = true;
         });
     };
 

@@ -3,8 +3,8 @@
     <h1 class="text-center">Check-In</h1>
     <a class="header-link" style="right: 0px;top: 40px;position: absolute;" href="#/monitor"> Go to monitor</a>
 </div>
-<div class="transition-effect" ng-style="{width: containerWidth}" style="padding-left: 20px; padding-right: 20px;">
-    <div class="row transition-effect" ng-style="{left: selectorLeft, width: selectorWidth}" style="position: relative;">
+<div style="width: 100%;padding-left: 20px; padding-right: 20px;">
+    <div class="row" style="left: 25%; width: 50%;position: relative;">
         <div class="col-xs-12" style="z-index: 5px;padding-right: 50px;padding-left: 0px;">
               <entity-selector selected="selectedTraveller" entities="travellers"></entity-selector>
         </div>
@@ -14,9 +14,21 @@
     </div>
     <camera-panel picture="picture" on-submit="onSubmit" user="selectedTraveller" on-next="onNext" next-label="Next" submitted="submitted"></camera-panel>
 </div>
-<div ng-if="showData" ng-style="{opacity: blockchainDataOpacity}" class="text-center transition-effect" style="left: 50%;position: absolute;top: 90px;padding-bottom: 20px;padding-right: 20px; width: 50%;">
-    <blockchain-viewer blockchaindata="blockchaindata" loading="loading" dataready="dataready"></blockchain-viewer>
-</div>
 <div style="position: absolute; right: 10px; top: 10px;color: #bfd7ec;">
     {{location}}
+</div>
+<button ng-if="showData" class="btn btn-primary text-center" data-toggle="modal" data-target="#blockchainModal" style="position: absolute; bottom: 20px; right: 20px;">Show blockchain data</button>
+<!-- Modal -->
+<div class="modal fade" id="blockchainModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Blockchain data</h4>
+        </div>
+        <div class="modal-body">
+            <blockchain-viewer blockchaindata="blockchaindata" loading="loading" dataready="dataready"></blockchain-viewer>
+        </div>
+    </div>
+    </div>
 </div>

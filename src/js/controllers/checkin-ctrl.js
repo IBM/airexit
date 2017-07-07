@@ -19,11 +19,6 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
         picturebase64: '' 
     };
 
-    $scope.containerWidth = '100%';
-    $scope.selectorLeft = '25%';
-    $scope.selectorWidth = '50%';
-    $scope.blockchainDataOpacity = '0';
-
     ApiService.getPassengers().then(function(response) {
         console.log('Passengers: ' , response.data);
         if (response.data.status == 'SUCCESS') {
@@ -75,13 +70,7 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
             }
             sessions[$scope.blockchaindata.cbp.txid] = session;
             $scope.submitted = true;
-            $scope.containerWidth = '50%';
-            $scope.blockchainDataOpacity = '1';
-            $scope.selectorLeft = '0px';
-            $scope.selectorWidth = '100%';
-            $timeout(function() {
-                $scope.showData = true;
-            }, 500);
+            $scope.showData = true;
             try {
                 localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
                 localStorage.setItem('sessions', JSON.stringify(sessions));

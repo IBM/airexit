@@ -171,13 +171,6 @@ function cameraPanel($timeout, $state) {
                 return ctx.getImageData(x, y, w, h);
             };
 
-            $scope.$watch('submitted',function(nv, ov) {
-                if (nv) {
-                    $scope.left = '0px';
-                } else {
-                    $scope.left = '25%';
-                }
-            });
         }],
         link: function(scope, element, attrs, tabsCtrl) {
 

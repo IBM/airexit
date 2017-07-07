@@ -16,7 +16,7 @@
 </div>
 <canvas ng-if="videoReady" ng-show="status=='RECORDING'" id="canvas" height="{{videoHeight}}" width="{{videoWidth}}" style="position: absolute; left: 25%; z-index: 1;box-shadow: inset 0 0 50px 10px rgba(0, 0, 0, 0.26);"></canvas>
 <div ng-show="status=='SHOWSNAP' || status=='SUBMITTED'">
-    <div class="transition-effect" style="position:absolute; width: auto;" ng-style="{left: left}">
+    <div style="position:absolute; width: auto;left: 25%;">
         <div ng-style="{width: focusBox.w, height: focusBox.h, top: focusBox.y, left: focusBox.x, position: 'relative'}" style="overflow: hidden;border: 2px solid rgb(29, 76, 117);border-radius: 3px;" >
             <canvas id="snapshot"></canvas>
         </div>
@@ -30,7 +30,7 @@
         <button class="btn btn-primary" ng-disabled="!user" style="width: 50%" ng-click="submit()">Submit</button>
     </div>
 </div>
-<div class="transition-effect" ng-show="status=='SUBMITTED' && submitted" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;z-index: 1;width:50%;" ng-style="{left: left}">
+<div ng-show="status=='SUBMITTED' && submitted" style="position: fixed;bottom: 0; background-color: #bfd7ec; padding: 20px; height: 74px;z-index: 1;width:50%;left:25%;">
     <div class="col-sm-12 text-center">
         <button class="btn btn-primary" style="width: 25%" ng-style="{opacity: submitted ? 1 : 0}" ng-click="next()">{{nextLabel || 'Next'}}</button>
     </div>
