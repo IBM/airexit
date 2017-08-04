@@ -33,18 +33,18 @@ function GateCheckCtrl($scope, $state, ApiService,$timeout, growl) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
             $scope.loading.value = false;
-            var sessions = JSON.parse(localStorage.getItem('sessions'));
-            if (sessions[localStorage.getItem('currentSession')]) {
-                sessions[localStorage.getItem('currentSession')].gatecheck = $scope.blockchaindata;
-                sessions[localStorage.getItem('currentSession')].pictures.gatecheck = $scope.picture.picturebase64;
-                try {
-                    localStorage.setItem('sessions', JSON.stringify(sessions));
-                } catch (e) {
-                    growl.error('LocalStorage is full, please clean LocalStorage and try again');
+            var session = {
+                gatecheck: $scope.blockchaindata,
+                pictures: {
+                    gatecheck: $scope.picture.picturebase64
                 }
-            }
-            $scope.submitted = true;
-            $scope.showData = true;
+            };
+            ApiService.updateSession(localStorage.getItem('currentSession'), session).then(function(response) {
+                $scope.submitted = true;
+                $scope.showData = true;
+            }, function() {
+                growl.error('Error saving session');
+            });
         });
     };
 

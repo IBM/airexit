@@ -1,8 +1,8 @@
 angular
     .module('app')
-    .controller('Monitor2Ctrl', ['$scope','$state','ApiService',Monitor2Ctrl]);
+    .controller('Monitor2Ctrl', ['$scope','$state','ApiService','growl',Monitor2Ctrl]);
 
-function Monitor2Ctrl($scope, $state, ApiService) {
+function Monitor2Ctrl($scope, $state, ApiService, growl) {
     
     $scope.sessions = [];
     $scope.sessionsById = {};
@@ -12,24 +12,27 @@ function Monitor2Ctrl($scope, $state, ApiService) {
     $scope.headerOffset = 210;
 
     var load = function() {
-        var sessions = JSON.parse(localStorage.getItem('sessions'));
-        $scope.session = JSON.parse(localStorage.getItem('sessionSelected'));
-        if (sessions) {
-            for (var key in sessions) {
-                var item = sessions[key];
-                var selectableItem = {
-                    id: item.id,
-                    name: item.user.firstName + ' ' + item.user.lastName,
-                    description: 'Timestamp: ' + item.checkin.shared.timestamp 
-                };
-                $scope.sessions.push(selectableItem);
-                
-                if ($scope.session && item.id == $scope.session.id) {
-                    $scope.selectedSession = selectableItem;
+        ApiService.getSessions().then(function(sessions) {
+            $scope.session = localStorage.getItem('sessionSelected') ? JSON.parse(localStorage.getItem('sessionSelected')) : null;
+            if (sessions) {
+                for (var key in sessions) {
+                    var item = sessions[key];
+                    var selectableItem = {
+                        id: item._id,
+                        name: item.user.firstName + ' ' + item.user.lastName,
+                        description: 'Timestamp: ' + item.checkin.shared.timestamp 
+                    };
+                    $scope.sessions.push(selectableItem);
+                    
+                    if ($scope.session && item._id == $scope.session._id) {
+                        $scope.selectedSession = selectableItem;
+                    }
+                    $scope.sessionsById[item.id] = item;
                 }
-                $scope.sessionsById[item.id] = item;
             }
-        }
+        }, function(reason) {
+            growl.error('Error getting Sessions');
+        });
     }
 
     $scope.dataHeight = window.innerHeight - $scope.headerOffset;
@@ -48,24 +51,15 @@ function Monitor2Ctrl($scope, $state, ApiService) {
     });
 
     $scope.deleteSession = function(id) {
-        var sessions = JSON.parse(localStorage.getItem('sessions'));
-        if (sessions) {
-            delete $scope.sessionsById[id];
-            var index = 0;
-            for (var i = 0; i < $scope.sessions.length; i++) {
-                if ($scope.sessions[i].id == id) {
-                    index = i;
-                    break;
-                }
-            }
-            $scope.sessions.splice(index, 1);
-            delete sessions[id];
+        ApiService.deleteSession(id).then(function() {
+            load();
             $scope.selectedSession = null;
             localStorage.setItem('sessionSelected', null);
             $scope.session = null;
             $scope.dataready = false;
-            localStorage.setItem('sessions', JSON.stringify(sessions));
-        }
+        }, function() {
+            growl.error('Error deleting Session');
+        });
     };
 
     $scope.refresh = function() {

@@ -39,10 +39,15 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider','growlProvi
                 templateUrl: 'templates/monitor2.html',
                 controller: 'Monitor2Ctrl'
             })
-            .state('monitor2', {
-                url: '/monitor2',
-                templateUrl: 'templates/monitor.html',
-                controller: 'MonitorCtrl'
+            .state('registration', {
+                url: '/registration',
+                templateUrl: 'templates/registration.html',
+                controller: 'RegistrationCtrl'
+            })
+            .state('travellers', {
+                url: '/travellers',
+                templateUrl: 'templates/travellers.html',
+                controller: 'TravellersCtrl'
             });
     }
 ]);

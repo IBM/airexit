@@ -1,0 +1,56 @@
+<div class="row">
+    <h1 class="text-center">Registration</h1>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <rd-loading status="loading"></rd-loading>
+        <ng-form ng-if="!loading" name="travellerForm">
+          <h4>Passport Info</h4>
+          <div class="row">
+            <div class="col-md-6">
+                <field type="text" label="Passport Number" name="passportInfo.passportNumber" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+                <field type="text" label="Date of Expiration" name="passportInfo.dateOfExpiration" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+                <field type="text" label="First Name" name="passportInfo.firstName" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+            </div>
+            <div class="col-md-6">
+                <field type="text" label="Last Name" name="passportInfo.lastName" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+                <field type="text" label="Sex" name="passportInfo.sex" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+                <field type="text" label="Nationality" name="passportInfo.nationality" required="true" model="traveller.passportInfo" form="travellerForm"></field>
+            </div>
+          </div>
+          <h4>Reservation Info</h4>
+          <div class="row">
+            <div class="col-md-6">
+                <field type="text" label="Ticket Number" name="reservationInfo.ticketNumber" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Operating Carrier Code" name="reservationInfo.operatingCarrierCode" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="From City Airport Code" name="reservationInfo.fromCityAirportCode" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="To City Airport Code" name="reservationInfo.toCityAirportCode" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Flight Number" name="reservationInfo.flightNumber" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Date Of Flight" name="reservationInfo.dateOfFlight" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+            </div>
+            <div class="col-md-6">    
+                <field type="text" label="Frequent Flyer Number" name="reservationInfo.frequentFlyerNumber" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Reservation Number" name="reservationInfo.reservationNumber" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Class" name="reservationInfo.class" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Seat Number" name="reservationInfo.seatNumber" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Boarding Group" name="reservationInfo.boardingGroup" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+                <field type="text" label="Special Needs" name="reservationInfo.specialNeeds" required="true" model="traveller.reservationInfo" form="travellerForm"></field>
+            </div>
+          </div>
+          <h4>Visa Info</h4>
+          <div class="row">
+            <div class="col-md-6">
+                <field type="text" label="Control Number" name="visaInfo.controlNumber" required="true" model="traveller.visaInfo" form="travellerForm"></field>
+            </div>                
+            <div class="col-md-6">
+                <field type="text" label="Date Of Expiration" name="visaInfo.dateOfExpiration" required="true" model="traveller.visaInfo" form="travellerForm"></field>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="accept()" ng-disabled="travellerForm.$invalid">Accept</button>
+            <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button>
+          </div>
+        </ng-form>
+
+    </div>
+</div>

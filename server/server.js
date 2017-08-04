@@ -7,7 +7,13 @@ var express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
     jwt = require('jsonwebtoken'),
-    session = require('express-session');
+    session = require('express-session'),
+    DB = require('./db/cloudantdb.js'),
+    api = require('./api.js'),
+    collections = require('./db/collections.js'),
+    service = require('./services.js');
+
+require('dotenv').config();
 
 var goToLogin = function(req, res) {
   var encodedHost = encodeURIComponent(req.headers.host);
@@ -75,10 +81,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use('/public', express.static(__dirname + '/../dist'));
-app.use(authMiddleware, express.static(__dirname + '/../dist'));
-
-
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(function(req, res, next) {
@@ -88,13 +90,33 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(authMiddleware, express.static(__dirname + '/../dist'));
+
+api.setService(service);
+
+var resources = ['travellers','sessions']
+app.use('/api', api.getRouter(resources));
+
 var port = (process.env.VCAP_APP_PORT || 8999);
 var host = (process.env.VCAP_APP_HOST || 'localhost');
 
 server.listen(port);
 
+
+
+DB.connect(collections).then(function() {
+  service.setDB(DB);
+  init();
+}, function(reason) {
+  var testRouter = express.Router();
+  testRouter.get('/', function(req, res){
+    res.json(reason);
+  });
+  app.use('/errors', testRouter);
+  console.log('Error connecting to DB: ' + reason);
+  console.log('Server NOT started.');
+});
+
 function init() {
   console.log('Started at http://' + host + ':' + port);
 }
-
-init();

@@ -20,9 +20,9 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
     };
 
     ApiService.getPassengers().then(function(response) {
-        console.log('Passengers: ' , response.data);
-        if (response.data.status == 'SUCCESS') {
-            response.data.message.manifest.forEach(function(item) {
+        console.log('Passengers: ' , response);
+        if (response.status == 'SUCCESS') {
+            response.message.manifest.forEach(function(item) {
                 $scope.travellers.push({
                     id: item.uuid,
                     name: item.passportInfo.firstName + ' ' + item.passportInfo.lastName,
@@ -51,15 +51,10 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
             $scope.picture.picturebase64,
             $scope.location
         ).then(function(response) {
-            $scope.blockchaindata = response.data;
+            $scope.blockchaindata = response;
             $scope.dataready = true;
             $scope.loading.value = false;
-            var sessions = JSON.parse(localStorage.getItem('sessions'));
-            if (!sessions) {
-                sessions = {};
-            }
             var session = {
-                id: $scope.blockchaindata.cbp.txid,
                 checkin: $scope.blockchaindata,
                 security: null,
                 gatecheck: null,
@@ -68,15 +63,20 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
                     checkin: $scope.picture.picturebase64
                 }
             }
-            sessions[$scope.blockchaindata.cbp.txid] = session;
-            $scope.submitted = true;
-            $scope.showData = true;
-            try {
-                localStorage.setItem('currentSession', $scope.blockchaindata.cbp.txid);
-                localStorage.setItem('sessions', JSON.stringify(sessions));
-            } catch (e) {
-                growl.error('LocalStorage is full, please clean LocalStorage and try again');
-            }
+            var sessionId = '';
+            ApiService.addSession(session).then(function(response) {
+                // growl.success('Session saved');
+                sessionId = response._id;
+                $scope.submitted = true;
+                $scope.showData = true;
+                try {
+                    localStorage.setItem('currentSession', sessionId);
+                } catch (e) {
+                    growl.error('LocalStorage is full, please clean LocalStorage and try again');
+                }
+            }, function() {
+                growl.error('Error adding session');
+            });
         });
     };
 

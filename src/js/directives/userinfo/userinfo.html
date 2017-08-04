@@ -1,0 +1,38 @@
+<div>Passport info</div>
+<ul class="list-group">
+    <li class="list-group-item">First Name: {{user.passportInfo.firstName}}
+        <span style="float: right;">Last Name: {{user.passportInfo.lastName}}</span>
+    </li>
+    <li class="list-group-item">Passport Number: {{user.passportInfo.passportNumber}}
+        <span style="float: right;">Date of Expiration: {{user.passportInfo.dateOfExpiration}}</span>
+    </li>
+    <li class="list-group-item">Sex: {{user.passportInfo.sex}}
+        <span style="float: right;">Nationality: {{user.passportInfo.nationality}}</span>
+    </li>
+</ul>
+<div>Visa info</div>
+<ul class="list-group">
+    <li class="list-group-item">Control Number: {{user.visaInfo.controlNumber}}
+        <span style="float: right;">Expiration Date: {{user.visaInfo.dateOfExpiration}}</span>
+    </li>
+</ul>
+<div>Reservation info</div>
+<ul class="list-group">
+    <li class="list-group-item">Flight Number: {{user.reservationInfo.flightNumber}}
+        <span style="float: right;">Carrier Code: {{user.reservationInfo.operatingCarrierCode}}</span>
+    </li>
+    <li class="list-group-item">From: {{user.reservationInfo.fromCityAirportCode}}
+        <span style="float: right;">To: {{user.reservationInfo.toCityAirportCode}}</span>
+    </li>
+    <li class="list-group-item">Ticket Number: {{user.reservationInfo.ticketNumber}}
+        <span style="float: right;">Date of flight: {{user.reservationInfo.dateOfFlight}}</span>
+    </li>
+    <li class="list-group-item">Group: {{user.reservationInfo.boardingGroup}}
+        <span style="float: right;">Class: {{user.reservationInfo.class}}</span>
+    </li>
+    <li class="list-group-item">Seat: {{user.reservationInfo.seatNumber}}
+        <span style="float: right;">Special Needs: {{user.reservationInfo.specialNeeds}}</span>
+    </li>
+    <li class="list-group-item">Frequent Flyer Number: {{user.reservationInfo.frequentFlyerNumber}}
+    </li>
+</ul>

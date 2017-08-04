@@ -1,0 +1,59 @@
+<div class="row">
+    <h1 class="text-center">Travellers</h1>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <rd-loading status="loading"></rd-loading>
+        <div ng-if="!loading.value">
+          <div ng-if="!loading.value && travellers.length" class="table-responsive">
+            <table class="table">
+                <thead class="table-header">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Passport</th>
+                        <th class="text-center">Reservation</th>
+                        <th class="text-center">Visa</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="traveller in travellers track by $index" ng-class="{'odd-row' : $odd}">
+                        <td class="text-center">{{traveller._id}}</td>
+                        <td class="text-center">{{traveller.passportInfo.firstName}} {{traveller.passportInfo.lastName}}</td>
+                        <td class="text-center">{{traveller.passportInfo.passportNumber}}</td>
+                        <td class="text-center">{{traveller.reservationInfo.flightNumber}}</td>
+                        <td class="text-center">{{traveller.visaInfo.controlNumber}}</td>
+                        <td class="text-center" style="padding: 0px;">
+                            <span title="Edit" class="btn" ng-click="openEditModal(traveller)"><i class="fa fa-pencil"></i></span>
+                            <span title="Remove" class="btn text-danger" data-toggle="modal" data-target="#confirmModal" ng-click="openConfirmModal(traveller)"><i class="fa fa-trash"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <div ng-if="!loading.value && !travellers.length">
+            <h4 style="text-align: center; color: darkgray;">No travellers</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="cancel()">Back</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+    <div class="modal fade" id="confirmModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Are you sure?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="remove(selectedItemForRemove)">Yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>

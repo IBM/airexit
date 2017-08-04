@@ -3,6 +3,8 @@
 angular.module('app')
   .service('ApiService', ['$http','$q','$cookies', function($http, $q, $cookies) {
     var serverURL = 'https://cbpdemo.mybluemix.net/api';
+    //var uiServerURL = 'https://airexit.mybluemix.net/api';
+    var uiServerURL = 'http://localhost:8999/api';
     var token = '';
     var authenticated = false;
     var tokenChecked;
@@ -10,7 +12,10 @@ angular.module('app')
     var self = this;
 
     var resolve = function(response) {
-      return response;
+      if (response.data.error) {
+        return $q.reject(response.data.error);
+      }
+      return response.data;
     };
 
     var reject = function(response) {
@@ -21,7 +26,7 @@ angular.module('app')
         self.user = null;
         unathorizedCallback();
       }
-      return $q.reject(response);
+      return $q.reject(response.data);
     };
 
     window.removeToken = function() {
@@ -32,7 +37,7 @@ angular.module('app')
 
     var GET = function(url) {
       if (!cache[url]) {
-        cache[url] = $http.get(serverURL+url, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
+        cache[url] = $http.get(url, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
         setTimeout(function() {
           delete cache[url];
         }, 1000);
@@ -41,20 +46,20 @@ angular.module('app')
     };
 
     var POST = function(url, data) {
-        return $http.post(serverURL+url, data, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
+        return $http.post(url, data, {headers: {'Authorization': 'Bearer '+token, 'Content-Type' : 'application/json'}}).then(resolve, reject);
     };
 
     var PUT = function(url, data) {
         if (!data) {
-            return $http.put(serverURL+url, null, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
+            return $http.put(url, null, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
         }
         else {
-            return $http.put(serverURL+url, data, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
+            return $http.put(url, data, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
         }
     };
 
     var DELETE = function(url) {
-        return $http.delete(serverURL+url, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
+        return $http.delete(url, {headers: {'Authorization': 'Bearer '+token}}).then(resolve, reject);
     };
 
     var buildQuery = function(query) {
@@ -89,30 +94,62 @@ angular.module('app')
       tsaInfo: user.tsaInfo,
       faceImage: CryptoJS.MD5(faceImage).toString()
     };
-    return POST('/request', {document: data});
+    return POST(serverURL+'/request', {document: data});
   };
 
   this.read = function(eventType, partnerId, user, faceImage) {
     var data = {};
     data.partnerId = 'airline';
     data.requestType = 'read';
-    return POST('/request', {document: data});
+    return POST(serverURL+'/request', {document: data});
   };
 
   this.getPassengers = function() {
-    return GET('/manifest');
+    return GET(serverURL+'/manifest');
   };
 
   this.getTransaction = function(id) {
-    return POST('/transaction', { txid: id });
+    return POST(serverURL+'/transaction', { txid: id });
   };
 
   this.deleteUser = function(id) {
-    return DELETE('/users/'+id);
+    return DELETE(serverURL+'/users/'+id);
   };
 
   this.updateUser = function(data) {
-    return PUT('/users/'+data._id, data);
+    return PUT(serverURL+'/users/'+data._id, data);
+  };
+
+  this.registerTraveller = function(data) {
+    return POST(uiServerURL+'/travellers', data);
+  };
+
+  this.getTravellers = function() {
+    return GET(uiServerURL+'/travellers');
+  };
+
+  this.deleteTraveller = function(id) {
+    return DELETE(uiServerURL+'/travellers/' + id);
+  };
+
+  this.addSession = function(data) {
+    return POST(uiServerURL + '/sessions', data);
+  };
+
+  this.getSessions = function() {
+    return GET(uiServerURL + '/sessions');
+  };
+
+  this.getSession = function(id) {
+    return GET(uiServerURL + '/sessions/' + id);
+  };
+  
+  this.updateSession = function(id) {
+    return PUT(uiServerURL + '/sessions/' + id);
+  };
+
+  this.deleteSession = function(id) {
+    return DELETE(uiServerURL + '/sessions/' + id);
   };
 
 }]);

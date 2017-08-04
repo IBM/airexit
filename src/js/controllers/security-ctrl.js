@@ -30,21 +30,21 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
             $scope.picture.picturebase64,
             $scope.location
         ).then(function(response) {
-            $scope.blockchaindata = response.data;
+            $scope.blockchaindata = response;
             $scope.dataready = true;
             $scope.loading.value = false;
-            var sessions = JSON.parse(localStorage.getItem('sessions'));
-            if (sessions[localStorage.getItem('currentSession')]) {
-                sessions[localStorage.getItem('currentSession')].security = $scope.blockchaindata;
-                sessions[localStorage.getItem('currentSession')].pictures.security = $scope.picture.picturebase64;
-                try {
-                    localStorage.setItem('sessions', JSON.stringify(sessions));
-                } catch (e) {
-                    growl.error('LocalStorage is full, please clean LocalStorage and try again');
+            var session = {
+                security: $scope.blockchaindata,
+                pictures: {
+                    security: $scope.picture.picturebase64
                 }
-            }
-            $scope.submitted = true;
-            $scope.showData = true;
+            };
+            ApiService.updateSession(localStorage.getItem('currentSession'), session).then(function(response) {
+                $scope.submitted = true;
+                $scope.showData = true;
+            }, function() {
+                growl.error('Error saving session');
+            });
         });
     };
 
