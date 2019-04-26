@@ -124,7 +124,7 @@ DB.prototype = {
     var defer = Q.defer();
     console.log('Collection: ' + collection + ' -> query: ', query);
     this.collections[collection].find(query, null).then(function (items) {
-      console.log('Items: ', items);
+      // console.log('Items: ', items);
       if (items[0]){
         defer.resolve(items[0]);
       } else {
@@ -299,7 +299,7 @@ DB.prototype = {
         if (err) {
             defer.reject(err);
         } else {
-          console.log('ITEMS: ', items);
+          // console.log('ITEMS: ', items);
           items = items.docs;
           if (_this.cache) {
             _this.cache.add({

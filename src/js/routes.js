@@ -44,6 +44,11 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider','growlProvi
                 templateUrl: 'templates/registration.html',
                 controller: 'RegistrationCtrl'
             })
+            .state('ticket', {
+                url: '/ticket',
+                templateUrl: 'templates/ticket.html',
+                controller: 'TicketCtrl'
+            })
             .state('travellers', {
                 url: '/travellers',
                 templateUrl: 'templates/travellers.html',

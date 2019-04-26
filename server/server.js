@@ -13,11 +13,14 @@ var express = require('express'),
     collections = require('./db/collections.js'),
     service = require('./services.js');
 
+const cors = require('cors')
+
+
 require('dotenv').config();
 
 var goToLogin = function(req, res) {
   var encodedHost = encodeURIComponent(req.headers.host);
-  res.redirect('https://w3id.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=MDA4MjIxYTktYmFiMC00&response_type=code&scope=openid&state=' + encodedHost);
+  res.redirect('https://w3id.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize?client_id=<redacted>&response_type=code&scope=openid&state=' + encodedHost);
 }
 
 var authMiddleware = function(req, res, next) {
@@ -41,15 +44,15 @@ var authMiddleware = function(req, res, next) {
         url: 'https://w3id.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token',
         form: {
           code: req.query.code,
-          client_id: 'MDA4MjIxYTktYmFiMC00',
-          client_secret: 'ZDEyYjYyODUtZDE0Mi00',
+          client_id: '<redacted>',
+          client_secret: '<redacted>',
           grant_type: 'authorization_code',
           state: hostname
         },
         headers: {
           'Accept': 'application/json',
           'User-Agent': 'UIServer'
-        } 
+        }
       }, function(err,httpResponse,body) {
         if (err) {
           console.log('Error:', err);
@@ -76,7 +79,7 @@ var authMiddleware = function(req, res, next) {
 }
 
 app.use(session({
-    secret: '2C44-4D44-WppQ38S',
+    secret: '<redacted>',
     resave: true,
     saveUninitialized: true
 }));
@@ -95,6 +98,7 @@ app.use(authMiddleware, express.static(__dirname + '/../dist'));
 api.setService(service);
 
 var resources = ['travellers','sessions']
+
 app.use('/api', api.getRouter(resources));
 
 var port = (process.env.VCAP_APP_PORT || 8999);
@@ -103,18 +107,20 @@ var host = (process.env.VCAP_APP_HOST || 'localhost');
 server.listen(port);
 
 
+var testRouter = express.Router();
+testRouter.all('*', cors())
+
+testRouter.get('/', function(req, res){
+  res.json(reason);
+});
+app.use('/errors', testRouter);
 
 DB.connect(collections).then(function() {
   service.setDB(DB);
   init();
 }, function(reason) {
-  var testRouter = express.Router();
-  testRouter.get('/', function(req, res){
-    res.json(reason);
-  });
-  app.use('/errors', testRouter);
   console.log('Error connecting to DB: ' + reason);
-  console.log('Server NOT started.');
+  // console.log('Server NOT started.');
 });
 
 function init() {

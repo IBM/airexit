@@ -41,9 +41,10 @@ service.save = function(collection, data, key) {
     }
     else {
       return service.getOneBy(collection, key, data[key]).then(function(response) {
-        console.log('Response: ', response);
+        // console.log('Response: ', response);
         if (response) {
-          return Q.reject('Entity already exists');
+          // TODO, see if removing the following line breaks anything
+          // return Q.reject('Entity already exists');
         }
       }, function(reason) {
         if (reason == 'Not found.') {

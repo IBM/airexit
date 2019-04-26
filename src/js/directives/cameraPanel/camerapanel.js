@@ -1,4 +1,4 @@
-angular.module('app').directive('cameraPanel', ['$timeout', '$state', cameraPanel]);
+angular.module('app').directive('cameraPanel', ['$timeout', '$state']);
 
 function cameraPanel($timeout, $state) {
 
@@ -18,7 +18,7 @@ function cameraPanel($timeout, $state) {
             tracker.setInitialScale(4);
             tracker.setStepSize(2);
             tracker.setEdgesDensity(0.1);
-            
+
             $scope.status = 'RECORDING';
             $scope.headerOffset = 90 + 64;
             $scope.footerOffset = 74;
@@ -49,7 +49,7 @@ function cameraPanel($timeout, $state) {
                 }
                 $scope.channel.videoHeight = $scope.videoHeight;
                 $scope.channel.videoWidth = channelWidth;
-                
+
                 $scope.focusBox.x = $scope.videoWidth/4;
                 $scope.focusBox.y = $scope.videoHeight*0.125;
                 $scope.focusBox.w = $scope.videoWidth/2;
@@ -141,7 +141,7 @@ function cameraPanel($timeout, $state) {
                             patCanvas.width = _video.width;
                             patCanvas.height = _video.height;
                             var ctxPat = patCanvas.getContext('2d');
-                            
+
                             var idata = getVideoData($scope.focusBox.x, $scope.focusBox.y, $scope.focusBox.w, $scope.focusBox.h);
                             ctxPat.putImageData(idata, 0, 0);
 
@@ -153,7 +153,7 @@ function cameraPanel($timeout, $state) {
                         $scope.$apply();
                     }, 1000);
 
-                    
+
                 }
             };
 

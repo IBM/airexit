@@ -19,9 +19,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="traveller in travellers track by $index" ng-class="{'odd-row' : $odd}">
-                        <td class="text-center">{{traveller._id}}</td>
-                        <td class="text-center">{{traveller.passportInfo.firstName}} {{traveller.passportInfo.lastName}}</td>
-                        <td class="text-center">{{traveller.passportInfo.passportNumber}}</td>
+                        <td class="text-center">{{traveller.passportNumber}}</td>
+                        <td class="text-center">{{traveller.firstName}} {{traveller.lastName}}</td>
+                        <td class="text-center">{{traveller.passportNumber}}</td>
+                        <!-- TODO, add the following vals to our object -->
                         <td class="text-center">{{traveller.reservationInfo.flightNumber}}</td>
                         <td class="text-center">{{traveller.visaInfo.controlNumber}}</td>
                         <td class="text-center" style="padding: 0px;">

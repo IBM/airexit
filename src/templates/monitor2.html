@@ -4,6 +4,7 @@
     <img src="img/tsa-logo.png" style="height: 70px;padding: 10px;float: right;">
     <img src="img/plane-logo.png" style="height: 70px;padding: 10px;float:right;">
 </div>
+
 <div class="row" style="padding: 0px;height: 40px;">
     <div class="col-xs-6" style="z-index: 5px;">
         <entity-selector selected="selectedSession" entities="sessions"></entity-selector>
@@ -18,7 +19,7 @@
 <div class="row" ng-show="selectedSession" style="font-size: 18px; margin-top: 3px;padding: 10px 10px;text-align: center; background-color: #1d4c75; color: white;width: 100%;cursor: default;height: 65px;">
     <div class="btn-group" data-toggle="buttons" style="width: 100%;height:25px;margin: 0;display: block;">
         <span ng-click="selectedOption = 'checkin'" style="cursor: pointer;width:33%;position: absolute;left: 0%;">Check-in</span>
-        <span ng-click="selectedOption = session.security ? 'security' : selectedOption" 
+        <span ng-click="selectedOption = session.security ? 'security' : selectedOption"
               ng-style="{color: session.security ? 'white' : 'darkgrey', cursor: session.security ? 'pointer' : 'default'}"
               style="width:33%;position: absolute;left: 33%;">Passenger Screening</span>
         <span ng-click="selectedOption = session.gatecheck ? 'gatecheck' : selectedOption"
@@ -29,13 +30,13 @@
         <span ng-click="selectedOption = 'checkin'" style="cursor: pointer;width: 33%;position: absolute;left: 0%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'checkin', 'fa-circle': selectedOption == 'checkin'}"></span>
         </span>
-        <div ng-if="session.security" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(16.5% + 7px);position: absolute;top: 11px;"></div>
+        <div ng-if="session.reservation.status == 'security'" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(16.5% + 7px);position: absolute;top: 11px;"></div>
         <span ng-click="selectedOption = session.security ? 'security' : selectedOption"
               ng-style="{color: session.security ? 'white' : 'darkgrey', cursor: session.security ? 'pointer' : 'default'}"
               style="width: 33%;position: absolute;left: 33%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'security', 'fa-circle': selectedOption == 'security'}"></span>
         </span>
-        <div ng-if="session.gatecheck" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(49.5% + 7px);position: absolute;top: 11px;"></div>
+        <div ng-if="session.reservation.status == 'gatecheck'" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(49.5% + 7px);position: absolute;top: 11px;"></div>
         <span ng-click="selectedOption = session.gatecheck ? 'gatecheck' : selectedOption"
               ng-style="{color: session.gatecheck ? 'white' : 'darkgrey', cursor: session.gatecheck ? 'pointer' : 'default'}"
               style="width: 33%;position: absolute;left: 66%;">
@@ -43,10 +44,19 @@
         </span>
     </div>
 </div>
-<div ng-if="session && session[selectedOption]" class="col-xs-12" style="margin: 10px 0 0 0;">
+<span>session</span></br>
+<span>{{session}}</span >
+
+<!-- <span>session.reservation.status</span >
+<span>{{session.reservation.status}}</span >
+<span>selectedOption</span>
+<span>{{selectedOption}}</span> -->
+
+<div ng-if="session && selectedSession " class="col-xs-12" style="margin: 10px 0 0 0;">
     <div class="col-xs-4" style="padding-right: 10px;padding-left: 0px;">
         <div ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
-            <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session[selectedOption].shared"></shared-data-viewer>
+            <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session"></shared-data-viewer>
+            <!-- <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session"></shared-data-viewer> -->
         </div>
     </div>
     <div class="col-xs-8" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
@@ -65,11 +75,11 @@
             <div class="col-xs-5" style="padding: 0 30px;">
                 <small>Reservation info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Reservation Number:</small> {{session[selectedOption].cbp.reservationInfo.reservationNumber}}</li>
+                    <li class="list-group-item"><small>Reservation Number:</small> {{session.reservation.id}}</li>
                 </ul>
                 <small>TSA info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus}}</li>
+                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus }}</li>
                 </ul>
             </div>
             <div class="col-xs-5" style="padding: 0 30px;">
@@ -145,4 +155,3 @@
         </div>
     </div>
 </div>
-

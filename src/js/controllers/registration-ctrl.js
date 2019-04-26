@@ -5,18 +5,23 @@ angular
 function RegistrationCtrl($scope, $state, ApiService, growl) {
     $scope.loading = false;
 
-    $scope.traveller = {
-        passportInfo: {},
-        reservationInfo: {},
-        visaInfo: {}
-    };
+    // $scope.traveller = {
+    //     passportInfo: {},
+    //     reservationInfo: {},
+    //     visaInfo: {}
+    // };
 
+    $scope.passportInfo = {}
+    $scope.picture = {
+        picturebase64: ''
+    };
     $scope.accept = function() {
-        console.log('Model: ', $scope.traveller);
-        $scope.traveller.uuid = $scope.traveller.passportInfo.passportNumber;
-        ApiService.registerTraveller($scope.traveller).then(function(response) {
+        console.log('Model: ', $scope.passportInfo);
+        // $scope.traveller.uuid = $scope.traveller.passportInfo.passportNumber;
+        ApiService.registerTraveller($scope.passportInfo, $scope.picture.picturebase64).then(function(response) {
+            console.log("registering traveller")
             growl.success('Traveller registered succesfully');
-            $state.transitionTo('index');  
+            $state.transitionTo('index');
         }, function(reason) {
             growl.error('Error: ' + reason.error);
         });
