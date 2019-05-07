@@ -311,10 +311,7 @@ func (ae *airexitChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-
-
 		// TODO, perhaps reservation shouldn't be a seperate entity
-
 		return shim.Success([]byte("Reservation successfully added!"))
 	}
 

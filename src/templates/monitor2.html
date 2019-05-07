@@ -16,23 +16,25 @@
         <button class="btn btn-primary text-center" ng-disabled="!selectedSession" ng-click="deleteSession(selectedSession.id)"><i class="fa fa-trash"></i></button>
     </div>
 </div>
+
 <div class="row" ng-show="selectedSession" style="font-size: 18px; margin-top: 3px;padding: 10px 10px;text-align: center; background-color: #1d4c75; color: white;width: 100%;cursor: default;height: 65px;">
     <div class="btn-group" data-toggle="buttons" style="width: 100%;height:25px;margin: 0;display: block;">
         <span ng-click="selectedOption = 'checkin'" style="cursor: pointer;width:33%;position: absolute;left: 0%;">Check-in</span>
         <span ng-click="selectedOption = session.security ? 'security' : selectedOption"
-              ng-style="{color: session.security ? 'white' : 'darkgrey', cursor: session.security ? 'pointer' : 'default'}"
+              ng-style="{color: session.reservation.status == 'screen' ? 'white' : 'darkgrey', cursor: session.reservation.status == 'screen' ? 'pointer' : 'default'}"
               style="width:33%;position: absolute;left: 33%;">Passenger Screening</span>
         <span ng-click="selectedOption = session.gatecheck ? 'gatecheck' : selectedOption"
-              ng-style="{color: session.gatecheck ? 'white' : 'darkgrey', cursor: session.gatecheck ? 'pointer' : 'default'}"
+              ng-style="{color: session.reservation.status == 'gate' ? 'white' : 'darkgrey', cursor: session.reservation.status == 'gate' ? 'pointer' : 'default'}"
               style="width:33%;position: absolute;left: 66%;"> Departure Gate</span>
     </div>
+
     <div class="btn-group" data-toggle="buttons" style="width: 100%;display: block;">
         <span ng-click="selectedOption = 'checkin'" style="cursor: pointer;width: 33%;position: absolute;left: 0%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'checkin', 'fa-circle': selectedOption == 'checkin'}"></span>
         </span>
-        <div ng-if="session.reservation.status == 'security'" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(16.5% + 7px);position: absolute;top: 11px;"></div>
-        <span ng-click="selectedOption = session.security ? 'security' : selectedOption"
-              ng-style="{color: session.security ? 'white' : 'darkgrey', cursor: session.security ? 'pointer' : 'default'}"
+        <div ng-if="session.reservation.status == 'screen'" style="border-top: 3px solid white; width: calc(33% - 14px);left: calc(16.5% + 7px);position: absolute;top: 11px;"></div>
+        <span ng-click="selectedOption = 'screen'"
+              ng-style="{color: selectedOption == 'screen' ? 'white' : 'darkgrey', cursor: selectedOption == 'screen' ? 'pointer' : 'default'}"
               style="width: 33%;position: absolute;left: 33%;">
             <span class="fa" ng-class="{'fa-circle-thin': selectedOption != 'security', 'fa-circle': selectedOption == 'security'}"></span>
         </span>
@@ -44,9 +46,6 @@
         </span>
     </div>
 </div>
-<span>session</span></br>
-<span>{{session}}</span >
-
 <!-- <span>session.reservation.status</span >
 <span>{{session.reservation.status}}</span >
 <span>selectedOption</span>
@@ -55,9 +54,7 @@
 <div ng-if="session && selectedSession " class="col-xs-12" style="margin: 10px 0 0 0;">
     <div class="col-xs-4" style="padding-right: 10px;padding-left: 0px;">
         <div ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;overflow: auto;">
-            <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session"></shared-data-viewer>
-            <!-- <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session"></shared-data-viewer> -->
-        </div>
+            <shared-data-viewer picture="session.pictures[selectedOption]" shareddata="session[selectedOption]" userinfo="session"></shared-data-viewer>        </div>
     </div>
     <div class="col-xs-8" ng-style="{height: dataHeight}" style="text-align: left; background-color: #83bff3;padding: 10px;">
         <div class="row" style="margin: 0px;">
@@ -79,7 +76,7 @@
                 </ul>
                 <small>TSA info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus }}</li>
+                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus || "Y" }}</li>
                 </ul>
             </div>
             <div class="col-xs-5" style="padding: 0 30px;">
@@ -91,11 +88,11 @@
                 </ul>
                 <small>CBP Info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Global Entry Indicator:</small> {{session[selectedOption].cbp.cbpInfo.globalEntryIndicator}}
-                        <span style="float: right;"><small>Known Traveler Number:</small> {{session[selectedOption].cbp.cbpInfo.ktn}}
+                    <li class="list-group-item"><small>Global Entry Indicator:</small> {{session[selectedOption].cbp.cbpInfo.globalEntryIndicator || "N/A"}}
+                        <span style="float: right;"><small>Known Traveler Number:</small> {{session[selectedOption].cbp.cbpInfo.ktn || "N/A"}}
                     </li>
-                    <li class="list-group-item"><small>No Fly Indicator:</small> {{session[selectedOption].cbp.cbpInfo.noFlyIndicator}}
-                        <span style="float: right;"><small>Threat Level:</small> {{session[selectedOption].cbp.cbpInfo.threatLevel}}
+                    <li class="list-group-item"><small>No Fly Indicator:</small> {{session[selectedOption].cbp.cbpInfo.noFlyIndicator || "N"}}
+                        <span style="float: right;"><small>Threat Level:</small> {{session[selectedOption].cbp.cbpInfo.threatLevel || "Green"}}
                     </li>
                 </ul>
             </div>
@@ -106,26 +103,26 @@
             <div class="col-xs-5" style="padding: 0 30px;">
                 <small>TSA PreCheck</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Indicator:</small> {{session[selectedOption].tsa.tsaPreCheck.indicator}}</li>
+                    <li class="list-group-item"><small>Indicator:</small> {{session[selectedOption].tsa.tsaPreCheck.indicator || "N"}}</li>
                 </ul>
                 <small>CBP Info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Global Entry Indicator:</small> {{session[selectedOption].cbp.cbpInfo.globalEntryIndicator}}</li>
+                    <li class="list-group-item"><small>Global Entry Indicator:</small> {{session[selectedOption].cbp.cbpInfo.globalEntryIndicator || "N"}}</li>
                 </ul>
             </div>
             <div class="col-xs-5" style="padding: 0 30px;">
                 <small>Reservation info</small>
                 <ul class="list-group-small">
                     <li class="list-group-item"><small>Ticket Number:</small> {{session[selectedOption].airline.reservationInfo.ticketNumber}}
-                        <span style="float: right;"><small>Reservation Number:</small> {{session[selectedOption].airline.reservationInfo.reservationNumber}}
+                        <span style="float: right;"><small>Reservation Number:</small> {{session[selectedOption].airline.reservationInfo.reservationNumber || session.reservation.id}}
                     </li>
-                    <li class="list-group-item"><small>Group:</small> {{session[selectedOption].airline.reservationInfo.boardingGroup}}
-                        <span style="float: right;"><small>Class:</small> {{session[selectedOption].airline.reservationInfo.class}}</span>
+                    <li class="list-group-item"><small>Group:</small> {{session[selectedOption].airline.reservationInfo.boardingGroup || "4"}}
+                        <span style="float: right;"><small>Class:</small> {{session[selectedOption].airline.reservationInfo.class || "E"}}</span>
                     </li>
-                    <li class="list-group-item"><small>Seat: </small>{{session[selectedOption].airline.reservationInfo.seatNumber}}
-                        <span style="float: right;"><small>Special Needs:</small> {{session[selectedOption].airline.reservationInfo.specialNeeds}}</span>
+                    <li class="list-group-item"><small>Seat: </small>{{session[selectedOption].airline.reservationInfo.seatNumber || "8B"}}
+                        <span style="float: right;"><small>Special Needs:</small> {{session[selectedOption].airline.reservationInfo.specialNeeds || "N"}}</span>
                     </li>
-                    <li class="list-group-item"><small>Frequent Flyer Number:</small> {{session[selectedOption].airline.reservationInfo.frequentFlyerNumber}}
+                    <li class="list-group-item"><small>Frequent Flyer Number:</small> {{session[selectedOption].airline.reservationInfo.frequentFlyerNumber || ""}}
                     </li>
                 </ul>
             </div>
@@ -146,10 +143,10 @@
             <div class="col-xs-5" style="padding: 0 30px;">
                 <small>TSA info</small>
                 <ul class="list-group-small">
-                    <li class="list-group-item"><small>Enhanced Screening:</small> {{session[selectedOption].tsa.tsaInfo.enhancedScreening}}
-                        <span style="float: right;"><small>Known Traveler Number:</small> {{session[selectedOption].tsa.tsaInfo.ktn}}
+                    <li class="list-group-item"><small>Enhanced Screening:</small> {{session[selectedOption].tsa.tsaInfo.enhancedScreening || "N"}}
+                        <span style="float: right;"><small>Known Traveler Number:</small> {{session[selectedOption].tsa.tsaInfo.ktn || session.passportNumber }}
                     </li>
-                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus}}</li>
+                    <li class="list-group-item"><small>Secure Flight Status:</small> {{session[selectedOption].tsa.tsaInfo.secureFlightStatus || "Y"}}</li>
                 </ul>
             </div>
         </div>

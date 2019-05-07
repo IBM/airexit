@@ -7,6 +7,8 @@ import json
 import numpy as np
 from flask import Flask, jsonify, request, redirect, Response
 from flask_cors import CORS
+import io
+import base64
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -16,10 +18,6 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# encoded_images = {
-#     # "$passport_num": "encoded image"
-# }
 
 # load cached file on boot
 print("Loading cached images")
@@ -54,33 +52,31 @@ def register_image(passport_num):
     print(request)
     print(request.files)
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if request.data:
+            print("request payload received")
+            image_str = request.data.decode("utf-8").split(',')[1]
+            decoded_image = face_recognition.load_image_file(io.BytesIO(base64.b64decode(image_str)))
+            encoded_user_image = face_recognition.face_encodings(decoded_image)[0]
+        elif request.files['file'] and allowed_file(file.filename):
+            file = request.files['file']
             # The image file seems valid! Detect faces and return the result.
             user_image = face_recognition.load_image_file(file)
-            encoded_images[passport_num] = face_recognition.face_encodings(
-                user_image)[0]
-            print(encoded_images)
-            save_images()
-            return Response("{'message':'new face encoded for passport" +
-                            passport_num + "'}",
-                            status=201,
-                            mimetype='application/json')
+            encoded_user_image = face_recognition.face_encodings(user_image)[0]
+        print(encoded_images)
+        save_images()
+        return Response("{\"message\":\"new passport encoded\"}",
+                        status=201,
+                        mimetype='application/json')
             #
             # return detect_faces_in_image(file)
-
     # If no valid image file was uploaded, show the file upload form:
     return Response(
-        "{'message':'invalid request, please confirm posted image is valid'}",
+        "{\"message\":\"invalid request, please confirm posted image is valid\"}",
         status=400,
         mimetype='application/json')
 
 
-threshold = 0.6  # the lower the number, the more strict comparison
+threshold = 0.5  # the lower the number, the more strict comparison
 
 
 # https://github.com/ageitgey/face_recognition/blob/master/examples/face_distance.py#L3:#L11
@@ -88,50 +84,39 @@ threshold = 0.6  # the lower the number, the more strict comparison
 def compare_image(passport_num):
     # Check if a valid image file was uploaded
     if request.method == 'POST':
-        # if 'file' not in request.files:
-        #     return redirect(request.url)
-        print(dir(request))
-        print(request.data)
-        file = request.files['file']
-        # if file.filename == '':
-        #     return redirect(request.url)
-        if file and allowed_file(file.filename):
-            print("comparing faces")
+        if request.data:
+            print("request payload received")
+            image_str = request.data.decode("utf-8").split(',')[1]
+            decoded_image = face_recognition.load_image_file(io.BytesIO(base64.b64decode(image_str)))
+            encoded_user_image = face_recognition.face_encodings(decoded_image)[0]
+        elif request.files['file'] and allowed_file(file.filename):
+            file = request.files['file']
             # The image file seems valid! Detect faces and return the result.
             user_image = face_recognition.load_image_file(file)
             encoded_user_image = face_recognition.face_encodings(user_image)[0]
-            face_distance = face_recognition.face_distance(
-                [encoded_images[passport_num]], encoded_user_image)
-            print("face_distance")
-            print(face_distance)
-            if face_distance < threshold:
-                res = Response("{'message':'faces match'}",
-                                status=200,
-                                mimetype='application/json')
-                res.headers.add('Access-Control-Allow-Origin', '*')
-                return res
-            else:
-                res = Response("{'message':'faces do not match'}",
-                                status=406,
-                                mimetype='application/json')
-                res.headers.add('Access-Control-Allow-Origin', '*')
-                return res
+        print("comparing faces")
+        face_distance = face_recognition.face_distance(
+            [encoded_images[passport_num]], encoded_user_image)
+        print("face_distance")
+        print(face_distance)
+        if face_distance < threshold:
+            res = Response("{\"message\":\"faces match\"}",
+                            status=200,
+                            mimetype='application/json')
+            res.headers.add('Access-Control-Allow-Origin', '*')
+            return res
+        else:
+            res = Response("{\"message\":\"faces do not match\"}",
+                            status=406,
+                            mimetype='application/json')
+            res.headers.add('Access-Control-Allow-Origin', '*')
+            return res
     res = Response(
         "{'message':'invalid request, please confirm posted image is valid'}",
         status=400,
         mimetype='application/json')
     res.headers.add('Access-Control-Allow-Origin', '*')
     return res
-    # If no valid image file was uploaded, show the file upload form:
-    # return '''
-    # <!doctype html>
-    # <title>Is this a picture of Obama?</title>
-    # <h1>Upload a picture and see if it's a picture of Obama!</h1>
-    # <form method="POST" enctype="multipart/form-data">
-    #   <input type="file" name="file">
-    #   <input type="submit" value="Upload">
-    # </form>
-    # '''
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=9000) #, debug=True)

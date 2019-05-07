@@ -12,6 +12,8 @@ function RegistrationCtrl($scope, $state, ApiService, growl) {
     // };
 
     $scope.passportInfo = {}
+
+    $scope.passportInfo = {}
     $scope.picture = {
         picturebase64: ''
     };
@@ -20,6 +22,7 @@ function RegistrationCtrl($scope, $state, ApiService, growl) {
         // $scope.traveller.uuid = $scope.traveller.passportInfo.passportNumber;
         ApiService.registerTraveller($scope.passportInfo, $scope.picture.picturebase64).then(function(response) {
             console.log("registering traveller")
+            console.log($scope.passportInfo)
             growl.success('Traveller registered succesfully');
             $state.transitionTo('index');
         }, function(reason) {

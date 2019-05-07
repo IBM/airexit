@@ -5,7 +5,8 @@ function sharedDataViewer() {
     var directive = {
         scope: {
             shareddata: '=',
-            picture: '='
+            picture: '=',
+            userinfo: '='
         },
         controller: ['$scope', function($scope) {
         }],

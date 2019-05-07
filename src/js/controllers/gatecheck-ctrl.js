@@ -18,7 +18,7 @@ function GateCheckCtrl($scope, $state, ApiService,$timeout, growl) {
     };
 
     $scope.picture = {
-        picturebase64: '' 
+        picturebase64: ''
     };
 
     $scope.onSubmit = function() {
@@ -28,7 +28,7 @@ function GateCheckCtrl($scope, $state, ApiService,$timeout, growl) {
             'airline',
             $scope.selectedTraveller,
             $scope.picture.picturebase64,
-            $scope.location 
+            $scope.location
         ).then(function(response) {
             $scope.blockchaindata = response.data;
             $scope.dataready = true;
@@ -53,5 +53,3 @@ function GateCheckCtrl($scope, $state, ApiService,$timeout, growl) {
     };
 
 }
-
-

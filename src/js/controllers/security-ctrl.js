@@ -6,7 +6,7 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
 
     $scope.selectedTraveller = JSON.parse(localStorage.getItem('travellerSelected'));
     if ($scope.selectedTraveller) {
-        $scope.travellerName = $scope.selectedTraveller.passportInfo.firstName + ' ' + $scope.selectedTraveller.passportInfo.lastName;
+        $scope.travellerName = $scope.selectedTraveller.firstName + ' ' + $scope.selectedTraveller.lastName;
     }
 
     $scope.location = 'TSA-G01';
@@ -69,8 +69,8 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
         $scope.loading.value = true;
         ApiService.submit(
             'screen',
-            'tsa',
-            $scope.selectedTraveller,
+            'TSA',
+            $scope.selectedTraveller.id,
             $scope.picture.picturebase64,
             $scope.location,
             "4568"
@@ -78,18 +78,23 @@ function SecurityCtrl($scope, $state, ApiService, $timeout, growl) {
             $scope.blockchaindata = response;
             $scope.dataready = true;
             $scope.loading.value = false;
-            var session = {
-                security: $scope.blockchaindata,
-                pictures: {
-                    security: $scope.picture.picturebase64
-                }
-            };
-            ApiService.updateSession(localStorage.getItem('currentSession'), session).then(function(response) {
-                $scope.submitted = true;
-                $scope.showData = true;
-            }, function() {
-                growl.error('Error saving session');
-            });
+            // var session = {
+            //     security: $scope.blockchaindata,
+            //     pictures: {
+            //         security: $scope.picture.picturebase64
+            //     }
+            // };
+            localStorage.setItem("screenpic", $scope.picture.picturebase64)
+
+            $scope.submitted = true;
+            $scope.showData = true;
+
+            // ApiService.updateSession(localStorage.getItem('currentSession'), session).then(function(response) {
+            //     $scope.submitted = true;
+            //     $scope.showData = true;
+            // }, function() {
+            //     growl.error('Error saving session');
+            // });
         });
     };
 

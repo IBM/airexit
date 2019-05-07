@@ -10,7 +10,6 @@ function Monitor2Ctrl($scope, $state, ApiService, growl) {
     $scope.session = null;
     $scope.dataready = false;
     $scope.headerOffset = 210;
-
     var load = function() {
         // ApiService.getSessions().then(function(sessions) {
         //     $scope.session = localStorage.getItem('sessionSelected') ? JSON.parse(localStorage.getItem('sessionSelected')) : null;
@@ -40,13 +39,32 @@ function Monitor2Ctrl($scope, $state, ApiService, growl) {
         })
         */
         ApiService.getPassengers().then(function(response) {
-            $scope.session = localStorage.getItem('sessionSelected') ? JSON.parse(localStorage.getItem('sessionSelected')) : null;
+            // TODO, uncomment below line
+            // $scope.session = localStorage.getItem('sessionSelected') ? JSON.parse(localStorage.getItem('sessionSelected')) : null;
+
+            var eventTypes = ["checkin", "security", "gate"]
 
             if (response.data) {
               JSON.parse(response.data).map((passenger) => {
+                var events = passenger['Record'].reservation.Events
+                console.log("events")
+                console.log(events)
+                var checkInEvents = events.filter(event => event.eventType == "checkin")
+                var securityEvents = events.filter(event => event.eventType == "screen")
+
+                var checkInImage = checkInEvents[checkInEvents.length - 1]['faceImage']
+                // localStorage.setItem('sessionSelected', JSON.stringify($scope.session));
+//
                 var pass = Object.assign(passenger['Record'], {
                   name: passenger['Record'].firstName + " " + passenger['Record'].lastName,
-                  id: passenger['Record'].passportNumber
+                  id: passenger['Record'].passportNumber,
+                  pictures: {
+                    "checkin": localStorage.getItem("checkinpic"),
+                    "screen": localStorage.getItem("screenpic"),
+                    "gate": localStorage.getItem("gatepic")
+                  },
+                  checkin: (checkInEvents[checkInEvents.length - 1 ] || []),
+                  "screen": (securityEvents[securityEvents.length - 1 ] || [])
                   // cbp: {
                   //   reservationInfo: {
                   //     reservationNumber: 2
@@ -63,6 +81,7 @@ function Monitor2Ctrl($scope, $state, ApiService, growl) {
 
                 })
                 $scope.sessions.push(pass)
+                // $scope.session.pictures['checkin'] = localStorage.getItem("checkinpic")
                 if ($scope.session && passenger.passportNumber == $scope.session.id) {
                   $scope.selectedSession = pass;
                 }
@@ -106,6 +125,7 @@ function Monitor2Ctrl($scope, $state, ApiService, growl) {
     $scope.$watch('selectedSession', function(ov, nv) {
         if (ov != nv && $scope.selectedSession) {
             $scope.session = $scope.sessionsById[$scope.selectedSession.id];
+            // $scope.session.pictures['checkin'] = $scope.session.reservation.Events[1]['faceImage']
             localStorage.setItem('sessionSelected', JSON.stringify($scope.session));
             $scope.dataready = true;
         }

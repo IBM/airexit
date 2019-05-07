@@ -23,7 +23,7 @@
                         <td class="text-center">{{traveller.firstName}} {{traveller.lastName}}</td>
                         <td class="text-center">{{traveller.passportNumber}}</td>
                         <!-- TODO, add the following vals to our object -->
-                        <td class="text-center">{{traveller.reservationInfo.flightNumber}}</td>
+                        <td class="text-center">{{traveller.reservation.partnerID}} {{traveller.reservation.flightNumber}}</td>
                         <td class="text-center">{{traveller.visaInfo.controlNumber}}</td>
                         <td class="text-center" style="padding: 0px;">
                             <span title="Edit" class="btn" ng-click="openEditModal(traveller)"><i class="fa fa-pencil"></i></span>

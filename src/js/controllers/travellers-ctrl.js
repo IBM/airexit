@@ -27,7 +27,6 @@ function TravellersCtrl($scope, $state, ApiService, growl) {
                 })
               );
             })
-
             $scope.loading.value = false;
           }
         }, function() {

@@ -12,8 +12,9 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
         value: false
     };
     $scope.submitted = false;
-
-    $scope.location = 'MT-BAW-001';
+    $scope.retry = false;
+    $scope.location = 'LAX-T-03';
+    $scope.session = {}
 
     $scope.picture = {
         picturebase64: ''
@@ -64,34 +65,38 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
     });
 
     $scope.dataready = false;
-
+    // $scope.$ = $;
     $scope.onSubmit = function() {
-
-        console.log($scope.selectedTraveller)
-        console.log("selectedTraveller.id")
-        console.log($scope.selectedTraveller.id)
-
+        var popup = angular.element("#proceedModal");
+      // popup.modal('show');
         $scope.loading.value = true;
         try {
+            console.log("setting traveller to localstorage")
+            console.log(JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]))
             localStorage.setItem('travellerSelected', JSON.stringify($scope.travellersById[$scope.selectedTraveller.id]));
         } catch (e) {
             growl.error('LocalStorage is full, please clean LocalStorage and try again');
         }
         // console.log($scope.travellersById[$scope.selectedTraveller.id].reservationNumber)
-        $scope.showData = true;
+        // $scope.showData = true;
+        // $scope.showCheckin = true;
         ApiService.submit(
           'checkin',
           'airline',
           $scope.selectedTraveller.id, // $scope.travellersById[$scope.selectedTraveller.id],
           $scope.picture.picturebase64,
           $scope.location,
-          "4568"
+          "4568" // reservation id
         ).then(function(response) {
-            $scope.session.pictures = {
-              checkin: $scope.picture.picturebase64
-            }
-            // upload base64 image to
-
+            // TODO, set image in localStorage
+            // localStorage.setItem('sessionSelected', JSON.stringify($scope.session));
+            localStorage.setItem("checkinpic", $scope.picture.picturebase64)
+            console.log("face matches, proceed to next checkpoint")
+            // TODO, TODO, maybe add time delay to show modal, render scope based off face rec response
+            // $scope.session.pictures = {
+            //   checkin: $scope.picture.picturebase64
+            // }
+            // $scope.checkinpic =
 
             /*
             $scope.blockchaindata = response;
@@ -120,12 +125,45 @@ function CheckinCtrl($scope, $state, ApiService, $timeout, growl) {
             }, function() {
                 growl.error('Error adding session');
             });*/
+            $scope.showData = true;
+            $scope.showCheckin = true;
+            $scope.submitted = true;
+            popup.modal('show')
 
-        });
+            var modalInstance = $uibModal.open({
+              animation: $scope.animationsEnabled,
+              templateUrl: 'myModalContent.html',
+              controller: 'ModalInstanceCtrl',
+              size: size,
+              resolve: {
+                items: function () {
+                  return $scope.items;
+                }
+              }
+            });
+            // $scope.dataready = true;
+        }).catch( (err) => {
+          console.log("face didn't match")
+          console.log(err)
+          $scope.failCheckIn = true;
+          // $scope.submitted = true;
+          $scope.retry = true;
+          /*
+          $scope.dataready = false;
+          // $scope.showCheckin = false;
+          $scope.showData = false;
+          $scope.videoReady = true;
+          $scope.submitted = false;
+          */
+
+        } ) ;
     };
 
     $scope.onNext = function() {
         $state.transitionTo('security');
     };
+
+    $scope.reloadPage = function(){window.location.reload();}
+
 
 }
