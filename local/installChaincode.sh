@@ -32,7 +32,7 @@ $docker_invoke_prefix '{"Args":["init_reservation", "lg7cl24xrhjusya3yx", "1234"
 sleep 2
 $docker_invoke_prefix '{"Args":["add_event", "123456", "041819", "delta", "checkin", "LAX", "1234", "faceinfo", "res1"]}'
 sleep 2
-$docker_invoke_prefix '{"Args":["get_everything"]}'
+# $docker_invoke_prefix '{"Args":["get_everything"]}'
 
 # echo "Install and Instantiate Chaincode"
 # docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" cli peer chaincode install -n airexit -v 1.0 -p github.com/airexit

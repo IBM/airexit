@@ -4,15 +4,17 @@ In this code pattern, we'll demonstrate how to leverage blockchain technology an
 
 This is achieved here by tracking the status of a traveller, and storing all related updates on a blockchain ledger. As users go through each flight checkpoint, such as retrieving their ticket, checking in to security, etc, the application will receive some biometric data, such as an image of their face, iris, or fingerprint. The biometric data is then validated, and the check-in event is then stored on a blockchain.
 
-<img src="https://i.imgur.com/JV9qO6A.png">
+<img src="https://developer.ibm.com/developer/patterns/blockchain-implement-automated-airport-security-control-system/images/arch.png">
 
 # Steps
 
 1. [Provision Cloud Services](#1-provision-cloud-services)
 2. [Clone Git Repository](#2-clone-git-repository)
-3. [Deploy Blockchain Ledger](#3-deploy-blockchain-ledger)
-4. [Deploy Node.js application](#4-deploy-cloud-services)
-5. [Populate Ledger and Simulate Transactions](#5-populate-ledger-and-simulate-transactions)
+3. [Package Smart Contract](#3-package-smart-contract)
+4. [Deploy Blockchain Ledger](#4-deploy-blockchain-ledger)
+5. [Deploy Facial Comparison Service](#5-deploy-facial-comparison-service)
+6. [Deploy Node.js application](#6-deploy-cloud-services)
+7. [Populate Ledger and Simulate Transactions](#7-populate-ledger-and-simulate-transactions)
 
 ## Install Prerequisites:
 
@@ -57,13 +59,13 @@ git clone https://github.com/IBM/airexit/
 ```
 
 
-## 2. Package Smart Contract
+## 3. Package Smart Contract
 
-We'll interact with VSCode via a graphic interface. If you're running on Linux or a headless operating system, or would prefer to manage the network manually via shell scripts, please skip ahead to the section labelled "Local Scripts".
+We'll interact with VSCode via a graphic interface. If you're running on Linux or a headless operating system, or would prefer to manage the network manually via shell scripts, please skip ahead to the section labelled "Deploy Blockchain Ledger" [section](#4-deploy-blockchain-ledger) 
 
 These smart contracts are written in Golang, so the source code for the smart contracts will need to be copied to the src folder in your `GOPATH`. This can be done like so.
 ```
-mkdir $GOPATH/src/github.com/airexit
+mkdir -p $GOPATH/src/github.com/airexit
 cp chaincode/*go $GOPATH/src/github.com/airexit/
 ```
 
@@ -83,7 +85,7 @@ airexit_chaincode.go airexit_chaincode_certs.go
 
 <img src="https://i.imgur.com/wk7fQX5.png">
 
-- Enter a name and version. Here we'll use "food" and "1.0".
+- Enter a name and version. Here we'll use "airexit" and "1.0".
 
 - Select the "IBM Blockchain Platform" button on the left hand menu
 
@@ -91,30 +93,9 @@ airexit_chaincode.go airexit_chaincode_certs.go
 
 <img src="https://i.imgur.com/mysot6o.png">
 
-## 3. Deploy a Blockchain Network
+## 4. Deploy a Blockchain Network
 
 We'll then need to deploy an Hyperledger network. This is done by provisioning each component in a docker container, and running configuration scripts to create and join a peer and channel. There are two methods to do so, and we'll need to only do one or the other.
-
- The first recommended method is using the "VSCode" application.
-
-*VSCode*
-- Select the menu in the "Local Fabric Ops" section, and click "Start Fabric Runtime". This downloads and starts the Hyperledger docker images.
-
-<img src="https://i.imgur.com/N8r1QLm.png">
-
-- If the network is started successfully, we should see options to "Instantiate" and "Install" the smart contracts.
-
-<img src="https://i.imgur.com/MIxQNE0.png">
-
-- First, click "Install", select the default peer (`peer0.org1.example.com`), and then select the name of the contract we've just built, which will be "food@1.0" in our case. If this is successful, our chaincode should show up in the "Installed" section.
-<img src="https://i.imgur.com/vLaW1pi.png">
-
-- Next, click "Instantiate", select the default channel (`mychannel`), and then select the name of the contract we've just built, which will be "food@1.0" in our case. Enter `Init` for the function, and enter an integer "101" as the argument. This Init function is called whenever chaincode is being instantiated or upgraded, and initializes the application state. More information can be found on the Init method and other Chaincode inferface methods [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/chaincode4ade.html#chaincode-api)
-
-<img src="https://i.imgur.com/2fQXQU4.png">
-
-- After the chaincode is installed and instantiated, we should see the following output in the Local Fabric Ops section
-<img src="https://i.imgur.com/mOb6JFw.png">
 
 <!--
 A local Hyperledger Fabric network can be deployed by running the following commands.
@@ -132,7 +113,7 @@ After the network is up and running, we'll need to install the "Smart Contracts"
 
 *Local Scripts*
 
-As an alternative to VSCode, we can also use the Hyperledger fabric scripts to provision a network like so.
+We can use the Hyperledger fabric scripts to provision a network like so.
 ```
 cd local
 ./startFabric.sh
@@ -148,6 +129,26 @@ Next, we'll need to install the "Smart Contracts" / "Chaincode", which are a ser
 ```
 
 The install script should result in the following output. Confirm that all status codes have the value of "200" and "OK"
+
+*VSCode*
+
+- Select the menu in the "Local Fabric Ops" section, and click "Start Fabric Runtime". This downloads and starts the Hyperledger docker images.
+
+<img src="https://i.imgur.com/N8r1QLm.png">
+
+- If the network is started successfully, we should see options to "Instantiate" and "Install" the smart contracts.
+
+<img src="https://i.imgur.com/MIxQNE0.png">
+
+- First, click "Install", select the default peer (`peer0.org1.example.com`), and then select the name of the contract we've just built, which will be "airexit@1.0" in our case. If this is successful, our chaincode should show up in the "Installed" section.
+<img src="https://i.imgur.com/vLaW1pi.png">
+
+- Next, click "Instantiate", select the default channel (`mychannel`), and then select the name of the contract we've just built, which will be "airexit@1.0" in our case. Enter `Init` for the function, and enter an integer "101" as the argument. This Init function is called whenever chaincode is being instantiated or upgraded, and initializes the application state. More information can be found on the Init method and other Chaincode inferface methods [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/chaincode4ade.html#chaincode-api)
+
+<img src="https://i.imgur.com/2fQXQU4.png">
+
+- After the chaincode is installed and instantiated, we should see the following output in the Local Fabric Ops section
+<img src="https://i.imgur.com/mOb6JFw.png">
 <!-- <img src="https://i.imgur.com/z3vV9A9.png"> -->
 
 <!-- After the chaincode has been installed, we can run a sample chaincode invocation to confirm things are configured properly. This can be done by using the `docker exec` command, and providing arguments to target our hyperledger network and invoke the `read_everything` function. This should return a 200 status code and a JSON object with `products`, `retailer`, and `regulator` keys.
@@ -156,9 +157,41 @@ The install script should result in the following output. Confirm that all statu
 docker exec cli peer chaincode invoke -o orderer.example.com:7050 -C mychannel -n food -c '{"Args":["read_everything"]}'
 ``` -->
 
+## 5. Deploy Facial Comparison Service
+To validate a passenger's biometric identity, we can simply start the service in a docker container like so
 
+```
+docker run -it -p 9000:9000 kkbankol/face_recognition python ~/face_recognition/server.py
+```
 
-## 4. Deploy Node.js application
+This will start a Flask server that accepts images via a POST request, and has the ability to compare two facial images using the [facial_recognition](https://github.com/ageitgey/face_recognition) library.
+
+Once the container is up, we can test the facial comparison service with curl.
+
+We'll start by submitting a picture to be registered with the service. Note the number at the end of the register endpoint is the passport number or driver's license ID.
+```
+curl -X POST localhost:9000/register/1234 -F "file=@${image_path}"
+```
+And then comparing a different image like so
+```
+curl -X POST localhost:9000/compare/1234 -F "file=@${compared_image_path}"
+```
+
+If a similar facial structure is detected, we'll get a HTTP `200 OK` response, also with a payload `{'message':'faces match'}`
+
+Otherwise, we'll get a `406 NOT ACCEPTABLE` response, with the payload `{'message':'faces do not match'}`
+
+In a separate tab, you can run `docker logs $(docker ps -lq)` to view the logs of the latest container. The logs should look like so
+```
+request payload received
+comparing faces
+face_distance
+[0.34975307]
+```
+
+The "face_distance" value is the primary score here, and the lower the score, the closer the match. The library author suggests a threshold of about 0.6.
+
+## 6. Deploy Node.js application
 Install frontend dependencies
 ```
 cd ..
@@ -191,7 +224,7 @@ node server.js
 The application UI should then be accessible at http://localhost:8997/
 <img src="https://i.imgur.com/p6ww24z.png">
 
-## 5. Populate Ledger and Simulate Transactions
+## 7. Populate Ledger and Simulate Transactions
 Now that we can access the application, the next step is to register passengers with the Airexit service. This can be done by navigating to the home page, and then clicking "Registration".
 
 <img src="https://i.imgur.com/qSUnE0S.png">
